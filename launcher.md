@@ -94,11 +94,11 @@ Let's call it test.slurm
 
 #SBATCH -J launcher
 #SBATCH -N 1
-#SBTAHC -n 16
+#SBATCH -n 16
 #SBATCH -p normal
 #SBATCH -o job.%j.out
 #SBATCH -e job.%j.err
-#SBTACH -t 2-00:00:00
+#SBATCH -t 2-00:00:00
 
 
 module load launcher
@@ -108,7 +108,6 @@ export LAUNCHER_WORKDIR=$HOME/workdir
 export LAUNCHER_JOB_FILE=jobfile
 
 $LAUNCHER_DIR/paramrun
-
 
 ```
 
