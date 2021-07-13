@@ -1,0 +1,43 @@
+Sat Apr 16 12:26:57 2016
+Starting analysis of Stark_s17 at level 1 with debug = 
+rm raw/._*PAR raw/._*REC raw/._*par raw/._*rec
+to3d -anat -prefix struct -view orig -xFOV 146.9A-99.1P -yFOV 130.3S-115.7I -zFOV 75.0L-75.0R 3D:0:0:336:336:200:raw/Stark_s17_WIP_HiRes_MPRAGE_Nov08_0.75mm_SENSE_4_1.REC
+to3d -epan -view orig -prefix raw_restinglores_long1 -xFOV 120.0R-120.0L -yFOV 119.8A-120.2P -zFOV 60.1I-59.9S -time:zt 30 214 2000 alt+z -save_outliers outliers_restinglores_long1 3D:0:0:128:128:6420:raw/Stark_s17_WIP_S1.5_flip70_30slices_160Frms_AP_SENSE_5_1.REC
+to3d -epan -view orig -prefix raw_restinglores_long2 -xFOV 120.0R-120.0L -yFOV 119.8A-120.2P -zFOV 60.1I-59.9S -time:zt 30 214 2000 alt+z -save_outliers outliers_restinglores_long2 3D:0:0:128:128:6420:raw/Stark_s17_WIP_S1.5_flip70_30slices_160Frms_AP_SENSE_6_1.REC
+to3d -epan -view orig -prefix raw_restinglores_long3 -xFOV 120.0R-120.0L -yFOV 119.8A-120.2P -zFOV 60.1I-59.9S -time:zt 30 214 2000 alt+z -save_outliers outliers_restinglores_long3 3D:0:0:128:128:6420:raw/Stark_s17_WIP_S1.5_flip70_30slices_160Frms_AP_SENSE_7_1.REC
+3dSkullStrip -input struct+orig. -prefix struct_ns
+qsub /tmp/mribin/mri/ANTS_OWSalign.sh .
+sleep 5
+qsub /tmp/mribin/mri/ANTS_corticalThickness.sh .
+3dAutomask -prefix mask_restinglores_long1 -dilate 1 raw_restinglores_long1+orig.BRIK
+3dcalc -a raw_restinglores_long1+orig -b mask_restinglores_long1+orig -expr 'a*step(b)' -prefix masked_restinglores_long1+orig
+align_epi_anat.py -anat struct_ns+orig. -epi masked_restinglores_long1+orig.BRIK -epi_base 0 -giant_move -epi2anat -Allineate_opts '-warp shr' -epi_strip None -anat_has_skull no -tshift on -volreg on -volreg_opts '-edging 1 -1Dfile motion_restinglores_long1'
+rm masked_restinglores_long1*al+orig*
+3dAllineate -cubic -base struct_ns+orig -mast_dxyz 3 -1Dmatrix_apply masked_restinglores_long1_al_reg_mat.aff12.1D -prefix run_restinglores_long1 masked_restinglores_long1+orig
+3dAutomask -prefix mask_restinglores_long2 -dilate 1 raw_restinglores_long2+orig.BRIK
+3dcalc -a raw_restinglores_long2+orig -b mask_restinglores_long2+orig -expr 'a*step(b)' -prefix masked_restinglores_long2+orig
+align_epi_anat.py -anat struct_ns+orig. -epi masked_restinglores_long2+orig.BRIK -epi_base 0 -giant_move -epi2anat -Allineate_opts '-warp shr' -epi_strip None -anat_has_skull no -tshift on -volreg on -volreg_opts '-edging 1 -1Dfile motion_restinglores_long2'
+rm masked_restinglores_long2*al+orig*
+3dAllineate -cubic -base struct_ns+orig -mast_dxyz 3 -1Dmatrix_apply masked_restinglores_long2_al_reg_mat.aff12.1D -prefix run_restinglores_long2 masked_restinglores_long2+orig
+3dAutomask -prefix mask_restinglores_long3 -dilate 1 raw_restinglores_long3+orig.BRIK
+3dcalc -a raw_restinglores_long3+orig -b mask_restinglores_long3+orig -expr 'a*step(b)' -prefix masked_restinglores_long3+orig
+align_epi_anat.py -anat struct_ns+orig. -epi masked_restinglores_long3+orig.BRIK -epi_base 0 -giant_move -epi2anat -Allineate_opts '-warp shr' -epi_strip None -anat_has_skull no -tshift on -volreg on -volreg_opts '-edging 1 -1Dfile motion_restinglores_long3'
+rm masked_restinglores_long3*al+orig*
+3dAllineate -cubic -base struct_ns+orig -mast_dxyz 3 -1Dmatrix_apply masked_restinglores_long3_al_reg_mat.aff12.1D -prefix run_restinglores_long3 masked_restinglores_long3+orig
+move_censor.pl -mm_thresh 1.0 -deg_thresh 1.0 -file motion_restinglores_long1 -file motion_restinglores_long2 -file motion_restinglores_long3
+mv motion_censor_vector.txt motion_censor_vector_strict_restinglores_long.txt
+move_censor.pl -mm_thresh 0.5 -deg_thresh 0.5 -file motion_restinglores_long1 -file motion_restinglores_long2 -file motion_restinglores_long3
+mv motion_censor_vector.txt motion_censor_vector_verystrict_restinglores_long.txt
+mv THERE_ARE_A_LOT_OF_MOTION_EVENTS.txt THERE_ARE_A_LOT_OF_0.5mm_MOTION_EVENTS.txt
+move_censor.pl  -file motion_restinglores_long1 -file motion_restinglores_long2 -file motion_restinglores_long3
+mv motion_censor_vector.txt motion_censor_vector_restinglores_long.txt
+3dAutomask -dilate 2 -prefix mask_run_restinglores_long1 run_restinglores_long1+orig
+3dAutomask -dilate 2 -prefix mask_run_restinglores_long2 run_restinglores_long2+orig
+3dAutomask -dilate 2 -prefix mask_run_restinglores_long3 run_restinglores_long3+orig
+3dmerge -1tindex 0 -1dindex 0 -nscale -gmax -prefix allmask_restinglores_long mask_run_restinglores_long1+orig mask_run_restinglores_long2+orig mask_run_restinglores_long3+orig
+rm mask*HEAD mask*BRIK mask*1D
+3dBandpass -despike -band 0.009 0.1 -mask allmask_restinglores_long+orig -prefix run_Filt_restinglores_long3+orig run_restinglores_long3+orig
+3dBandpass -despike -band 0.009 0.1 -mask allmask_restinglores_long+orig -prefix run_Filt_restinglores_long1+orig run_restinglores_long1+orig
+3dBandpass -despike -band 0.009 0.1 -mask allmask_restinglores_long+orig -prefix run_Filt_restinglores_long2+orig run_restinglores_long2+orig
+3dTcat -prefix run_allruns_restinglores_long  run_restinglores_long1+orig.BRIK run_restinglores_long2+orig.BRIK run_restinglores_long3+orig.BRIK
+3dTcat -prefix run_Filt_allruns_restinglores_long  run_Filt_restinglores_long1+orig.BRIK run_Filt_restinglores_long2+orig.BRIK run_Filt_restinglores_long3+orig.BRIK
