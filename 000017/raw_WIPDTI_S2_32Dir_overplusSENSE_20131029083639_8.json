@@ -1,0 +1,24 @@
+{
+	"Manufacturer": "Philips",
+	"PatientPosition": "HFS",
+	"SeriesDescription": "ImageMRSERIES",
+	"ProtocolName": "WIPDTI_S2_32Dir_overplusSENSE",
+	"SeriesNumber": 8,
+	"AcquisitionNumber": 8,
+	"ImageComments": "none",
+	"PhilipsRescaleSlope": 3.92405,
+	"PhilipsRescaleIntercept": 0,
+	"PhilipsScaleSlope": 0.00108364,
+	"UsePhilipsFloatNotDisplayScaling": 1,
+	"EchoTime": 0.04869,
+	"RepetitionTime": 12.9786,
+	"ImageOrientationPatientDICOM": [
+		0.999987,
+		-0.00259111,
+		0.00431979,
+		0.00122172,
+		0.95671,
+		0.291042	],
+	"ConversionSoftware": "dcm2niix",
+	"ConversionSoftwareVersion": "v1.0.20210317"
+}
