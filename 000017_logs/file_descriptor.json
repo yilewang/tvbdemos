@@ -1,0 +1,11 @@
+{
+    "AP": "",
+    "AP_bval": "",
+    "AP_bvec": "",
+    "PA": "",
+    "PA_bval": "",
+    "PA_bvec": "",
+    "T1": "T1/T1.nii.gz",
+    "rfMRI": "fMRI/rfMRI.nii.gz",
+    "rfMRI_SBRef": "fMRI/rfMRI_SBREF.nii.gz"
+}

@@ -1,0 +1,22 @@
+STANDARD OUT:
+HOST INFO: Linux compute-1-4-26 4.18.0-193.19.1.el8_2.x86_64 #1 SMP Mon Sep 14 14:37:00 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux
+COMMAND RUN: /home/yxw190015/tvb-pipeline2/tvb-ukbb/bb_functional_pipeline/bb_clean_fix_logs
+Starting time: Sat Aug 28 13:42:14 CDT 2021
+The command /home/yxw190015/tvb-pipeline2/tvb-ukbb/bb_functional_pipeline/bb_clean_fix_logs took 0 seconds
+Ending time: Sat Aug 28 13:42:14 CDT 2021
+
+
+STANDARD ERROR:
++ subjectLogsDir=/home/yxw190015/HSAM/000017/logs/
++ restingDir=/home/yxw190015/HSAM/000017/fMRI/rfMRI.ica
++ logFile=/home/yxw190015/HSAM/000017/logs//bb_fixlogs_000017.log
++ for fixFile in ".fix.log" ".fix" ".fix_2b_predict.log"
++ '[' -f /home/yxw190015/HSAM/000017/fMRI/rfMRI.ica/.fix.log ']'
++ for fixFile in ".fix.log" ".fix" ".fix_2b_predict.log"
++ '[' -f /home/yxw190015/HSAM/000017/fMRI/rfMRI.ica/.fix ']'
++ for fixFile in ".fix.log" ".fix" ".fix_2b_predict.log"
++ '[' -f /home/yxw190015/HSAM/000017/fMRI/rfMRI.ica/.fix_2b_predict.log ']'
++ cat /home/yxw190015/HSAM/000017/fMRI/rfMRI.ica/.fix_2b_predict.log
++ rm /home/yxw190015/HSAM/000017/fMRI/rfMRI.ica/.fix_2b_predict.log
++ . /home/yxw190015/tvb-pipeline2/tvb-ukbb/bb_pipeline_tools/bb_set_footer
+++ set +x

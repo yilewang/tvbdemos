@@ -1,0 +1,40 @@
+STANDARD OUT:
+HOST INFO: Linux compute-1-4-26 4.18.0-193.19.1.el8_2.x86_64 #1 SMP Mon Sep 14 14:37:00 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux
+COMMAND RUN: /home/yxw190015/tvb-pipeline2/tvb-ukbb/bb_diffusion_pipeline/bb_eddy/bb_post_eddy
+Starting time: Sat Aug 28 13:42:14 CDT 2021
+FLIRT pre-alignment
+Running BBR
+
+
+STANDARD ERROR:
++ baseDir=/home/yxw190015/HSAM/000017
++ /opt/ohpc/pub/unpackaged/apps/fslbinary/6.0.4/bin/fslroi /home/yxw190015/HSAM/000017/dMRI/dMRI/data.nii.gz /home/yxw190015/HSAM/000017/dMRI/dMRI/data_B0.nii.gz 0 1
+Image Exception : #63 :: No image files match: /home/yxw190015/HSAM/000017/dMRI/dMRI/data
+No image files match: /home/yxw190015/HSAM/000017/dMRI/dMRI/data
++ /home/yxw190015/tvb-pipeline2/tvb-ukbb/bb_structural_pipeline/bb_epi_reg --epi=/home/yxw190015/HSAM/000017/dMRI/dMRI/data_B0.nii.gz --t1=/home/yxw190015/HSAM/000017/T1/T1.nii.gz --t1brain=/home/yxw190015/HSAM/000017/T1/T1_brain.nii.gz --out=/home/yxw190015/HSAM/000017/dMRI/dMRI/transforms/DTI_to_T1 --wmseg=/home/yxw190015/HSAM/000017/T1/T1_fast/T1_brain_WM_mask.nii.gz
+cp: cannot create regular file '/home/yxw190015/HSAM/000017/dMRI/dMRI/transforms/DTI_to_T1_fast_wmseg.nii.gz': No such file or directory
+Image Exception : #63 :: No image files match: /home/yxw190015/HSAM/000017/dMRI/dMRI/transforms/DTI_to_T1_fast_wmseg
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  No image files match: /home/yxw190015/HSAM/000017/dMRI/dMRI/transforms/DTI_to_T1_fast_wmseg
+/home/yxw190015/tvb-pipeline2/tvb-ukbb/bb_structural_pipeline/bb_epi_reg: line 265: 1972086 Aborted                 (core dumped) $FSLDIR/bin/fslmaths ${vout}_fast_wmseg -edge -bin -mas ${vout}_fast_wmseg ${vout}_fast_wmedge
+Image Exception : #63 :: No image files match: /home/yxw190015/HSAM/000017/dMRI/dMRI/data_B0
+Image Exception : #22 :: Failed to read volume /home/yxw190015/HSAM/000017/dMRI/dMRI/data_B0
+Error : No image files match: /home/yxw190015/HSAM/000017/dMRI/dMRI/data_B0
+Failed to read volume /home/yxw190015/HSAM/000017/dMRI/dMRI/data_B0
+Error : No image files match: /home/yxw190015/HSAM/000017/dMRI/dMRI/data_B0
+Image Exception : #63 :: No image files match: /home/yxw190015/HSAM/000017/dMRI/dMRI/data_B0
+Image Exception : #22 :: Failed to read volume /home/yxw190015/HSAM/000017/dMRI/dMRI/data_B0
+Error : No image files match: /home/yxw190015/HSAM/000017/dMRI/dMRI/data_B0
+Failed to read volume /home/yxw190015/HSAM/000017/dMRI/dMRI/data_B0
+Error : No image files match: /home/yxw190015/HSAM/000017/dMRI/dMRI/data_B0
+Could not open matrix file /home/yxw190015/HSAM/000017/dMRI/dMRI/transforms/DTI_to_T1.mat
+Image Exception : #63 :: No image files match: /home/yxw190015/HSAM/000017/dMRI/dMRI/data_B0
+Image Exception : #22 :: Failed to read volume /home/yxw190015/HSAM/000017/dMRI/dMRI/data_B0
+Error : No image files match: /home/yxw190015/HSAM/000017/dMRI/dMRI/data_B0
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  Failed to read volume /home/yxw190015/HSAM/000017/dMRI/dMRI/data_B0
+Error : No image files match: /home/yxw190015/HSAM/000017/dMRI/dMRI/data_B0
+/home/yxw190015/tvb-pipeline2/tvb-ukbb/bb_structural_pipeline/bb_epi_reg: line 332: 1972091 Aborted                 (core dumped) $FSLDIR/bin/applywarp -i ${vepi} -r ${vrefhead} -o ${vout} --premat=${vout}.mat --interp=spline
++ /opt/ohpc/pub/unpackaged/apps/fslbinary/6.0.4/bin/convert_xfm -omat /home/yxw190015/HSAM/000017/dMRI/dMRI/transforms/T1_to_DTI.mat -inverse /home/yxw190015/HSAM/000017/dMRI/dMRI/transforms/DTI_to_T1.mat
+Could not open matrix file /home/yxw190015/HSAM/000017/dMRI/dMRI/transforms/DTI_to_T1.mat
+Cannot read input-matrix

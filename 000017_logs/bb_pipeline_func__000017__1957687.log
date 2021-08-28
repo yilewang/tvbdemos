@@ -1,0 +1,150 @@
+2021-08-28 13:20:27,829 - bb_pipeline_func - INFO - Starting the subject processing: Sat Aug 28 13:20:27 2021 
+2021-08-28 13:20:27,830 - bb_pipeline_func - INFO - Subject received as input: 000017 
+2021-08-28 13:20:27,830 - bb_pipeline_func - INFO - COMMAND TO RUN: 	$BB_BIN_DIR/bb_functional_pipeline/bb_postprocess_struct 000017 
+2021-08-28 13:20:29,114 - bb_pipeline_func - INFO - COMMAND OUTPUT: 	+ direc=/home/yxw190015/HSAM/000017
++ linkDir=/home/yxw190015/HSAM/000017/fMRI/symlink
++ mkdir /home/yxw190015/HSAM/000017/fMRI/symlink
++ ln -s /home/yxw190015/HSAM/000017/T1/T1.nii.gz /home/yxw190015/HSAM/000017/fMRI/symlink/T1.nii.gz
++ ln -s /home/yxw190015/HSAM/000017/T1/T1_brain.nii.gz /home/yxw190015/HSAM/000017/fMRI/symlink/T1_brain.nii.gz
++ ln -s /home/yxw190015/HSAM/000017/T1/transforms/T1_to_MNI_warp.nii.gz /home/yxw190015/HSAM/000017/fMRI/symlink/T1_brain2MNI152_T1_2mm_brain_warp.nii.gz
++ ln -s /home/yxw190015/HSAM/000017/T1/transforms/T1_to_MNI_linear.mat /home/yxw190015/HSAM/000017/fMRI/symlink/T1_brain2MNI152_T1_2mm_brain.mat
++ /opt/ohpc/pub/unpackaged/apps/fslbinary/6.0.4/bin/fslmaths /home/yxw190015/HSAM/000017/T1/T1_fast/T1_brain_pve_2.nii.gz -thr 0.5 -bin /home/yxw190015/HSAM/000017/fMRI/symlink/T1_brain_wmseg.nii.gz
++ . /home/yxw190015/tvb-pipeline2/tvb-ukbb/bb_pipeline_tools/bb_set_footer
+++ set +x
+ 
+2021-08-28 13:20:29,114 - bb_pipeline_func - INFO - COMMAND TO RUN: 	$BB_BIN_DIR/bb_functional_pipeline/bb_prepare_rfMRI 000017 
+2021-08-28 13:20:29,216 - bb_pipeline_func - INFO - COMMAND OUTPUT: 	+ nameDir=/home/yxw190015/HSAM/000017
++ cp /home/yxw190015/tvb-pipeline2/tvb-ukbb/bb_data/design_ICA_nonSmoothed.fsf 000017/fMRI/rfMRI.fsf
+++ cat 000017/fMRI/rfMRI.fsf
+++ sort
+++ grep -oP '_--_\K.*?(?=_-_)'
+++ uniq
++ for elem in `cat $1/fMRI/rfMRI.fsf | grep -oP '_--_\K.*?(?=_-_)' | sort | uniq`
+++ echo /opt/ohpc/pub/unpackaged/apps/fslbinary/6.0.4
+++ sed 's|/|\\/|g'
++ val='\/opt\/ohpc\/pub\/unpackaged\/apps\/fslbinary\/6.0.4'
++ echo '\/opt\/ohpc\/pub\/unpackaged\/apps\/fslbinary\/6.0.4'
++ sed -i 's/_--_FSLDIR_-_/\/opt\/ohpc\/pub\/unpackaged\/apps\/fslbinary\/6.0.4/g' 000017/fMRI/rfMRI.fsf
+++ /opt/ohpc/pub/unpackaged/apps/fslbinary/6.0.4/bin/fslval 000017/fMRI/rfMRI.nii.gz dim4
++ fmriNumVol='214 '
+++ /opt/ohpc/pub/unpackaged/apps/fslbinary/6.0.4/bin/fslval 000017/fMRI/rfMRI.nii.gz pixdim4
++ fmriTR='2.000000 '
+++ /opt/ohpc/pub/unpackaged/apps/fslbinary/6.0.4/bin/fslval 000017/fMRI/rfMRI.nii.gz descrip
++ descrip=
++ descrip=(`echo $descrip | tr ';' ' '`)
+++ echo
+++ tr ';' ' '
++ fmriTE=
+++ /home/yxw190015/tvb-pipeline2/tvb-ukbb/bb_pipeline_tools/bb_get_dwell_time 000017/fMRI/rfMRI.nii.gz
++ fmriDwell=
++ echo 'set fmri(outputdir)     "/home/yxw190015/HSAM/000017/fMRI/rfMRI.ica"'
++ echo 'set fmri(regunwarp_yn) 0'
++ echo 'set feat_files(1)       "/home/yxw190015/HSAM/000017/fMRI/rfMRI.nii.gz"'
++ echo 'set alt_ex_func(1)      "/home/yxw190015/HSAM/000017/fMRI/rfMRI_SBREF.nii.gz"'
++ echo 'set unwarp_files(1) 0'
++ echo 'set unwarp_files_mag(1) 0'
++ echo 'set highres_files(1)    "/home/yxw190015/HSAM/000017/fMRI/symlink/T1_brain.nii.gz"'
++ echo 'set fmri(unwarp_dir) 0'
++ echo 'set fmri(tr) 2.000000 '
++ echo 'set fmri(npts) 214 '
++ echo 'set fmri(dwell) '
++ echo 'set fmri(te) '
++ echo 'set fmri(smooth) 5'
++ echo 'set fmri(ndelete) 4'
++ . /home/yxw190015/tvb-pipeline2/tvb-ukbb/bb_pipeline_tools/bb_set_footer
+++ set +x
+ 
+2021-08-28 13:20:29,216 - bb_pipeline_func - INFO - COMMAND TO RUN: 	feat /home/yxw190015/HSAM/000017/fMRI/rfMRI.fsf 000017 
+2021-08-28 13:40:45,280 - bb_pipeline_func - INFO - COMMAND OUTPUT: 	 
+2021-08-28 13:40:45,280 - bb_pipeline_func - INFO - COMMAND TO RUN: 	$BB_BIN_DIR/bb_functional_pipeline/bb_fix 000017 
+2021-08-28 13:42:13,486 - bb_pipeline_func - INFO - COMMAND OUTPUT: 	+ . /home/yxw190015/tvb-pipeline2/tvb-ukbb/bb_functional_pipeline/bb_fix_dir/settings.sh
+++ FIXFEATUREVERSION=1.06
++++ uname -s
+++ FSL_FIX_OS=Linux
++++ uname -m
+++ FSL_FIX_ARCH=x86_64
+++ '[' -z /home/yxw190015/tvb-pipeline2/tvb-ukbb/bb_functional_pipeline/bb_fix_dir ']'
++++ cat /home/yxw190015/tvb-pipeline2/tvb-ukbb/bb_functional_pipeline/bb_fix_dir/fixversion
+++ FIXVERSION=1.06.15
++++ set -o
++++ grep errexit
++++ awk '{ print $2 }'
+++ cur_errexit=on
+++ '[' on = on ']'
+++ set +o errexit
+++ '[' -z '' ']'
+++ FSL_FIX_MATLAB_MODE=0
+++ '[' 0 -eq 0 ']'
+++ '[' -z '' ']'
+++ FSL_FIX_MCRROOT=/home/yxw190015/tvb-pipeline2/software/MCR_2017b_glnxa64
+++ '[' '!' -x /home/yxw190015/tvb-pipeline2/software/MCR_2017b_glnxa64 ']'
+++ '[' -z '' ']'
+++ FSL_FIX_MLCDIR=/home/yxw190015/tvb-pipeline2/tvb-ukbb/bb_functional_pipeline/bb_fix_dir/compiled/Linux/x86_64
+++ '[' -z '' ']'
+++ '[' -f /home/yxw190015/tvb-pipeline2/tvb-ukbb/bb_functional_pipeline/bb_fix_dir/compiled/Linux/x86_64/MCR.version ']'
+++ FSL_FIX_MCRV=v93
+++ '[' '!' -z v93 -a -z '' ']'
+++ FSL_FIX_MCR=/home/yxw190015/tvb-pipeline2/software/MCR_2017b_glnxa64/v93
+++ '[' 0 -eq 1 ']'
+++ '[' 0 -eq 2 ']'
+++ '[' -z '' ']'
+++ FSL_FIX_R_CMD=/home/yxw190015/tvb-pipeline2/software/env/lib/R/bin/R
+++ '[' '!' -x /home/yxw190015/tvb-pipeline2/software/env/lib/R/bin/R ']'
++++ which R
+++ FSL_FIX_R_CMD=/home/yxw190015/tvb-pipeline2/software/condaenv/bin/R
+++ '[' -z /home/yxw190015/tvb-pipeline2/software/condaenv/bin/R ']'
+++ '[' -z '' ']'
+++ FSL_FIX_CIFTIRW=/opt/fmrib/matlab_ciftireadwrite/
+++ '[' -z /opt/ohpc/pub/unpackaged/apps/fslbinary/6.0.4 ']'
+++ FSL_FIX_FSLMATLAB=/opt/ohpc/pub/unpackaged/apps/fslbinary/6.0.4/etc/matlab
+++ '[' on = on ']'
+++ set -o errexit
+++ pwd
++ origDir=/home/yxw190015/HSAM
++ '[' 000017 = '' ']'
++ '[' -d 000017/fMRI/rfMRI.ica ']'
++ cd 000017/fMRI/rfMRI.ica
++ /opt/ohpc/pub/unpackaged/apps/fslbinary/6.0.4/bin/imcp /home/yxw190015/HSAM/000017/T1/T1_fast/T1_brain_pveseg reg/highres_pveseg
++ /opt/ohpc/pub/unpackaged/apps/fslbinary/6.0.4/bin/invwarp --ref=reg/example_func -w reg/example_func2standard_warp -o reg/standard2example_func_warp
++ /home/yxw190015/tvb-pipeline2/tvb-ukbb/bb_functional_pipeline/bb_fix_dir/fix . /home/yxw190015/tvb-pipeline2/tvb-ukbb/bb_functional_pipeline/bb_fix_dir/training_files/ADNI3_Training.RData 30 -m -h 100
++ mkdir -p reg_standard
++ /opt/ohpc/pub/unpackaged/apps/fslbinary/6.0.4/bin/applywarp --ref=reg/standard --in=filtered_func_data_clean --out=reg_standard/filtered_func_data_clean --warp=reg/example_func2standard_warp --interp=spline
+Image Exception : #63 :: No image files match: filtered_func_data_clean
+Image Exception : #22 :: Failed to read volume filtered_func_data_clean
+Error : No image files match: filtered_func_data_clean
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  Failed to read volume filtered_func_data_clean
+Error : No image files match: filtered_func_data_clean
+/home/yxw190015/tvb-pipeline2/tvb-ukbb/bb_functional_pipeline/bb_fix: line 39: 1971806 Aborted                 (core dumped) ${FSLDIR}/bin/applywarp --ref=reg/standard --in=filtered_func_data_clean --out=reg_standard/filtered_func_data_clean --warp=reg/example_func2standard_warp --interp=spline
+ 
+2021-08-28 13:42:13,486 - bb_pipeline_func - INFO - COMMAND TO RUN: 	$BB_BIN_DIR/bb_functional_pipeline/bb_FC 000017 
+2021-08-28 13:42:14,339 - bb_pipeline_func - INFO - COMMAND OUTPUT: 	/home/yxw190015/tvb-pipeline2/tvb-ukbb/bb_functional_pipeline/bb_FC: line 25: mri_segstats: command not found
+Traceback (most recent call last):
+  File "/home/yxw190015/tvb-pipeline2/tvb-ukbb/bb_functional_pipeline/bb_FC_compute", line 75, in <module>
+    main()
+  File "/home/yxw190015/tvb-pipeline2/tvb-ukbb/bb_functional_pipeline/bb_FC_compute", line 47, in main
+    TS_old = np.loadtxt(ts_rois)
+  File "/home/yxw190015/tvb-pipeline2/software/condaenv/lib/python3.7/site-packages/numpy/lib/npyio.py", line 1065, in loadtxt
+    fh = np.lib._datasource.open(fname, 'rt', encoding=encoding)
+  File "/home/yxw190015/tvb-pipeline2/software/condaenv/lib/python3.7/site-packages/numpy/lib/_datasource.py", line 194, in open
+    return ds.open(path, mode, encoding=encoding, newline=newline)
+  File "/home/yxw190015/tvb-pipeline2/software/condaenv/lib/python3.7/site-packages/numpy/lib/_datasource.py", line 531, in open
+    raise IOError("%s not found." % path)
+OSError: /home/yxw190015/HSAM/000017/fMRI/rfMRI.ica/ts_roied.txt not found.
+ 
+2021-08-28 13:42:14,340 - bb_pipeline_func - INFO - COMMAND TO RUN: 	$BB_BIN_DIR/bb_functional_pipeline/bb_clean_fix_logs 000017 
+2021-08-28 13:42:14,366 - bb_pipeline_func - INFO - COMMAND OUTPUT: 	+ subjectLogsDir=/home/yxw190015/HSAM/000017/logs/
++ restingDir=/home/yxw190015/HSAM/000017/fMRI/rfMRI.ica
++ logFile=/home/yxw190015/HSAM/000017/logs//bb_fixlogs_000017.log
++ for fixFile in ".fix.log" ".fix" ".fix_2b_predict.log"
++ '[' -f /home/yxw190015/HSAM/000017/fMRI/rfMRI.ica/.fix.log ']'
++ for fixFile in ".fix.log" ".fix" ".fix_2b_predict.log"
++ '[' -f /home/yxw190015/HSAM/000017/fMRI/rfMRI.ica/.fix ']'
++ for fixFile in ".fix.log" ".fix" ".fix_2b_predict.log"
++ '[' -f /home/yxw190015/HSAM/000017/fMRI/rfMRI.ica/.fix_2b_predict.log ']'
++ cat /home/yxw190015/HSAM/000017/fMRI/rfMRI.ica/.fix_2b_predict.log
++ rm /home/yxw190015/HSAM/000017/fMRI/rfMRI.ica/.fix_2b_predict.log
++ . /home/yxw190015/tvb-pipeline2/tvb-ukbb/bb_pipeline_tools/bb_set_footer
+++ set +x
+ 
+2021-08-28 13:42:14,366 - bb_pipeline_func - ERROR - There is no tFMRI info. Thus, the Task Functional part will not be run 

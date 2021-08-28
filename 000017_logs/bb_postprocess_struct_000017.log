@@ -1,0 +1,19 @@
+STANDARD OUT:
+HOST INFO: Linux compute-1-4-26 4.18.0-193.19.1.el8_2.x86_64 #1 SMP Mon Sep 14 14:37:00 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux
+COMMAND RUN: /home/yxw190015/tvb-pipeline2/tvb-ukbb/bb_functional_pipeline/bb_postprocess_struct
+Starting time: Sat Aug 28 13:20:27 CDT 2021
+The command /home/yxw190015/tvb-pipeline2/tvb-ukbb/bb_functional_pipeline/bb_postprocess_struct took 2 seconds
+Ending time: Sat Aug 28 13:20:29 CDT 2021
+
+
+STANDARD ERROR:
++ direc=/home/yxw190015/HSAM/000017
++ linkDir=/home/yxw190015/HSAM/000017/fMRI/symlink
++ mkdir /home/yxw190015/HSAM/000017/fMRI/symlink
++ ln -s /home/yxw190015/HSAM/000017/T1/T1.nii.gz /home/yxw190015/HSAM/000017/fMRI/symlink/T1.nii.gz
++ ln -s /home/yxw190015/HSAM/000017/T1/T1_brain.nii.gz /home/yxw190015/HSAM/000017/fMRI/symlink/T1_brain.nii.gz
++ ln -s /home/yxw190015/HSAM/000017/T1/transforms/T1_to_MNI_warp.nii.gz /home/yxw190015/HSAM/000017/fMRI/symlink/T1_brain2MNI152_T1_2mm_brain_warp.nii.gz
++ ln -s /home/yxw190015/HSAM/000017/T1/transforms/T1_to_MNI_linear.mat /home/yxw190015/HSAM/000017/fMRI/symlink/T1_brain2MNI152_T1_2mm_brain.mat
++ /opt/ohpc/pub/unpackaged/apps/fslbinary/6.0.4/bin/fslmaths /home/yxw190015/HSAM/000017/T1/T1_fast/T1_brain_pve_2.nii.gz -thr 0.5 -bin /home/yxw190015/HSAM/000017/fMRI/symlink/T1_brain_wmseg.nii.gz
++ . /home/yxw190015/tvb-pipeline2/tvb-ukbb/bb_pipeline_tools/bb_set_footer
+++ set +x
