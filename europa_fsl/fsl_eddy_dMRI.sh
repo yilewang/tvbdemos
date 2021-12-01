@@ -1,5 +1,23 @@
 #!/usr/bin/bash
 
+"""
+The test script for fsl eddy.
+
+Input:
+	main DWI data: DWI.nii.gz
+	mask: rawDTI_B0_brain_mask.nii.gz
+	acqp: acqparames.txt
+	index: eddy_index.txt
+	bvecs: bvecs
+	bvalues: bvals
+Output:
+	data.* files
+
+"""
+
+
+
+
 ml load fsl
 
 #FSLDIR=/opt/ohpc/pub/unpackaged/apps/fslbinary/6.0.4
