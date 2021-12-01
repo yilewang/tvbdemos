@@ -1,4 +1,4 @@
-# The test script of FSL
+# The test scripts of FSL in europa
 
 I made two scripts for test run of fsl in europa:
 
