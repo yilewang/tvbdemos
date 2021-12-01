@@ -8,7 +8,7 @@ The second one is `fsl_fnirt_struct.sh`, and the required files are stored at `s
 
 ```bash
 svn export https://github.com/yilewang/TVB_Demo/trunk/europa_fsl
-chmod +x fsl*
+# chmod +x fsl* # in case the permission issues
 cd europa_fsl
 ./fsl_eddy_dMRI.sh
 ./fsl_fnirt_struct.sh
