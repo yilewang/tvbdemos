@@ -1,7 +1,0 @@
-2021-08-28 13:48:57,857 - tvb_bb_QC - INFO - Starting the subject processing: Sat Aug 28 13:48:57 2021 
-2021-08-28 13:48:57,857 - tvb_bb_QC - INFO - Subject received as input: 000017 
-2021-08-28 13:48:57,857 - tvb_bb_QC - INFO - COMMAND TO RUN: 	xvfb-run -a $BB_BIN_DIR/tvb_bb_QC/tvb_bb_QC.sh 000017 
-2021-08-28 13:48:57,863 - tvb_bb_QC - ERROR - Exception raised during execution of: 	xvfb-run -a $BB_BIN_DIR/tvb_bb_QC/tvb_bb_QC.sh 000017 
-2021-08-28 13:48:57,863 - tvb_bb_QC - ERROR - Exception type: 	<class 'FileNotFoundError'> 
-2021-08-28 13:48:57,864 - tvb_bb_QC - ERROR - Exception args: 	(2, "No such file or directory: 'xvfb-run'") 
-2021-08-28 13:48:57,864 - tvb_bb_QC - ERROR - Exception message: 	[Errno 2] No such file or directory: 'xvfb-run': 'xvfb-run' 
