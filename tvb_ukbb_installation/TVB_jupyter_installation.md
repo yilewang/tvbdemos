@@ -18,7 +18,7 @@ jupyter notebook password #setup the password
 
 In X2GO, we can submit jobs to the nodes and launch TVB jupyter notebook
 ```bash
-srun -pnormal -N1 -n48 --pty /bin/bash
+srun -pTVB -N1 -n48 --pty /bin/bash
 conda activate tvbenv
 jupyter notebook --ip=*
 
