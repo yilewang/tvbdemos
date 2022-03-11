@@ -50,6 +50,8 @@ How to submit job? use `sbatch tvb_long_sim.slurm`
 
 How to monitor the progress? `watch -n 1 squeue -u$USER`. press 'ctrl+z' to exit
 
+when it's finished, you go to `/scratch/netid/AD/` to check your results
+
 if you want to pull the csv file and pic png file into your local computer for visualization
 
 ```bash
