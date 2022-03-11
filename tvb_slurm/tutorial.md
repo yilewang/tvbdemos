@@ -22,6 +22,8 @@ cd tvb_slurm
 
 cat tutorial.md
 
+rm 
+
 ```
 
 we need to use conda to create a new environment
