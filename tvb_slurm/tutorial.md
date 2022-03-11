@@ -22,7 +22,15 @@ cd tvb_slurm
 
 cat tutorial.md
 
-rm 
+rm # delete
+
+vim tvb_longxxx
+
+i
+
+esc 
+
+:x
 
 ```
 
