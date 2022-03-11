@@ -11,6 +11,17 @@ use Git to download the repo in your europa
 
 ```bash
 git clone https://github.com/yilewang/tvbdemos.git
+
+ls
+
+cd tvbdemos
+
+ls
+
+cd tvb_slurm
+
+cat tutorial.md
+
 ```
 
 we need to use conda to create a new environment
