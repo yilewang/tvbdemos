@@ -35,7 +35,7 @@ esc
 ```
 
 we need to use conda to create a new environment
-
+<!-- 
 ```python
 # create a conda environment
 # if conda not found: 
@@ -44,13 +44,13 @@ we need to use conda to create a new environment
 conda create -n tvbenv -c conda-forge python=3.8 tvb-library tvb-data pandas numpy matplotlib
 ```
 
-If you want to activate the env, just `source activate tvbenv`
+If you want to activate the env, just `source activate tvbenv` -->
 
 How to submit job? use `sbatch tvb_long_sim.slurm`
 
 How to monitor the progress? `watch -n 1 squeue -u$USER`. press 'ctrl+z' to exit
 
-when it's finished, you go to `/scratch/netid/AD/` to check your results
+when it's finished, you go to `cd /scratch/netid/AD/` to check your results
 
 if you want to pull the csv file and pic png file into your local computer for visualization
 
