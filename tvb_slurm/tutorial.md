@@ -34,8 +34,8 @@ esc
 
 ```
 
-we need to use conda to create a new environment
 <!-- 
+we need to use conda to create a new environment
 ```python
 # create a conda environment
 # if conda not found: 
