@@ -22,4 +22,4 @@
 #source ~/tvb-pipeline2/tvb-ukbb/init_vars && python ~/tvb-pipeline2/tvb-ukbb/bb_pipeline_tools/bb_pipeline.py s123366_output
 
 source activate tvbenv
-python sim.py --grp 'AD' --caseid '0306A' --gc '0.015' --time '1000*60*10'
+python sim.py --grp 'AD' --caseid '0306A' --gc '0.015' --time '10000.0'
