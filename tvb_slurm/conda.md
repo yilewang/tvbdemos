@@ -1,5 +1,7 @@
 # use conda to manage environment
 
+use Git to download the repo in your europa
+
 ```bash
 git clone https://github.com/yilewang/tvbdemos.git
 ```
@@ -16,4 +18,4 @@ If you want to activate the env, just `source activate tvbenv`
 
 How to submit job? use `sbatch tvb_long_sim.slurm`
 
-How to monitor the progress? `watch -n 1 queue -u$USER`
+How to monitor the progress? `watch -n 1 queue -u$USER`. press 'ctrl+z' to exit
