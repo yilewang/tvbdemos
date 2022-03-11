@@ -1,5 +1,9 @@
 # use conda to manage environment
 
+```bash
+git clone https://github.com/yilewang/tvbdemos.git
+```
+
 we need to use conda to create a new environment
 
 ```python
