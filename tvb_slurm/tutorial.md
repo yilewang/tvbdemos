@@ -1,5 +1,12 @@
 # steps to do the simulation in europa
 
+```bash
+ssh netid@europa.circ.utdallas.edu
+
+cd $SCRATCH
+```
+
+
 use Git to download the repo in your europa
 
 ```bash
