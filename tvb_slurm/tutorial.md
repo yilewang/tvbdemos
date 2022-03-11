@@ -1,4 +1,4 @@
-# use conda to manage environment
+# steps to do the simulation in europa
 
 use Git to download the repo in your europa
 
