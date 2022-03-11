@@ -49,3 +49,9 @@ If you want to activate the env, just `source activate tvbenv`
 How to submit job? use `sbatch tvb_long_sim.slurm`
 
 How to monitor the progress? `watch -n 1 squeue -u$USER`. press 'ctrl+z' to exit
+
+if you want to pull the csv file and pic png file into your local computer for visualization
+
+```bash
+scp netid@europa.circ.utdallas.edu:/scratch/netid/AD/file_name1 filename2 /home/Username/Desktop
+```
