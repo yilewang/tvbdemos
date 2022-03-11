@@ -38,4 +38,4 @@ If you want to activate the env, just `source activate tvbenv`
 
 How to submit job? use `sbatch tvb_long_sim.slurm`
 
-How to monitor the progress? `watch -n 1 queue -u$USER`. press 'ctrl+z' to exit
+How to monitor the progress? `watch -n 1 squeue -u$USER`. press 'ctrl+z' to exit
