@@ -26,7 +26,7 @@ def tvb_simulation(file, gc, simTime):
           monitors.ProgressLogger(period=1e2))).configure()
     sim.configure()
     (tavg_time, tavg_data), (raw_time, raw_data). _ = sim.run()
-    return raw_data
+    return raw_time, raw_data
 
 
 #bash obtain the input
@@ -40,13 +40,13 @@ args = parser.parse_args()
 if __name__ == "__main__":
     the_file = '/home/'+netid+'/'+args.grp+'/'+args.caseid+'.zip'
     start_time = time.time()
-    raw = tvb_simulation(the_file, np.array([args.gc]), args.time)
+    raw_time, raw_data = tvb_simulation(the_file, np.array([args.gc]), args.time)
     end_time = time.time()
     logging.warning('Duration: {}'.format(end_time - start_time))
 
     # plot
     plt.figure(figsize=(15, 10))
-    plt.plot(raw_time * sim_time, raw_data[:, 0, :, 0], alpha=0.3)
+    plt.plot(raw_time * args.time, raw_data[:, 0, :, 0], alpha=0.3)
     plt.title('Initial transient in RAW')
     plt.xlabel('Time (s)')
     plt.grid(True);
@@ -54,7 +54,8 @@ if __name__ == "__main__":
     # save_as_output
     df = pd.DataFrame(raw[:, 0, :, 0], columns = ['aCNG-L', 'aCNG-R','mCNG-L','mCNG-R','pCNG-L','pCNG-R', 'HIP-L','HIP-R','PHG-L','PHG-R','AMY-L','AMY-R', 'sTEMp-L','sTEMP-R','mTEMp-L','mTEMp-R'])
     save_path='/home/'+netid+'/'+args.grp+'/'+args.caseid+'_'+str(args.gc)+'.csv'
+    save_path_pic = '/home/'+netid+'/'+args.grp+'/'+args.caseid+'_'+str(args.gc)+'.png'
     df.to_csv(save_path)
-    plt.savefig(save_path)
+    plt.savefig(save_path_pic)
 
 
