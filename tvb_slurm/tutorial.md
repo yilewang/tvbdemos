@@ -52,7 +52,7 @@ How to monitor the progress? `watch -n 1 squeue -u$USER`. press 'ctrl+z' to exit
 
 when it's finished, you go to `cd /scratch/netid/AD/` to check your results
 
-if you want to pull the csv file and pic png file into your local computer for visualization
+if you want to pull the csv file and pic png file into **your local computer** (not europa, just click start new terminal in mobaxterm) for visualization
 
 ```bash
 scp netid@europa.circ.utdallas.edu:/scratch/netid/AD/file_name1 filename2 /home/Username/Desktop
