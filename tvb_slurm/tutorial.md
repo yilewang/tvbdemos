@@ -46,7 +46,7 @@ conda create -n tvbenv -c conda-forge python=3.8 tvb-library tvb-data pandas num
 
 If you want to activate the env, just `source activate tvbenv` -->
 
-How to submit job? use `sbatch tvb_long_sim.slurm`
+How to submit job? use `sbatch tvb_long_sim.slurm` or `sbatch /scratch/netid/tvbdemos/tvb_slurm/tvb_long_sim.slurm`
 
 How to monitor the progress? `watch -n 1 squeue -u$USER`. press 'ctrl+z' to exit
 
