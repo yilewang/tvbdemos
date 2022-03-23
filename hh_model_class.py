@@ -165,14 +165,15 @@ def InjectedCurrent(t):
     '''
     current changes with time
     '''
-    if t>0.0 and t<0.3:
-        return -0.2
-    elif t<0.5:
-        return 0.1
-    elif t <0.8:
-        return 0.3
-    else:
-        return 0.6
+    return 0.2
+    # if t>0.0 and t<0.3:
+    #     return -0.2
+    # elif t<0.5:
+    #     return 0.1
+    # elif t <0.8:
+    #     return 0.3
+    # else:
+    #     return 0.6
 
 J = [InjectedCurrent(tt) for tt in t]
 
