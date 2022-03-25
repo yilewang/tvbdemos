@@ -65,7 +65,11 @@ scp netid@europa.circ.utdallas.edu:/scratch/netid/AD/file_name1 filename2 /home/
 first we need to put zip files into right path
 
 ```bash
-cp -r /opt/ohpc/pub/groups/tvb/connectome /scratch/netid/
+mkdir MCI NC SNC
+cd .. # back to the previous dir
+. # means current dir
+
+cp /opt/ohpc/pub/groups/tvb/connectome/AD_conn/* /scratch
 ```
 
 how to update the script by using git 
