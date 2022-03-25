@@ -46,7 +46,7 @@ if __name__ == "__main__":
     logging.warning('Duration: {}'.format(end_time - start_time))
 
     # plot
-    plt.figure(figsize=(15, 10))
+    #plt.figure(figsize=(15, 10))
     #plt.plot(raw_time * args.time, raw_data[:, 0, :, 0], alpha=0.3)
     plt.plot(raw_time * args.time, raw_data[:,0, 4, 0], label='PCG_L')
     plt.plot(raw_time * args.time, raw_data[:,0, 5, 0], label='PCG_R')
