@@ -56,8 +56,8 @@ if __name__ == "__main__":
 
     # save_as_output
     df = pd.DataFrame(raw[:, 0, :, 0], columns = ['aCNG-L', 'aCNG-R','mCNG-L','mCNG-R','pCNG-L','pCNG-R', 'HIP-L','HIP-R','PHG-L','PHG-R','AMY-L','AMY-R', 'sTEMp-L','sTEMP-R','mTEMp-L','mTEMp-R'])
-    save_path='/scratch/'+netid+'/output'+'/'+args.grp+'/'+args.caseid+'_'+str(args.gc)+'.csv'
-    save_path_pic = '/scratch/'+netid+'/'+args.grp+'/'+args.caseid+'_'+str(args.gc)+'.png'
+    save_path='/scratch/'+netid+'/output/'+args.grp+'/'+args.caseid+'_'+str(args.gc)+'.csv'
+    save_path_pic = '/scratch/'+netid+'/'+'output/'+args.grp+'/'+args.caseid+'_'+str(args.gc)+'.png'
     df.to_csv(save_path)
     plt.savefig(save_path_pic)
 
