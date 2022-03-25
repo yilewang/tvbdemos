@@ -1,0 +1,6 @@
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+Traceback (most recent call last):
+  File "/scratch/yxw190015/github/tvbdemos/tvb_slurm/sim2.py", line 59, in <module>
+    df = pd.DataFrame(raw[:, 0, :, 0], columns = ['aCNG-L', 'aCNG-R','mCNG-L','mCNG-R','pCNG-L','pCNG-R', 'HIP-L','HIP-R','PHG-L','PHG-R','AMY-L','AMY-R', 'sTEMp-L','sTEMP-R','mTEMp-L','mTEMp-R'])
+NameError: name 'raw' is not defined
