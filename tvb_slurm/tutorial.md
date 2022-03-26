@@ -3,6 +3,7 @@
 ```bash
 ssh netid@europa.circ.utdallas.edu
 
+# cd means change directory. We will do all the operations in $SCRATCH space.
 cd $SCRATCH
 ```
 
@@ -12,29 +13,28 @@ use Git to download the repo in your europa
 ```bash
 git clone https://github.com/yilewang/tvbdemos.git
 
+# ls means to show all the files in the current directory
 ls
 
-cd tvbdemos
+cd ./tvbdemos/tvb_slurm
 
-ls
-
-cd tvb_slurm
-
+# cat means print out the content of this file
 cat tutorial.md
 
 rm # delete
 
+# vim helps us to check and edit the files
 vim tvb_longxxx
 
+# press i to edit in vim mode
 i
 
+# how to exit vim mode and save your edits.
 esc 
-
 :x
 
 ```
 
-<!-- 
 we need to use conda to create a new environment
 ```python
 # create a conda environment
@@ -44,7 +44,7 @@ we need to use conda to create a new environment
 conda create -n tvbenv -c conda-forge python=3.8 tvb-library tvb-data pandas numpy matplotlib
 ```
 
-If you want to activate the env, just `source activate tvbenv` -->
+If you want to activate the env, just `source activate tvbenv`
 
 How to submit job? use `sbatch tvb_long_sim.slurm` or `sbatch /scratch/netid/tvbdemos/tvb_slurm/tvb_long_sim.slurm`
 
@@ -58,8 +58,6 @@ if you want to pull the csv file and pic png file into **your local computer** (
 scp netid@europa.circ.utdallas.edu:/scratch/netid/AD/file_name1 filename2 /home/Username/Desktop
 ```
 ## steps to use different connectome to run simulation
-
-
 
 
 first we need to put zip files into right path
