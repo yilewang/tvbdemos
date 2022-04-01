@@ -46,9 +46,13 @@ if __name__ == "__main__":
     logging.warning('Duration: {}'.format(end_time - start_time))
 
     # plot
+<<<<<<< HEAD
     plt.figure(figsize=(15, 10))
     dispTime = raw_time * args.time
 
+=======
+    #plt.figure(figsize=(15, 10))
+>>>>>>> refs/remotes/origin/master
     #plt.plot(raw_time * args.time, raw_data[:, 0, :, 0], alpha=0.3)
     plt.plot(dispTime[81920*2:], raw_data[81920*2:,0, 4, 0], label='PCG_L')
     plt.plot(dispTime[81920*2:], raw_data[81920*2:,0, 5, 0], label='PCG_R')

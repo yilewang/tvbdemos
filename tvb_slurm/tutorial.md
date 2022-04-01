@@ -57,3 +57,31 @@ if you want to pull the csv file and pic png file into **your local computer** (
 ```bash
 scp netid@europa.circ.utdallas.edu:/scratch/netid/AD/file_name1 filename2 /home/Username/Desktop
 ```
+## steps to use different connectome to run simulation
+
+
+
+
+first we need to put zip files into right path
+
+```bash
+mkdir MCI NC SNC
+cd .. # back to the previous dir
+. # means current dir
+
+cp /opt/ohpc/pub/groups/tvb/connectome/AD_conn/* /scratch
+```
+
+how to update the script by using git 
+
+```bash
+git fetch && git merge
+```
+
+
+then, change the parameters in tvb_long_sim.slurm file. i.e., in here, we change it to 0578A instead of 0306A.
+```bash
+python sim2.py --grp 'AD' --caseid '0578A' --gc '0.015' --time '10000.0'
+```
+then we can run the simulation.
+
