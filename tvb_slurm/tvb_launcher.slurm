@@ -11,7 +11,7 @@
 
 #SBATCH -J TVB
 #SBATHC -N 1
-#SBATCH -n 2
+#SBATCH -n 16
 #SBATCH -p normal
 #SBATCH -o job.%j.out
 #SBATCH -e job.%j.err
@@ -24,7 +24,7 @@
 source activate tvbenv
 module load launcher
 export LD_LIBRARY_PATH=/lib64:$LD_LIBRARY_PATH
-export LAUNCHER_WORKDIR=$HOME/workdir
+export LAUNCHER_WORKDIR=$SCRATCH/github/tvbdemos/tvb_slurm
 export LAUNCHER_JOB_FILE=jobfile
 
 $LAUNCHER_DIR/paramrun
