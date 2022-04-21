@@ -1,0 +1,3 @@
+python sim2.py --grp 'AD' --caseid '0306A' --gc '0.015' --time '1000.0'
+python sim2.py --grp 'AD' --caseid '0306A' --gc '0.016' --time '1000.0'
+python sim2.py --grp 'AD' --caseid '0306A' --gc '0.017' --time '1000.0'
