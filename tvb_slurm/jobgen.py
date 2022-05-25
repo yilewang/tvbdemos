@@ -12,5 +12,5 @@ f.close()
 
 
 with open('/scratch/nkk170000/tvbdemos/tvb_slurm/jobfile', 'w') as f:
-    for i in range(73):
+    for i in range(74):
         print(f"python sim2hdf5.py --grp '{group[i]}' --caseid '{caseid[i]}' --gc '{gc[i]}' --time '180000'", file=f)

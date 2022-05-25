@@ -25,7 +25,7 @@
 source activate tvbenv
 module load launcher
 export LD_LIBRARY_PATH=/lib64:$LD_LIBRARY_PATH
-export LAUNCHER_WORKDIR=$SCRATCH/github/tvbdemos/tvb_slurm
+export LAUNCHER_WORKDIR=$SCRATCH/tvbdemos/tvb_slurm
 export LAUNCHER_JOB_FILE=jobfile
 
 $LAUNCHER_DIR/paramrun
