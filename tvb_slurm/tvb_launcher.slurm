@@ -10,8 +10,8 @@
 #set up parameters
 
 #SBATCH -J TVB
-#SBATHC -N 1
-#SBATCH -n 16
+#SBATCH -N 74
+#SBATCH -n 74
 #SBATCH -p normal
 #SBATCH -o job.%j.out
 #SBATCH -e job.%j.err
@@ -21,6 +21,7 @@
 #LD_LIBRARY_PATH=/home/yxw190015/local/gsl-2.6/lib:$LD_LIBRARY_PATH ldd /opt/ohpc/pub/unpackaged/apps/afnibinary/21.0.06/3dROIMaker
 #source ~/tvb-pipeline2/tvb-ukbb/init_vars && python ~/tvb-pipeline2/tvb-ukbb/bb_pipeline_tools/bb_pipeline.py s123366_output
 
+#export OMP_NUM_THREADS=16
 source activate tvbenv
 module load launcher
 export LD_LIBRARY_PATH=/lib64:$LD_LIBRARY_PATH
