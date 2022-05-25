@@ -10,7 +10,7 @@ import time
 import logging
 import sys
 
-netid="yxw190015"
+netid="nkk170000"
 
 def tvb_simulation(file, gc, simTime):
     connectivity.speed = np.array([10.])
