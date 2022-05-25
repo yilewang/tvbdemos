@@ -10,7 +10,7 @@
 #set up parameters
 
 #SBATCH -J TVB
-#SBATHC -N 1
+#SBATCH -N 1
 #SBATCH -n 1
 #SBATCH -p normal
 #SBATCH -o job.%j.out
@@ -22,4 +22,4 @@
 #source ~/tvb-pipeline2/tvb-ukbb/init_vars && python ~/tvb-pipeline2/tvb-ukbb/bb_pipeline_tools/bb_pipeline.py s123366_output
 
 source activate tvbenv
-python sim2.py --grp 'AD' --caseid '0306A' --gc '0.015' --time '600000.0'
+python sim2hdf5.py --grp 'AD' --caseid '0306A' --gc '0.029' --time '600000.0'
