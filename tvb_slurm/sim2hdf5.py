@@ -53,7 +53,7 @@ if __name__ == "__main__":
     # df.to_hdf(save_path, key='raw', mode='w')
 
     # save as hdf5
-    filename = args.caseid + '.h5'
+    filename = '/scratch/'+netid+'/output/'+args.grp+'/'+args.caseid + '.h5'
     hdf = h5py.File(filename, 'w')
     hdf.create_dataset('raw', data = raw_data[:,0,:,0])
     hdf.close()
