@@ -9,6 +9,7 @@ import pandas as pd
 import time
 import logging
 import sys
+import h5py
 
 netid="yxw190015"
 
@@ -47,8 +48,15 @@ if __name__ == "__main__":
     logging.warning('Duration: {}'.format(end_time - start_time))
 
     # save_as_output
-    df = pd.DataFrame(raw_data[:, 0, :, 0], columns = ['aCNG-L', 'aCNG-R','mCNG-L','mCNG-R','pCNG-L','pCNG-R', 'HIP-L','HIP-R','PHG-L','PHG-R','AMY-L','AMY-R', 'sTEMp-L','sTEMP-R','mTEMp-L','mTEMp-R'])
-    save_path='/scratch/'+netid+'/output/'+args.grp+'/'+args.caseid+'_'+str(args.gc)+'.h5'
-    df.to_hdf(save_path, key='raw', mode='w')
+    # df = pd.DataFrame(raw_data[:, 0, :, 0], columns = ['aCNG-L', 'aCNG-R','mCNG-L','mCNG-R','pCNG-L','pCNG-R', 'HIP-L','HIP-R','PHG-L','PHG-R','AMY-L','AMY-R', 'sTEMp-L','sTEMP-R','mTEMp-L','mTEMp-R'])
+    # save_path='/scratch/'+netid+'/output/'+args.grp+'/'+args.caseid+'_'+str(args.gc)+'.h5'
+    # df.to_hdf(save_path, key='raw', mode='w')
+
+    # save as hdf5
+    filename = args.caseid + '.h5'
+    hdf = h5py.File(filename, 'w')
+    hdf.create_dataset('raw', data = raw_data[:,0,:,0])
+    hdf.close()
+
 
 
