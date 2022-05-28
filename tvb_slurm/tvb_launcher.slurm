@@ -10,8 +10,8 @@
 #set up parameters
 
 #SBATCH -J TVB
-#SBATHC -N 1
-#SBATCH -n 16
+#SBATCH -N 74
+#SBATCH -n 74
 #SBATCH -p normal
 #SBATCH -o job.%j.out
 #SBATCH -e job.%j.err

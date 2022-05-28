@@ -18,7 +18,7 @@ def tvb_simulation(file, gc, simTime):
     sim_time = simTime
     ReducedSetBase.number_of_modes = 1
     sim = simulator.Simulator(
-       model=ReducedSetHindmarshRose(variable_of_interest=['xi']),
+       model=ReducedSetHindmarshRose(variables_of_interest=['xi']),
        connectivity=connectivity.Connectivity.from_file(file),             
        coupling=coupling.Linear(a=np.array([gc])),
        simulation_length=sim_time,
