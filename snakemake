@@ -1,0 +1,325 @@
+SAMPLES = ["case1", "case2"]
+
+
+rule all:
+    input:
+        
+
+
+#### convert raw T1 to T1_Orig
+rule T1toT1Orig:
+    input:
+        "T1/T1.nii.gz",
+    output:
+        "T1/T1_orig.nii.gz"
+    shell:
+        "${FSLDIR}/bin/immv {input} {output}"
+
+
+rule T1Orig2ud:
+    input:
+        "T1/T1_orig.nii.gz"
+    output:
+        "T1/T1_orig_ud.nii.gz"
+    shell:
+        "cp {input} {output}"
+
+#### Calculate where does the brain start in the z dimension and then extract the roi
+rule extractROI:
+    input:
+        "T1/T1_orig_ud.nii.gz"
+    output:
+        "T1/T1_tmp.nii.gz"
+    params:
+        head_top=`${FSLDIR}/bin/robustfov -i {input} | grep -v Final | head -n 1 | awk '{print $5}'`
+    shell:
+        "${FSLDIR}/bin/fslmaths {input} -roi 0 -1 0 -1 $head_top 170 0 1 {output}"
+
+
+#### bet, brain extraction
+rule RecursiveBrainExtract:
+    input:
+        "T1_tmp.nii.gz"
+    output:
+        "T1_tmp_brain.nii.gz"
+    shell:
+        "${FSLDIR}/bin/bet {input} {output} -R"
+
+
+#### Reduces the FOV of T1_orig_ud by calculating a registration from T1_tmp_brain to ssref and applies it to T1_orig_ud. Keeps intermediate outputs for concatenation in next step (T1_tmp2_tmp_to_std.mat)
+
+rule ReduceFOV:
+    input:
+        tmpbrain = 'T1/T1_tmp_brain',
+        MNI152 = "$FSLDIR/data/standard/MNI152_T1_1mm_brain"
+        T1OrigUd = "T1/T1_orig_ud.nii.gz"
+    output:
+        "T1/T1_tmp2.nii.gz"
+    shell:
+        "${FSLDIR}/bin/standard_space_roi {input.tmpbrain} T1_tmp2 -maskNONE -ssref {input.MNI152} -altinput {input.T1OrigUd} -d"
+
+
+rule T1_tmp2toT1:
+    input:
+        "T1_tmp2.nii.gz"
+    output:
+        "T1.nii.gz"
+    shell:
+        "${FSLDIR}/bin/immv {input} output"
+
+
+
+
+#### Generate the actual affine from the orig_ud volume to the cut version we have now and combine it to have an affine matrix from orig_ud to MNI
+
+rule T1toT1origud:
+    input:
+        T1 = "T1/T1.nii.gz"
+        origud = "T1/T1_orig_ud.nii.gz"
+        sch = "$FSLDIR/etc/flirtsch/xyztrans.sch"
+    output:
+        "T1_to_T1_orig_ud.mat"
+    shell:
+        "${FSLDIR}/bin/flirt -in {input.T1} -ref {input.origud} -omat {output} -schedule {input.sch}"
+
+rule T1origud2T1:
+    input:
+        "T1_to_T1_orig_ud.mat"
+    output:
+        "T1_orig_ud_to_T1.mat"
+    shell:
+        "${FSLDIR}/bin/convert_xfm -omat {output} -inverse {input}"
+
+rule T1toMNI:
+    input:
+        "T1_to_T1_orig_ud.mat"
+    output:
+        MNIlinear = "T1_to_MNI_linear.mat"
+        secMat = "T1_tmp2_tmp_to_std.mat"
+    shell:
+        "${FSLDIR}/bin/convert_xfm -omat {output.MNIlinear} -concat {output.secMat} {input}"
+
+
+
+#### Non-linear registration of T1 to MNI using the previously calculated alignment
+
+rule NonlinearT1toMNI:
+    input:
+        T1="T1/T1.nii.gz"
+        ref="$FSLDIR/data/standard/MNI152_T1_1mm"
+        aff="T1/T1_to_MNI_linear.mat"
+        config="$BB_BIN_DIR/bb_data/bb_fnirt.cnf"
+        refmask="$templ/MNI152_T1_1mm_brain_mask_dil_GD7"
+    output:
+        log="T1/logs/bb_T1_to_MNI_fnirt.log"
+        cout="T1/T1_to_MNI_warp_coef"
+        fout="T1/T1_to_MNI_warp"
+        jout="T1_to_MNI_warp_jac"
+        iout="T1_brain_to_MNI.nii.gz"
+    shell:
+        "${FSLDIR}/bin/fnirt --in={input.T1} --ref={input.ref} --aff={input.aff} \
+  --config={input.config} --refmask={input.refmask} \
+  --logout= {output.log} --cout={output.cout} --fout={output.fout} \
+  --jout={output.jout} --iout={output.iout} --interp=spline"
+
+#### NO GDC ####
+
+
+#### create brain mask and mask T1
+rule invwarpMask:
+    input:
+        T1="T1.nii.gz"
+        warp="T1_to_MNI_warp_coef"
+    output:
+        "T1_to_MNI_warp_coef_inv"
+    shell:
+        "${FSLDIR}/bin/invwarp --ref={input.T1} -w {input.warp} -o {ouput}"
+
+
+rule applywarpMask:
+    input:
+        ref='T1.nii.gz'
+        in='$templ/MNI152_T1_1mm_brain_mask'
+        w='T1_to_MNI_warp_coef_inv'
+    output:
+        'T1_brain_mask'
+    shell:
+        "${FSLDIR}/bin/applywarp --rel --interp=nn --in={input.in} --ref={input.ref} -w {input.w} -o {output}"
+
+rule mask2T1brain:
+    input:
+        
+    output:
+        
+    shell:
+        '${FSLDIR}/bin/fslmaths T1 -mul T1_brain_mask T1_brain'
+rule mask2T1brain2MNI:
+    input:
+    output:
+    shell:
+        '${FSLDIR}/bin/fslmaths T1_brain_to_MNI -mul $templ/MNI152_T1_1mm_brain_mask T1_brain_to_MNI'
+
+
+#### register parcellation, cerebellar & brainstem masks to T1
+rule parcel2T1:
+    input:
+    output:
+    shell:
+        '${FSLDIR}/bin/applywarp --rel --interp=nn --in=$PARC_IMG --ref=T1 -w T1_to_MNI_warp_coef_inv -o parcel_to_T1'
+
+rule cerebellum2T1:
+    input:
+    output:
+    shell:
+        '${FSLDIR}/bin/applywarp --rel --interp=nn --in=${templ}/cerebellum --ref=T1 -w T1_to_MNI_warp_coef_inv -o cerebellum_to_T1'
+    
+rule brainstem2T1:
+    input:
+    output:
+    shell:
+        '${FSLDIR}/bin/applywarp --rel --interp=nn --in=${templ}/brainstem --ref=T1 -w T1_to_MNI_warp_coef_inv -o brainstem_to_T1'
+
+
+#### Defacing T1
+rule linear
+
+#### Generation of QC value: Number of voxels in which the defacing mask goes into the brain mask
+rule 
+
+#### Run fast
+rule T1_fast:
+    input:
+    output:
+    shell:
+        '${FSLDIR}/bin/fast -b -o T1_fast/T1_brain T1_brain'
+
+#### Binarize PVE masks
+
+
+#### remove cerebellum and brainstem from GM and WM mask
+rule GMmask
+    input:
+    output:
+    shell:
+        '${FSLDIR}/bin/fslmaths T1_fast/T1_brain_GM_mask -sub transforms/cerebellum_to_T1 -sub transforms/brainstem_to_T1 -bin T1_fast/T1_brain_GM_mask_noCerebBS'
+
+rule WMmask:
+    input:
+    output:
+    shell:
+        '${FSLDIR}/bin/fslmaths T1_fast/T1_brain_WM_mask -sub transforms/cerebellum_to_T1 -sub transforms/brainstem_to_T1 -bin T1_fast/T1_brain_WM_mask_noCerebBS'
+
+#### Apply bias field correction to T1
+
+
+
+
+
+#### Run First
+
+
+#### Creates a link inside T1_first to ./T1_unbiased_brain.nii.gz (In the present working directory)
+rule linkinside:
+    input:
+    output:
+    shell:
+        'ln -s ../T1_unbiased_brain.nii.gz T1_first/T1_unbiased_brain.nii.gz'
+    
+rule runfirstall:
+    input:
+    output:
+    shell:
+        'ln -s ../T1_unbiased_brain.nii.gz T1_first/T1_unbiased_brain.nii.gz'
+
+#### Add FIRST subcortical segmentation to GM segmentation without brainstem
+rule 
+    input:
+    output:
+    shell:
+        '${FSLDIR}/bin/fslmaths T1_first/T1_first_all_fast_firstseg -uthr 15 T1_first/subcort_upperthresh_seg'
+
+rule 
+    input:
+    output:
+    shell:
+        '${FSLDIR}/bin/fslmaths T1_first/T1_first_all_fast_firstseg -thr 17 T1_first/subcort_lowerthresh_seg'
+
+rule 
+    input:
+    output:
+    shell:
+        '${FSLDIR}/bin/fslmaths T1_first/subcort_upperthresh_seg -add T1_first/subcort_lowerthresh_seg -bin T1_first/subcort_GM'
+
+rule 
+    input:
+    output:
+    shell:
+        '${FSLDIR}/bin/fslmaths T1_fast/T1_brain_GM_mask_noCerebBS -add T1_first/subcort_GM -bin cort_subcort_GM'
+
+#### Run Siena
+rule 
+    input:
+    output:
+    shell:
+        '$BB_BIN_DIR/bb_structural_pipeline/bb_sienax `pwd`/..'
+#### Run VBM
+rule 
+    input:
+    output:
+    shell:
+        '$BB_BIN_DIR/bb_structural_pipeline/bb_vbm `pwd`/..'
+
+#### Generate noise-related QC metrics
+
+
+
+
+
+#### Run BIANCA
+rule BIANCA:
+    input:
+    output:
+    shell:
+        '$BB_BIN_DIR/bb_structural_pipeline/bb_BIANCA $1'
+#### remove BIANCA estimated lesion voxels from GM masks & add to WM mask
+
+
+#### create GM-WM interface for dMRI tractography seeds
+
+
+rule:
+    input:
+    output:
+    shell:
+        '${FSLDIR}/bin/fslmaths $1/T1/T1_fast/T1_brain_GM_mask_noCerebBS -kernel sphere 1 -dilM $1/T1/T1_fast/T1_brain_GM_mask_noCerebBS_dil'
+
+rule:
+    input:
+    output:
+    shell:
+        '${FSLDIR}/bin/fslmaths $1/T1/T1_fast/T1_brain_GM_mask_noCerebBS_dil -add $1/T1/T1_fast/T1_brain_WM_mask_noCerebBS -thr 2 -bin $1/T1/interface'
+
+#### check interface, re-do with extra dilation if empty
+
+
+
+
+
+#### label GM with ROIs
+
+rule:
+    input:
+    output:
+    shell:
+        '${AFNIDIR}/3dROIMaker -inset $1/T1/cort_subcort_GM.nii.gz -thresh 0.1 -inflate 1 -prefix $1/T1/labelled -refset $1/T1/transforms/parcel_to_T1.nii.gz -nifti -neigh_upto_vert -dump_no_labtab'
+
+
+
+
+#### for some reason both labelled_GM and labelled_GMI are inflated; fix it here
+
+rule:
+    input:
+    output:
+    shell:
+        '${FSLDIR}/bin/fslmaths $1/T1/labelled_GM -mas $1/T1/cort_subcort_GM.nii.gz $1/T1/labelled_GM'
