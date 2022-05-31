@@ -332,11 +332,13 @@ rule BIANCA:
 #### create GM-WM interface for dMRI tractography seeds
 
 
-rule:
+rule :
     input:
+
     output:
+        
     shell:
-        '${FSLDIR}/bin/fslmaths $1/T1/T1_fast/T1_brain_GM_mask_noCerebBS -kernel sphere 1 -dilM $1/T1/T1_fast/T1_brain_GM_mask_noCerebBS_dil'
+        "${FSLDIR}/bin/fslmaths $1/T1/T1_fast/T1_brain_GM_mask_noCerebBS -kernel sphere 1 -dilM $1/T1/T1_fast/T1_brain_GM_mask_noCerebBS_dil"
 
 rule :
     input:
