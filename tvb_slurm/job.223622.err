@@ -1,0 +1,32 @@
+/home/nkk170000/.conda/envs/tvbenv/lib/python3.8/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+Traceback (most recent call last):
+  File "sim2hdf5.py", line 52, in <module>
+    df.to_hdf(save_path, key='raw', mode='w')
+  File "/home/nkk170000/.conda/envs/tvbenv/lib/python3.8/site-packages/pandas/core/generic.py", line 2775, in to_hdf
+    pytables.to_hdf(
+  File "/home/nkk170000/.conda/envs/tvbenv/lib/python3.8/site-packages/pandas/io/pytables.py", line 314, in to_hdf
+    f(store)
+  File "/home/nkk170000/.conda/envs/tvbenv/lib/python3.8/site-packages/pandas/io/pytables.py", line 296, in <lambda>
+    f = lambda store: store.put(
+  File "/home/nkk170000/.conda/envs/tvbenv/lib/python3.8/site-packages/pandas/io/pytables.py", line 1122, in put
+    self._write_to_group(
+  File "/home/nkk170000/.conda/envs/tvbenv/lib/python3.8/site-packages/pandas/io/pytables.py", line 1772, in _write_to_group
+    s.write(
+  File "/home/nkk170000/.conda/envs/tvbenv/lib/python3.8/site-packages/pandas/io/pytables.py", line 3241, in write
+    self.write_array(f"block{i}_values", blk.values, items=blk_items)
+  File "/home/nkk170000/.conda/envs/tvbenv/lib/python3.8/site-packages/pandas/io/pytables.py", line 3113, in write_array
+    self._handle.create_array(self.group, key, value)
+  File "/home/nkk170000/.conda/envs/tvbenv/lib/python3.8/site-packages/tables/file.py", line 1125, in create_array
+    return Array(parentnode, name,
+  File "/home/nkk170000/.conda/envs/tvbenv/lib/python3.8/site-packages/tables/array.py", line 172, in __init__
+    super().__init__(parentnode, name, new, Filters(), byteorder, _log,
+  File "/home/nkk170000/.conda/envs/tvbenv/lib/python3.8/site-packages/tables/leaf.py", line 259, in __init__
+    super().__init__(parentnode, name, _log)
+  File "/home/nkk170000/.conda/envs/tvbenv/lib/python3.8/site-packages/tables/node.py", line 249, in __init__
+    self._v_objectid = self._g_create()
+  File "/home/nkk170000/.conda/envs/tvbenv/lib/python3.8/site-packages/tables/array.py", line 204, in _g_create
+    (self._v_objectid, self.shape, self.atom) = self._create_array(
+  File "tables/hdf5extension.pyx", line 1298, in tables.hdf5extension.Array._create_array
+tables.exceptions.HDF5ExtError: Problems creating the Array.
+/var/spool/slurm/d/job223622/slurm_script: line 25: 2551477 Segmentation fault      (core dumped) python sim2hdf5.py --grp 'AD' --caseid '0306A' --gc '0.029' --time '600000.0'
