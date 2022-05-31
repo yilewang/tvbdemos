@@ -138,9 +138,9 @@ rule invwarpMask:
 
 rule applywarpMask:
     input:
-        ref='T1.nii.gz'
-        in='$templ/MNI152_T1_1mm_brain_mask'
-        w='T1_to_MNI_warp_coef_inv'
+        ref="T1.nii.gz"
+        in="$templ/MNI152_T1_1mm_brain_mask"
+        w="T1_to_MNI_warp_coef_inv"
     output:
         'T1_brain_mask'
     shell:
@@ -148,50 +148,89 @@ rule applywarpMask:
 
 rule mask2T1brain:
     input:
-        
+        T1='T1'
+        mask='T1_brain_mask'
     output:
-        
+        "T1_brain"
     shell:
-        '${FSLDIR}/bin/fslmaths T1 -mul T1_brain_mask T1_brain'
+        "${FSLDIR}/bin/fslmaths {input.T1} -mul {input.mask} {output}"
+
 rule mask2T1brain2MNI:
     input:
+        mni='T1_brain_to_MNI'
+        masktmp='$templ/MNI152_T1_1mm_brain_mask'
     output:
+        'T1_brain_to_MNI'
     shell:
-        '${FSLDIR}/bin/fslmaths T1_brain_to_MNI -mul $templ/MNI152_T1_1mm_brain_mask T1_brain_to_MNI'
+        "${FSLDIR}/bin/fslmaths {input.mni} -mul {input.masktmp} {output}"
 
 
 #### register parcellation, cerebellar & brainstem masks to T1
 rule parcel2T1:
     input:
+        ref="T1"
+        w="T1_to_MNI_warp_coef_inv"
     output:
+        "parcel_to_T1"
     shell:
-        '${FSLDIR}/bin/applywarp --rel --interp=nn --in=$PARC_IMG --ref=T1 -w T1_to_MNI_warp_coef_inv -o parcel_to_T1'
+        "${FSLDIR}/bin/applywarp --rel --interp=nn --in=$PARC_IMG --ref=T1 -w T1_to_MNI_warp_coef_inv -o parcel_to_T1"
 
 rule cerebellum2T1:
     input:
+        in="${templ}/cerebellum"
+        ref="T1"
+        w="T1_to_MNI_warp_coef_inv"
     output:
+        "cerebellum_to_T1"
     shell:
-        '${FSLDIR}/bin/applywarp --rel --interp=nn --in=${templ}/cerebellum --ref=T1 -w T1_to_MNI_warp_coef_inv -o cerebellum_to_T1'
+        "${FSLDIR}/bin/applywarp --rel --interp=nn --in={input.in} --ref={input.ref} -w {input.w} -o {output}"
     
 rule brainstem2T1:
     input:
+        in="${templ}/brainstem"
+        ref="T1"
+        w="T1_to_MNI_warp_coef_inv"
     output:
+        "brainstem_to_T1"
     shell:
-        '${FSLDIR}/bin/applywarp --rel --interp=nn --in=${templ}/brainstem --ref=T1 -w T1_to_MNI_warp_coef_inv -o brainstem_to_T1'
+        "${FSLDIR}/bin/applywarp --rel --interp=nn --in={input.in} --ref={input.ref} -w {input.w} -o {output}"
 
 
 #### Defacing T1
-rule linear
+# convert_xfm is a utility that is used to convert between different transformation file formats. It can read and write ascii 4x4 matrices. In addition, it can be used to concatenate two transforms (using -concat with the second transform) or to find the inverse transformation (using -inverse).
+
+rule
+
+
+${FSLDIR}/bin/convert_xfm -omat grot.mat -concat T1_to_MNI_linear.mat T1_orig_ud_to_T1.mat
+${FSLDIR}/bin/convert_xfm -omat grot.mat -concat $templ/MNI_to_MNI_BigFoV_facemask.mat grot.mat
+${FSLDIR}/bin/convert_xfm -omat grot.mat -inverse grot.mat
+${FSLDIR}/bin/flirt -in $templ/MNI152_T1_1mm_BigFoV_facemask -ref T1_orig -out grot -applyxfm -init grot.mat
+#${FSLDIR}/bin/fslmaths grot -mul -1 -add 1 -mul T1_orig T1_orig_defaced
+${FSLDIR}/bin/fslmaths grot -binv -mul T1_orig T1_orig_defaced
+
+cp T1.nii.gz T1_not_defaced_tmp.nii.gz  
+${FSLDIR}/bin/convert_xfm -omat grot.mat -concat $templ/MNI_to_MNI_BigFoV_facemask.mat T1_to_MNI_linear.mat
+${FSLDIR}/bin/convert_xfm -omat grot.mat -inverse grot.mat
+${FSLDIR}/bin/flirt -in $templ/MNI152_T1_1mm_BigFoV_facemask -ref T1 -out grot -applyxfm -init grot.mat
+${FSLDIR}/bin/fslmaths grot -binv -mul T1 T1
+
 
 #### Generation of QC value: Number of voxels in which the defacing mask goes into the brain mask
 rule 
 
+
+
+
+
 #### Run fast
 rule T1_fast:
     input:
+
     output:
+        "T1_fast/T1_brain"
     shell:
-        '${FSLDIR}/bin/fast -b -o T1_fast/T1_brain T1_brain'
+        "${FSLDIR}/bin/fast -b -o T1_fast/T1_brain T1_brain"
 
 #### Binarize PVE masks
 
@@ -199,15 +238,17 @@ rule T1_fast:
 #### remove cerebellum and brainstem from GM and WM mask
 rule GMmask
     input:
+
     output:
+
     shell:
-        '${FSLDIR}/bin/fslmaths T1_fast/T1_brain_GM_mask -sub transforms/cerebellum_to_T1 -sub transforms/brainstem_to_T1 -bin T1_fast/T1_brain_GM_mask_noCerebBS'
+        "${FSLDIR}/bin/fslmaths T1_fast/T1_brain_GM_mask -sub transforms/cerebellum_to_T1 -sub transforms/brainstem_to_T1 -bin T1_fast/T1_brain_GM_mask_noCerebBS"
 
 rule WMmask:
     input:
     output:
     shell:
-        '${FSLDIR}/bin/fslmaths T1_fast/T1_brain_WM_mask -sub transforms/cerebellum_to_T1 -sub transforms/brainstem_to_T1 -bin T1_fast/T1_brain_WM_mask_noCerebBS'
+        "${FSLDIR}/bin/fslmaths T1_fast/T1_brain_WM_mask -sub transforms/cerebellum_to_T1 -sub transforms/brainstem_to_T1 -bin T1_fast/T1_brain_WM_mask_noCerebBS"
 
 #### Apply bias field correction to T1
 
@@ -234,40 +275,44 @@ rule runfirstall:
 #### Add FIRST subcortical segmentation to GM segmentation without brainstem
 rule 
     input:
+
     output:
+
     shell:
-        '${FSLDIR}/bin/fslmaths T1_first/T1_first_all_fast_firstseg -uthr 15 T1_first/subcort_upperthresh_seg'
+        "${FSLDIR}/bin/fslmaths T1_first/T1_first_all_fast_firstseg -uthr 15 T1_first/subcort_upperthresh_seg"
+
+rule 
+    input:
+
+    output:
+
+    shell:
+        "${FSLDIR}/bin/fslmaths T1_first/T1_first_all_fast_firstseg -thr 17 T1_first/subcort_lowerthresh_seg"
 
 rule 
     input:
     output:
     shell:
-        '${FSLDIR}/bin/fslmaths T1_first/T1_first_all_fast_firstseg -thr 17 T1_first/subcort_lowerthresh_seg'
+        "${FSLDIR}/bin/fslmaths T1_first/subcort_upperthresh_seg -add T1_first/subcort_lowerthresh_seg -bin T1_first/subcort_GM"
 
 rule 
     input:
     output:
     shell:
-        '${FSLDIR}/bin/fslmaths T1_first/subcort_upperthresh_seg -add T1_first/subcort_lowerthresh_seg -bin T1_first/subcort_GM'
-
-rule 
-    input:
-    output:
-    shell:
-        '${FSLDIR}/bin/fslmaths T1_fast/T1_brain_GM_mask_noCerebBS -add T1_first/subcort_GM -bin cort_subcort_GM'
+        "${FSLDIR}/bin/fslmaths T1_fast/T1_brain_GM_mask_noCerebBS -add T1_first/subcort_GM -bin cort_subcort_GM"
 
 #### Run Siena
-rule 
+rule Siena:
     input:
     output:
     shell:
-        '$BB_BIN_DIR/bb_structural_pipeline/bb_sienax `pwd`/..'
+        "$BB_BIN_DIR/bb_structural_pipeline/bb_sienax `pwd`/.."
 #### Run VBM
-rule 
+rule VBM:
     input:
     output:
     shell:
-        '$BB_BIN_DIR/bb_structural_pipeline/bb_vbm `pwd`/..'
+        "$BB_BIN_DIR/bb_structural_pipeline/bb_vbm `pwd`/.."
 
 #### Generate noise-related QC metrics
 
@@ -287,17 +332,21 @@ rule BIANCA:
 #### create GM-WM interface for dMRI tractography seeds
 
 
-rule:
+rule :
     input:
-    output:
-    shell:
-        '${FSLDIR}/bin/fslmaths $1/T1/T1_fast/T1_brain_GM_mask_noCerebBS -kernel sphere 1 -dilM $1/T1/T1_fast/T1_brain_GM_mask_noCerebBS_dil'
 
-rule:
-    input:
     output:
+        
     shell:
-        '${FSLDIR}/bin/fslmaths $1/T1/T1_fast/T1_brain_GM_mask_noCerebBS_dil -add $1/T1/T1_fast/T1_brain_WM_mask_noCerebBS -thr 2 -bin $1/T1/interface'
+        "${FSLDIR}/bin/fslmaths $1/T1/T1_fast/T1_brain_GM_mask_noCerebBS -kernel sphere 1 -dilM $1/T1/T1_fast/T1_brain_GM_mask_noCerebBS_dil"
+
+rule :
+    input:
+
+    output:
+
+    shell:
+        "${FSLDIR}/bin/fslmaths $1/T1/T1_fast/T1_brain_GM_mask_noCerebBS_dil -add $1/T1/T1_fast/T1_brain_WM_mask_noCerebBS -thr 2 -bin $1/T1/interface"
 
 #### check interface, re-do with extra dilation if empty
 
@@ -307,19 +356,25 @@ rule:
 
 #### label GM with ROIs
 
-rule:
+rule GMROI:
     input:
+        subcortGM="$1/T1/cort_subcort_GM.nii.gz"
+        refset="$1/T1/transforms/parcel_to_T1.nii.gz"
     output:
+        "$1/T1/labelled"
     shell:
-        '${AFNIDIR}/3dROIMaker -inset $1/T1/cort_subcort_GM.nii.gz -thresh 0.1 -inflate 1 -prefix $1/T1/labelled -refset $1/T1/transforms/parcel_to_T1.nii.gz -nifti -neigh_upto_vert -dump_no_labtab'
+        "${AFNIDIR}/3dROIMaker -inset $1/T1/cort_subcort_GM.nii.gz -thresh 0.1 -inflate 1 -prefix $1/T1/labelled -refset $1/T1/transforms/parcel_to_T1.nii.gz -nifti -neigh_upto_vert -dump_no_labtab"
 
 
 
 
 #### for some reason both labelled_GM and labelled_GMI are inflated; fix it here
 
-rule:
+rule fixInflated_GM:
     input:
+        labelGM="$1/T1/labelled_GM"
+        subcortGM="$1/T1/cort_subcort_GM.nii.gz"
     output:
+        "$1/T1/labelled_GM"
     shell:
-        '${FSLDIR}/bin/fslmaths $1/T1/labelled_GM -mas $1/T1/cort_subcort_GM.nii.gz $1/T1/labelled_GM'
+        "${FSLDIR}/bin/fslmaths {input.labelGM} -mas {input.subcortGM} {output}"
