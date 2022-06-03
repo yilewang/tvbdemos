@@ -1,5 +1,5 @@
 
-from tvb.simulator.models.stefanescu_jirsa import ReducedSetHindmarshRose
+from tvb.simulator.models.stefanescu_jirsa import ReducedSetBase, ReducedSetHindmarshRose
 from tvb.simulator.lab import *
 import warnings
 import matplotlib.pyplot as plt
@@ -15,8 +15,9 @@ netid="yxw190015"
 def tvb_simulation(file, gc, simTime):
     connectivity.speed = np.array([10.])
     sim_time = simTime
+    ReducedSetBase.number_of_modes=1
     sim = simulator.Simulator(
-       model=ReducedSetHindmarshRose(),
+       model=ReducedSetHindmarshRose(variables_of_interest=['xi']),
        connectivity=connectivity.Connectivity.from_file(file),             
        coupling=coupling.Linear(a=np.array([gc])),
        simulation_length=sim_time,
@@ -46,21 +47,21 @@ if __name__ == "__main__":
     logging.warning('Duration: {}'.format(end_time - start_time))
 
     # plot
-    plt.figure(figsize=(20, 7))
+    #plt.figure(figsize=(20, 7))
     #plt.figure(figsize=(15, 10))
     #plt.plot(raw_time * args.time, raw_data[:, 0, :, 0], alpha=0.3)
-    plt.plot(raw_time[81920*2:], raw_data[81920*2:,0, 4, 0], label='PCG_L')
-    plt.plot(raw_time[81920*2:], raw_data[81920*2:,0, 5, 0], label='PCG_R')
-    plt.title('Initial transient in RAW')
-    plt.xlabel('Time (s)')
-    plt.legend()
-    plt.grid(True);
+    #plt.plot(raw_time[81920*2:], raw_data[81920*2:,0, 4, 0], label='PCG_L')
+    #plt.plot(raw_time[81920*2:], raw_data[81920*2:,0, 5, 0], label='PCG_R')
+    #plt.title('Initial transient in RAW')
+    #plt.xlabel('Time (s)')
+    #plt.legend()
+    #plt.grid(True);
 
     # save_as_output
     df = pd.DataFrame(raw_data[:, 0, :, 0], columns = ['aCNG-L', 'aCNG-R','mCNG-L','mCNG-R','pCNG-L','pCNG-R', 'HIP-L','HIP-R','PHG-L','PHG-R','AMY-L','AMY-R', 'sTEMp-L','sTEMP-R','mTEMp-L','mTEMp-R'])
     save_path='/scratch/'+netid+'/output/'+args.grp+'/'+args.caseid+'_'+str(args.gc)+'.csv'
-    save_path_pic = '/scratch/'+netid+'/'+'output/'+args.grp+'/'+args.caseid+'_'+str(args.gc)+'.png'
+    #save_path_pic = '/scratch/'+netid+'/'+'output/'+args.grp+'/'+args.caseid+'_'+str(args.gc)+'.png'
     df.to_csv(save_path)
-    plt.savefig(save_path_pic)
+    #plt.savefig(save_path_pic)
 
 
