@@ -1,0 +1,237 @@
+using /tmp/launcher.237002.hostlist.yzJhAhSm to get hosts
+starting job on compute-1-1-6
+starting job on compute-1-1-8
+starting job on compute-1-1-9
+starting job on compute-1-1-10
+starting job on compute-1-1-11
+starting job on compute-1-1-13
+starting job on compute-1-1-14
+starting job on compute-1-1-15
+starting job on compute-1-1-17
+starting job on compute-1-1-18
+starting job on compute-1-1-19
+starting job on compute-1-1-20
+starting job on compute-1-1-21
+starting job on compute-1-1-23
+starting job on compute-1-1-26
+starting job on compute-1-1-28
+starting job on compute-1-1-29
+starting job on compute-1-1-30
+starting job on compute-1-1-32
+starting job on compute-1-1-33
+starting job on compute-1-1-36
+starting job on compute-1-1-37
+starting job on compute-1-1-38
+starting job on compute-1-1-39
+starting job on compute-1-1-40
+starting job on compute-1-2-1
+starting job on compute-1-2-2
+starting job on compute-1-2-8
+starting job on compute-1-2-10
+starting job on compute-1-2-15
+starting job on compute-1-2-17
+starting job on compute-1-2-25
+starting job on compute-1-2-32
+starting job on compute-1-2-33
+starting job on compute-1-2-34
+starting job on compute-1-3-10
+starting job on compute-1-3-15
+starting job on compute-1-3-23
+starting job on compute-1-3-24
+starting job on compute-1-3-25
+starting job on compute-1-3-26
+starting job on compute-1-3-34
+starting job on compute-1-3-40
+starting job on compute-1-4-1
+starting job on compute-1-4-2
+starting job on compute-1-4-3
+starting job on compute-1-4-5
+starting job on compute-1-4-6
+starting job on compute-1-4-9
+starting job on compute-1-4-10
+starting job on compute-1-4-11
+starting job on compute-1-4-13
+starting job on compute-1-4-14
+starting job on compute-1-4-15
+starting job on compute-1-4-17
+starting job on compute-1-4-19
+starting job on compute-1-4-20
+starting job on compute-1-4-21
+starting job on compute-1-4-22
+starting job on compute-1-4-24
+starting job on compute-1-4-25
+starting job on compute-1-4-26
+starting job on compute-1-4-27
+starting job on compute-1-4-30
+starting job on compute-1-4-32
+starting job on compute-1-4-33
+starting job on compute-1-4-34
+starting job on compute-1-4-35
+starting job on compute-1-4-36
+starting job on compute-1-4-38
+starting job on compute-1-4-39
+starting job on compute-1-4-40
+starting job on compute-1-6-2
+starting job on compute-1-6-3
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/tvb/datatypes/surfaces.py:63: UserWarning: Geodesic distance module is unavailable; some functionality for surfaces will be unavailable.
+  warnings.warn(msg)
+Traceback (most recent call last):
+  File "/scratch/yxw190015/github/tvbdemos/tvb_slurm/sim2go.py", line 58, in <module>
+    hdf.create_dataset('raw', data = raw_data[:,0,:,0], shape=(14745600, 16))
+  File "h5py/_objects.pyx", line 54, in h5py._objects.with_phil.wrapper
+  File "h5py/_objects.pyx", line 55, in h5py._objects.with_phil.wrapper
+  File "/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/h5py/_hl/files.py", line 544, in __exit__
+    self.close()
+  File "/home/yxw190015/.conda/envs/tvbenv/lib/python3.9/site-packages/h5py/_hl/files.py", line 526, in close
+    self.id._close_open_objects(h5f.OBJ_LOCAL | h5f.OBJ_FILE)
+  File "h5py/_objects.pyx", line 54, in h5py._objects.with_phil.wrapper
+  File "h5py/_objects.pyx", line 55, in h5py._objects.with_phil.wrapper
+  File "h5py/h5f.pyx", line 358, in h5py.h5f.FileID._close_open_objects
+RuntimeError: Can't decrement id ref count (unable to close file, errno = 5, error message = 'Input/output error')
+/opt/ohpc/pub/unpackaged/apps/launcher/launcher-3.7/launcher: line 93: 2903638 Segmentation fault      (core dumped) python sim2go.py --grp 'MCI' --caseid '1070A' --gc '0.031' --time '180000'
