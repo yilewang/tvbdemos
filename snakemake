@@ -199,17 +199,65 @@ rule brainstem2T1:
 #### Defacing T1
 # convert_xfm is a utility that is used to convert between different transformation file formats. It can read and write ascii 4x4 matrices. In addition, it can be used to concatenate two transforms (using -concat with the second transform) or to find the inverse transformation (using -inverse).
 
-rule 
+rule convert_xfmStep1:
+    input:
+        b2c="T1_to_MNI_linear.mat"
+        a2b="T1_orig_ud_to_T1.mat"
+    output:
+        "grot.mat"
+    shell:
+        "${FSLDIR}/bin/convert_xfm -omat {output} -concat {input.b2c} {input.a2b}"
+
+rule convert_xfmStep2:
+    input:
+        b2c="$templ/MNI_to_MNI_BigFoV_facemask.mat"
+        a2b="grot.mat"
+    output:
+        "grot.mat"
+    shell:
+        "${FSLDIR}/bin/convert_xfm -omat {output} -concat {input.b2c} {input.a2b}"
+
+rule convert_xfmStep3:
+    input:
+        "grot.mat"
+    output:
+        "grot.mat"
+    shell:
+        "${FSLDIR}/bin/convert_xfm -omat {output} -inverse {input}"
 
 
-${FSLDIR}/bin/convert_xfm -omat grot.mat -concat T1_to_MNI_linear.mat T1_orig_ud_to_T1.mat
-${FSLDIR}/bin/convert_xfm -omat grot.mat -concat $templ/MNI_to_MNI_BigFoV_facemask.mat grot.mat
-${FSLDIR}/bin/convert_xfm -omat grot.mat -inverse grot.mat
-${FSLDIR}/bin/flirt -in $templ/MNI152_T1_1mm_BigFoV_facemask -ref T1_orig -out grot -applyxfm -init grot.mat
+rule flirtDeFacing:
+    input:
+        inmat="$templ/MNI152_T1_1mm_BigFoV_facemask"
+        ref="T1_orig"
+        affinemat="grot.mat"
+    output:
+        "grot"
+    shell:
+        "${FSLDIR}/bin/flirt -in {input.inmat} -ref {input.ref} -out {output} -applyxfm -init {input.affinemat}"
+
+
+
 #${FSLDIR}/bin/fslmaths grot -mul -1 -add 1 -mul T1_orig T1_orig_defaced
-${FSLDIR}/bin/fslmaths grot -binv -mul T1_orig T1_orig_defaced
 
-cp T1.nii.gz T1_not_defaced_tmp.nii.gz  
+rule fslmathsDeFacing:
+    input:
+        mat = "grot"
+        T1 = "T1_orig"
+    output:
+        "T1_orig_defaced"
+    shell:
+        "${FSLDIR}/bin/fslmaths {input.mat} -binv -mul {input.T1} {output}"
+
+rule renameDeFacing:
+    input:
+        "T1.nii.gz"
+    output:
+        "T1_not_defaced_tmp.nii.gz"
+    shell:
+        "cp {input} {output}"  
+
+
 ${FSLDIR}/bin/convert_xfm -omat grot.mat -concat $templ/MNI_to_MNI_BigFoV_facemask.mat T1_to_MNI_linear.mat
 ${FSLDIR}/bin/convert_xfm -omat grot.mat -inverse grot.mat
 ${FSLDIR}/bin/flirt -in $templ/MNI152_T1_1mm_BigFoV_facemask -ref T1 -out grot -applyxfm -init grot.mat
