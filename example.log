@@ -1,4 +1,0 @@
-DEBUG:root:This message is a debug message
-INFO:root:Output info
-WARNING:root:Give out some warnings
-ERROR:root:Ops error
