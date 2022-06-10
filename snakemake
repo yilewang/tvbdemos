@@ -258,14 +258,47 @@ rule renameDeFacing:
         "cp {input} {output}"  
 
 
-${FSLDIR}/bin/convert_xfm -omat grot.mat -concat $templ/MNI_to_MNI_BigFoV_facemask.mat T1_to_MNI_linear.mat
-${FSLDIR}/bin/convert_xfm -omat grot.mat -inverse grot.mat
-${FSLDIR}/bin/flirt -in $templ/MNI152_T1_1mm_BigFoV_facemask -ref T1 -out grot -applyxfm -init grot.mat
-${FSLDIR}/bin/fslmaths grot -binv -mul T1 T1
+rule convert_xfmStep4:
+    input:
+        b2c = "$templ/MNI_to_MNI_BigFoV_facemask.mat"
+        a2b = "T1_to_MNI_linear.mat"
+    output:
+        "grot.mat"
+    shell:
+        "${FSLDIR}/bin/convert_xfm -omat {output} -concat {input.b2c} {input.a2b}"
+
+
+rule convert_xfmStep5:
+    input:
+        "grot.mat"
+    output:
+        "grot.mat"
+    shell:
+        "${FSLDIR}/bin/convert_xfm -omat {output} -inverse {input}"
+
+rule flirtDeFacingT1:
+    input:
+        inmat="$templ/MNI152_T1_1mm_BigFoV_facemask"
+        ref="T1"
+        affinemat="grot.mat"
+    output:
+        "grot"
+    shell:
+        "${FSLDIR}/bin/flirt -in {input.inmat} -ref {input.ref} -out {output} -applyxfm -init {input.affinemat}"
+
+
+rule fslmathsDeFacingT1:
+    input:
+        mat = "grot"
+        T1 = "T1"
+    output:
+        "T1"
+    shell:
+        "${FSLDIR}/bin/fslmaths {input.mat} -binv -mul {input.T1} {output}"
+
 
 
 #### Generation of QC value: Number of voxels in which the defacing mask goes into the brain mask
-rule 
 
 
 
