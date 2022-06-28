@@ -1,0 +1,37 @@
+Bootstrap: library
+From: noahfl/tvb/tvb-ukbb:latest
+%files
+    /home/wayne/tvb-ukbb-singularity/tvb-ukbb /opt
+    /home/wayne/tvb-ukbb-singularity/afnibinary /opt
+    /home/wayne/tvb-ukbb-singularity/freesurfer /opt
+    /home/wayne/tvb-ukbb-singularity/ANTs /opt
+%post
+    chmod -R 755 /opt
+    export TZ="America/Chicago"
+    ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+    # install conda packages
+    source /opt/tvb-ukbb/init_vars
+    # solve reload problem
+    cd /opt/mcr/v93/bin/glnxa64
+    mkdir exclude
+    mv libfreetype* exclude
+
+    # install conda env
+    conda install -c aarch64-staging gsl
+    ln /opt/tvb-pipeline/software/env/lib/libgsl.so /opt/tvb-pipeline/software/env/lib/libgsl.so.0
+    conda install -c conda-forge --yes xorg-libxp
+    conda install -c conda-forge --yes xorg-libxpm
+    conda install -c conda-forge --yes xorg-libxmu
+    conda install -c conda-forge --yes libpng
+    conda install -c conda-forge --yes xorg-libxft
+%runscript
+    GITDIR=/opt/tvb-ukbb
+    echo "Git Dir specified: ${GITDIR}"
+    . ${GITDIR}/init_vars
+    echo "Subject Directory: ${1}"
+    exec python -u ${GITDIR}/bb_pipeline_tools/bb_pipeline.py ${1}
+%labels
+    User: yile.wang@utdallas.edu
+
+
+
