@@ -66,4 +66,4 @@ if __name__ == "__main__":
 
         subjectdf = pd.concat([subjectdf, pd.DataFrame.from_records([{"group": one, "caseid":two, "freq":freq_num, "amp":amp_dergee, "delay":delay_time}])], ignore_index = True)
         subjectdf.to_excel(args.path)
-        print("done")
+
