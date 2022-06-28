@@ -23,4 +23,4 @@
 #source ~/tvb-pipeline2/tvb-ukbb/init_vars && python ~/tvb-pipeline2/tvb-ukbb/bb_pipeline_tools/bb_pipeline.py s123366_output
 
 source activate tvbenv
-python gamma_freq.py --path $WORK
+python freq.py --path $WORK
