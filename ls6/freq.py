@@ -37,7 +37,7 @@ args = parser.parse_args()
 
 if __name__ == "__main__":
     subjectdf = pd.DataFrame(columns=["group", "caseid", "freq_gamma_left", "freq_gamma_right", "freq_theta_left", "freq_theta_right"])
-    start_time = time.tim()
+    start_time = time.time()
     for one, two in zip(group, caseid):
         print(one, two)
         ############## generate individual filename 
@@ -66,7 +66,8 @@ if __name__ == "__main__":
 
         # write into DataFrame
         subjectdf = pd.concat([subjectdf, pd.DataFrame.from_records([{"group": one, "caseid":two, "freq_gamma_left":freq_gamma_left, "freq_gamma_right":freq_gamma_right, "freq_theta_left":freq_theta_left, "freq_theta_right":freq_theta_right}])], ignore_index = True)
-        subjectdf.to_excel(args.path)
+
         print("done")
+    subjectdf.to_excel(args.path)
     end_time = time.time()
     print('Time: ', end_time - start_time)  

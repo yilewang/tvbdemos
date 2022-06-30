@@ -12,7 +12,7 @@ import ipywidgets as widgets
 my_layout = widgets.Layout()
 plt.style.use('ggplot')
 import argparse
-
+import time
 
 with open('/work/08008/yilewang/tvbsim3mins/group.txt') as f:
     group = f.read().splitlines()
@@ -36,6 +36,7 @@ args = parser.parse_args()
 
 
 if __name__ == "__main__":
+    start_time = time.time()
     subjectdf = pd.DataFrame(columns=["group", "caseid", "freq_gamma_left", "freq_gamma_right", "freq_theta_left", "freq_theta_right"])
     for one, two in zip(group, caseid):
         print(one, two)
@@ -81,5 +82,7 @@ if __name__ == "__main__":
 
         # write into DataFrame
         subjectdf = pd.concat([subjectdf, pd.DataFrame.from_records([{"group": one, "caseid":two, "amp_gamma_left":amp_gamma_left, "amp_gamma_right":amp_gamma_right, "amop_theta_left":amp_theta_left, "amp_theta_right":amp_theta_right}])], ignore_index = True)
-        subjectdf.to_excel(args.path)
         print("done")
+    subjectdf.to_excel(args.path)
+    end_time = time.time()
+    print('Time: ', end_time - start_time)  
