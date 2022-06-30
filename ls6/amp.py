@@ -46,6 +46,8 @@ if __name__ == "__main__":
         subject = SignalToolkit(filename, fs=81920.)
         df = subject.data_reader()
         ############## indexing the pcg regions
+        cutoff_low = 2.
+        cutoff_high = 10.
 
         spikesparas = {'prominence': 0.5, 'height': .5}
         valleysparas= {'prominence': 0.2, 'width':2000, 'height': -0.5}
@@ -54,16 +56,6 @@ if __name__ == "__main__":
 
         pcgl=subject.signal_package(data=df, channel_num = 4, label='pcg_left', low=cutoff_low, high=cutoff_high, spikesparas=spikesparas, valleysparas=valleysparas, spikesparas_af=spikesparas_af, valleysparas_af = valleysparas, truncate = 10.)
         pcgr=subject.signal_package(data=df, channel_num = 5, label='pcg_right', low=cutoff_low, high=cutoff_high, spikesparas=spikesparas, valleysparas=valleysparas, spikesparas_af=spikesparas_af, valleysparas_af=valleysparas_af, truncate = 10.)
-
-        # define the parameters used for `find_speaks` algorithm.
-        spikesparas = {'prominence': 0.5, 'height': .5}
-        valleysparas= {'prominence': 0.2, 'width':2000, 'height': -0.5}
-        spikesparas_af= {'prominence': 0.2, 'width':2000, 'height': 0.}
-        valleysparas_af = {'prominence': 0.2, 'width':2000, 'height': -0.5}
-
-        # to generate raw and filtered data, including the spikes and valleys
-        pcg_left = subject.signal_package(df, 4, 'pcg_left', 2.0, 10.0, True, spikesparas, valleysparas,spikesparas_af, valleysparas_af, truncate = 10.)
-        pcg_right = subject.signal_package(df, 5, 'pcg_right', 2.0, 10.0, True, spikesparas, valleysparas,spikesparas_af, valleysparas_af, truncate = 10.)
 
 
         # amp
