@@ -12,7 +12,7 @@ import ipywidgets as widgets
 my_layout = widgets.Layout()
 plt.style.use('ggplot')
 import argparse
-import time
+
 
 with open('/work/08008/yilewang/tvbsim3mins/group.txt') as f:
     group = f.read().splitlines()
@@ -37,15 +37,24 @@ args = parser.parse_args()
 
 if __name__ == "__main__":
     subjectdf = pd.DataFrame(columns=["group", "caseid", "freq_gamma_left", "freq_gamma_right", "freq_theta_left", "freq_theta_right"])
-    start_time = time.tim()
     for one, two in zip(group, caseid):
         print(one, two)
         ############## generate individual filename 
         filename = filename_path + one +"/"+ two+".h5"
         # create an instance
         subject = SignalToolkit(filename, fs=81920.)
-        dset = subject.hdf5_reader()
+        df = subject.data_reader()
         ############## indexing the pcg regions
+
+        cutoff_low = 2.
+        cutoff_high = 10.
+        spikesparas = {'prominence': 0.5, 'height': .5}
+        valleysparas= {'prominence': 0.2, 'width':2000, 'height': -0.5}
+        spikesparas_af= {'prominence': 0.2, 'width':2000, 'height': 0.}
+        valleysparas_af = {'prominence': 0.2, 'width':2000, 'height': -0.5}
+
+        pcgl=subject.signal_package(data=df, channel_num = 4, label='pcg_left', low=cutoff_low, high=cutoff_high, spikesparas=spikesparas, valleysparas=valleysparas, spikesparas_af=spikesparas_af, valleysparas_af = valleysparas)
+        pcgr=subject.signal_package(data=df, channel_num = 5, label='pcg_right', low=cutoff_low, high=cutoff_high, spikesparas=spikesparas, valleysparas=valleysparas, spikesparas_af=spikesparas_af, valleysparas_af=valleysparas_af)
 
         # define the parameters used for `find_speaks` algorithm.
         spikesparas = {'prominence': 0.5, 'height': .5}
@@ -53,19 +62,23 @@ if __name__ == "__main__":
         spikesparas_af= {'prominence': 0.5, 'width':3000, 'height': 0.}
 
         # to generate raw and filtered data, including the spikes and valleys
-        pcg_left = subject.signal_package(dset, 4, 'pcg_left', 2.0, 10.0, True, spikesparas, valleysparas,spikesparas_af, truncate = 10.)
-        pcg_right = subject.signal_package(dset, 5, 'pcg_right', 2.0, 10.0, True, spikesparas, valleysparas,spikesparas_af, truncate = 10.)
+        pcg_left = subject.signal_package(df, 4, 'pcg_left', 2.0, 10.0, True, spikesparas, valleysparas,spikesparas_af)
+        pcg_right = subject.signal_package(df, 5, 'pcg_right', 2.0, 10.0, True, spikesparas, valleysparas,spikesparas_af)
 
 
-        # to calculate the frequency
-        freq_gamma_left = subject.freq_count(spikeslist=pcg_left["spikeslist"])
-        freq_theta_left = subject.freq_count(spikeslist=pcg_left["spikeslist_af"])
-        freq_gamma_right = subject.freq_count(spikeslist=pcg_right["spikeslist"])
-        freq_theta_right = subject.freq_count(spikeslist=pcg_right["spikeslist_af"])
+        # amp
+        amp = 'p2v'
+        if amp in ['p2v']:
+            pcgl_amp_gamma = subject.amp_count(**pcgl, mode="p2v")
+            pcgr_amp_gamma = subject.amp_count(**pcgr, mode="p2v")
+            pcgl_amp_theta = subject.amp_count(data=pcgl["after_filtered"], spikeslist=pcgl["spikeslist_af"], valleyslist=pcgl["valleyslist_af"], mode="p2v")
+            pcgr_amp_theta = subject.amp_count(data=pcgr["after_filtered"], spikeslist=pcgr["spikeslist_af"], valleyslist=pcgr["valleyslist_af"], mode="p2v")
+        elif amp in ['ap']:
+            # another version of amp
+            pcgl_amp_gamma, pcgl_amp_theta = subject.amp_count(**pcgl, mode="ap")
+            pcgr_amp_gamma, pcgr_amp_theta = subject.amp_count(**pcgr, mode="ap")
 
         # write into DataFrame
         subjectdf = pd.concat([subjectdf, pd.DataFrame.from_records([{"group": one, "caseid":two, "freq_gamma_left":freq_gamma_left, "freq_gamma_right":freq_gamma_right, "freq_theta_left":freq_theta_left, "freq_theta_right":freq_theta_right}])], ignore_index = True)
         subjectdf.to_excel(args.path)
         print("done")
-    end_time = time.time()
-    print('Time: ', end_time - start_time)  
