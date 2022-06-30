@@ -47,8 +47,6 @@ if __name__ == "__main__":
         df = subject.data_reader()
         ############## indexing the pcg regions
 
-        cutoff_low = 2.
-        cutoff_high = 10.
         spikesparas = {'prominence': 0.5, 'height': .5}
         valleysparas= {'prominence': 0.2, 'width':2000, 'height': -0.5}
         spikesparas_af= {'prominence': 0.2, 'width':2000, 'height': 0.}
