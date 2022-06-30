@@ -29,7 +29,7 @@ f.close()
 
 filename_path = "/work/08008/yilewang/tvbsim3mins/gc3mins/"
 
-parser = argparse.ArgumentParser(description='pass a float')
+parser = argparse.ArgumentParser(description='pass a str')
 parser.add_argument('--path',type=str, required=True, help='the path we put our final signal processing results')
 args = parser.parse_args()
 
@@ -53,32 +53,33 @@ if __name__ == "__main__":
         spikesparas_af= {'prominence': 0.2, 'width':2000, 'height': 0.}
         valleysparas_af = {'prominence': 0.2, 'width':2000, 'height': -0.5}
 
-        pcgl=subject.signal_package(data=df, channel_num = 4, label='pcg_left', low=cutoff_low, high=cutoff_high, spikesparas=spikesparas, valleysparas=valleysparas, spikesparas_af=spikesparas_af, valleysparas_af = valleysparas)
-        pcgr=subject.signal_package(data=df, channel_num = 5, label='pcg_right', low=cutoff_low, high=cutoff_high, spikesparas=spikesparas, valleysparas=valleysparas, spikesparas_af=spikesparas_af, valleysparas_af=valleysparas_af)
+        pcgl=subject.signal_package(data=df, channel_num = 4, label='pcg_left', low=cutoff_low, high=cutoff_high, spikesparas=spikesparas, valleysparas=valleysparas, spikesparas_af=spikesparas_af, valleysparas_af = valleysparas, truncate = 10.)
+        pcgr=subject.signal_package(data=df, channel_num = 5, label='pcg_right', low=cutoff_low, high=cutoff_high, spikesparas=spikesparas, valleysparas=valleysparas, spikesparas_af=spikesparas_af, valleysparas_af=valleysparas_af, truncate = 10.)
 
         # define the parameters used for `find_speaks` algorithm.
         spikesparas = {'prominence': 0.5, 'height': .5}
-        valleysparas= {'prominence': 1., 'width':3000, 'height': 0.}
-        spikesparas_af= {'prominence': 0.5, 'width':3000, 'height': 0.}
+        valleysparas= {'prominence': 0.2, 'width':2000, 'height': -0.5}
+        spikesparas_af= {'prominence': 0.2, 'width':2000, 'height': 0.}
+        valleysparas_af = {'prominence': 0.2, 'width':2000, 'height': -0.5}
 
         # to generate raw and filtered data, including the spikes and valleys
-        pcg_left = subject.signal_package(df, 4, 'pcg_left', 2.0, 10.0, True, spikesparas, valleysparas,spikesparas_af)
-        pcg_right = subject.signal_package(df, 5, 'pcg_right', 2.0, 10.0, True, spikesparas, valleysparas,spikesparas_af)
+        pcg_left = subject.signal_package(df, 4, 'pcg_left', 2.0, 10.0, True, spikesparas, valleysparas,spikesparas_af, valleysparas_af, truncate = 10.)
+        pcg_right = subject.signal_package(df, 5, 'pcg_right', 2.0, 10.0, True, spikesparas, valleysparas,spikesparas_af, valleysparas_af, truncate = 10.)
 
 
         # amp
         amp = 'p2v'
         if amp in ['p2v']:
-            pcgl_amp_gamma = subject.amp_count(**pcgl, mode="p2v")
-            pcgr_amp_gamma = subject.amp_count(**pcgr, mode="p2v")
-            pcgl_amp_theta = subject.amp_count(data=pcgl["after_filtered"], spikeslist=pcgl["spikeslist_af"], valleyslist=pcgl["valleyslist_af"], mode="p2v")
-            pcgr_amp_theta = subject.amp_count(data=pcgr["after_filtered"], spikeslist=pcgr["spikeslist_af"], valleyslist=pcgr["valleyslist_af"], mode="p2v")
+            amp_gamma_left = subject.amp_count(**pcgl, mode="p2v")
+            amp_gamma_right = subject.amp_count(**pcgr, mode="p2v")
+            amp_theta_left = subject.amp_count(data=pcgl["after_filtered"], spikeslist=pcgl["spikeslist_af"], valleyslist=pcgl["valleyslist_af"], mode="p2v")
+            amp_theta_right = subject.amp_count(data=pcgr["after_filtered"], spikeslist=pcgr["spikeslist_af"], valleyslist=pcgr["valleyslist_af"], mode="p2v")
         elif amp in ['ap']:
             # another version of amp
-            pcgl_amp_gamma, pcgl_amp_theta = subject.amp_count(**pcgl, mode="ap")
-            pcgr_amp_gamma, pcgr_amp_theta = subject.amp_count(**pcgr, mode="ap")
+            amp_gamma_left, amp_theta_left = subject.amp_count(**pcgl, mode="ap")
+            amp_gamma_right, amp_theta_right = subject.amp_count(**pcgr, mode="ap")
 
         # write into DataFrame
-        subjectdf = pd.concat([subjectdf, pd.DataFrame.from_records([{"group": one, "caseid":two, "freq_gamma_left":freq_gamma_left, "freq_gamma_right":freq_gamma_right, "freq_theta_left":freq_theta_left, "freq_theta_right":freq_theta_right}])], ignore_index = True)
+        subjectdf = pd.concat([subjectdf, pd.DataFrame.from_records([{"group": one, "caseid":two, "amp_gamma_left":amp_gamma_left, "amp_gamma_right":amp_gamma_right, "amop_theta_left":amp_theta_left, "amp_theta_right":amp_theta_right}])], ignore_index = True)
         subjectdf.to_excel(args.path)
         print("done")

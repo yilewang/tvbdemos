@@ -29,7 +29,7 @@ f.close()
 
 filename_path = "/work/08008/yilewang/tvbsim3mins/gc3mins/"
 
-parser = argparse.ArgumentParser(description='pass a float')
+parser = argparse.ArgumentParser(description='pass a str')
 parser.add_argument('--path',type=str, required=True, help='the path we put our final signal processing results')
 args = parser.parse_args()
 
@@ -44,17 +44,18 @@ if __name__ == "__main__":
         filename = filename_path + one +"/"+ two+".h5"
         # create an instance
         subject = SignalToolkit(filename, fs=81920.)
-        dset = subject.hdf5_reader()
+        df = subject.data_reader()
         ############## indexing the pcg regions
 
         # define the parameters used for `find_speaks` algorithm.
         spikesparas = {'prominence': 0.5, 'height': .5}
-        valleysparas= {'prominence': 1., 'width':3000, 'height': 0.}
-        spikesparas_af= {'prominence': 0.5, 'width':3000, 'height': 0.}
+        valleysparas= {'prominence': 0.2, 'width':2000, 'height': -0.5}
+        spikesparas_af= {'prominence': 0.2, 'width':2000, 'height': 0.}
+        valleysparas_af = {'prominence': 0.2, 'width':2000, 'height': -0.5}
 
         # to generate raw and filtered data, including the spikes and valleys
-        pcg_left = subject.signal_package(dset, 4, 'pcg_left', 2.0, 10.0, True, spikesparas, valleysparas,spikesparas_af, truncate = 10.)
-        pcg_right = subject.signal_package(dset, 5, 'pcg_right', 2.0, 10.0, True, spikesparas, valleysparas,spikesparas_af, truncate = 10.)
+        pcg_left = subject.signal_package(df, 4, 'pcg_left', 2.0, 10.0, True, spikesparas, valleysparas,spikesparas_af, valleysparas_af, truncate = 10.)
+        pcg_right = subject.signal_package(df, 5, 'pcg_right', 2.0, 10.0, True, spikesparas, valleysparas,spikesparas_af, valleysparas_af, truncate = 10.)
 
 
         # to calculate the frequency

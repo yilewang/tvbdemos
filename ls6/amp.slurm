@@ -22,4 +22,4 @@
 #source ~/tvb-pipeline2/tvb-ukbb/init_vars && python ~/tvb-pipeline2/tvb-ukbb/bb_pipeline_tools/bb_pipeline.py s123366_output
 
 source activate tvbenv
-python freq.py --path $WORK'/freqres.xlsx'
+python amp.py --path $WORK'/ampres.xlsx'
