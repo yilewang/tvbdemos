@@ -37,7 +37,7 @@ args = parser.parse_args()
 
 if __name__ == "__main__":
     start_time = time.time()
-    subjectdf = pd.DataFrame(columns=["group", "caseid", "freq_gamma_left", "freq_gamma_right", "freq_theta_left", "freq_theta_right"])
+    subjectdf = pd.DataFrame(columns=["group", "caseid", "amp_gamma_left", "amp_gamma_right", "amp_theta_left", "amp_theta_right"])
     for one, two in zip(group, caseid):
         print(one, two)
         ############## generate individual filename 
