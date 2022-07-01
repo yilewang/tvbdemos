@@ -71,7 +71,7 @@ if __name__ == "__main__":
             amp_gamma_right, amp_theta_right = subject.amp_count(**pcgr, mode="ap")
 
         # write into DataFrame
-        subjectdf = pd.concat([subjectdf, pd.DataFrame.from_records([{"group": one, "caseid":two, "amp_gamma_left":amp_gamma_left, "amp_gamma_right":amp_gamma_right, "amop_theta_left":amp_theta_left, "amp_theta_right":amp_theta_right}])], ignore_index = True)
+        subjectdf = pd.concat([subjectdf, pd.DataFrame.from_records([{"group": one, "caseid":two, "amp_gamma_left":amp_gamma_left, "amp_gamma_right":amp_gamma_right, "amp_theta_left":amp_theta_left, "amp_theta_right":amp_theta_right}])], ignore_index = True)
         print("done")
     subjectdf.to_excel(args.path)
     end_time = time.time()
