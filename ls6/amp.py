@@ -49,9 +49,9 @@ if __name__ == "__main__":
         cutoff_low = 2.
         cutoff_high = 10.
 
-        spikesparas = {'prominence': 0.5, 'height': .5}
+        spikesparas = {'prominence': 1.0}
         valleysparas= {'prominence': 0.2, 'width':2000, 'height': -0.5}
-        spikesparas_af= {'prominence': 0.2, 'width':2000, 'height': 0.}
+        spikesparas_af= {'prominence': 0.3, 'width':2000, 'height': 0.}
         valleysparas_af = {'prominence': 0.2, 'width':2000, 'height': -0.5}
 
         pcgl=subject.signal_package(data=df, channel_num = 4, label='pcg_left', low=cutoff_low, high=cutoff_high, spikesparas=spikesparas, valleysparas=valleysparas, spikesparas_af=spikesparas_af, valleysparas_af = valleysparas, truncate = 10.)

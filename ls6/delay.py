@@ -36,8 +36,8 @@ args = parser.parse_args()
 
 
 if __name__ == "__main__":
-    subjectdf = pd.DataFrame(columns=["group", "caseid", "freq_gamma_left", "freq_gamma_right", "freq_theta_left", "freq_theta_right"])
     start_time = time.time()
+    subjectdf = pd.DataFrame(columns=["group", "caseid", "pcg_delay"])
     for one, two in zip(group, caseid):
         print(one, two)
         ############## generate individual filename 
@@ -46,27 +46,23 @@ if __name__ == "__main__":
         subject = SignalToolkit(filename, fs=81920.)
         df = subject.data_reader()
         ############## indexing the pcg regions
+        cutoff_low = 2.
+        cutoff_high = 10.
 
-        # define the parameters used for `find_speaks` algorithm.
         spikesparas = {'prominence': 1.0}
         valleysparas= {'prominence': 0.2, 'width':2000, 'height': -0.5}
         spikesparas_af= {'prominence': 0.3, 'width':2000, 'height': 0.}
         valleysparas_af = {'prominence': 0.2, 'width':2000, 'height': -0.5}
 
-        # to generate raw and filtered data, including the spikes and valleys
-        pcg_left = subject.signal_package(df, 4, 'pcg_left', 2.0, 10.0, True, spikesparas, valleysparas,spikesparas_af, valleysparas_af, truncate = 10.)
-        pcg_right = subject.signal_package(df, 5, 'pcg_right', 2.0, 10.0, True, spikesparas, valleysparas,spikesparas_af, valleysparas_af, truncate = 10.)
+        pcgl=subject.signal_package(data=df, channel_num = 4, label='pcg_left', low=cutoff_low, high=cutoff_high, spikesparas=spikesparas, valleysparas=valleysparas, spikesparas_af=spikesparas_af, valleysparas_af = valleysparas, truncate = 10.)
+        pcgr=subject.signal_package(data=df, channel_num = 5, label='pcg_right', low=cutoff_low, high=cutoff_high, spikesparas=spikesparas, valleysparas=valleysparas, spikesparas_af=spikesparas_af, valleysparas_af=valleysparas_af, truncate = 10.)
 
 
-        # to calculate the frequency
-        freq_gamma_left = subject.freq_count(spikeslist=pcg_left["spikeslist"])
-        freq_theta_left = subject.freq_count(spikeslist=pcg_left["spikeslist_af"])
-        freq_gamma_right = subject.freq_count(spikeslist=pcg_right["spikeslist"])
-        freq_theta_right = subject.freq_count(spikeslist=pcg_right["spikeslist_af"])
+        # delay
+        pcg_delay = subject.phase_delay(pcgl["after_filtered"], pcgr["after_filtered"], pcgl["spikeslist_af"], pcgl["valleyslist_af"], pcgr["spikeslist_af"], pcgr["valleyslist_af"], mode = "SI")
 
         # write into DataFrame
-        subjectdf = pd.concat([subjectdf, pd.DataFrame.from_records([{"group": one, "caseid":two, "freq_gamma_left":freq_gamma_left, "freq_gamma_right":freq_gamma_right, "freq_theta_left":freq_theta_left, "freq_theta_right":freq_theta_right}])], ignore_index = True)
-
+        subjectdf = pd.concat([subjectdf, pd.DataFrame.from_records([{"group": one, "caseid":two, "pcg_delay":pcg_delay}])], ignore_index = True)
         print("done")
     subjectdf.to_excel(args.path)
     end_time = time.time()
