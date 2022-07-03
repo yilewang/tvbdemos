@@ -1,14 +1,16 @@
 Bootstrap: library
 From: noahfl/tvb/tvb-ukbb:latest
 %files
-    /home/wayne/tvb-ukbb-singularity/tvb-ukbb /opt
-    /home/wayne/tvb-ukbb-singularity/afnibinary /opt
-    /home/wayne/tvb-ukbb-singularity/freesurfer /opt
-    /home/wayne/tvb-ukbb-singularity/ANTs /opt
+    /mnt/c/Users/wayne/tvb/container/tvb-ukbb /opt
+    /mnt/c/Users/wayne/tvb/container/afnibinary /opt
+    /mnt/c/Users/wayne/tvb/container/freesurfer /opt
+    # /mnt/c/Users/wayne/tvb/container/ANTs /opt
 %post
     chmod -R 755 /opt
     export TZ="America/Chicago"
     ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+    apt-get update
+    apt-get -y install libc6
     # install conda packages
     source /opt/tvb-ukbb/init_vars
     # solve reload problem
@@ -25,10 +27,13 @@ From: noahfl/tvb/tvb-ukbb:latest
     conda install -c conda-forge --yes libpng
     conda install -c conda-forge --yes xorg-libxft
 %runscript
+    echo "Container created ${NOW}"
+
     GITDIR=/opt/tvb-ukbb
-    echo "Git Dir specified: ${GITDIR}"
+    echo "Git directory specified: ${GITDIR}"
     . ${GITDIR}/init_vars
-    echo "Subject Directory: ${1}"
+    echo "Subject directory: ${1}"
+    echo "Running..."
     exec python -u ${GITDIR}/bb_pipeline_tools/bb_pipeline.py ${1}
 %labels
     User: yile.wang@utdallas.edu
