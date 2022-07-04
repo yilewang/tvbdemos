@@ -47,25 +47,33 @@ export QUEUE_MAX_MEM="normal"                                              #TO B
 #           for low-memory systems.
 # option 3: false: use CPU probtrackx split into 10 smaller batches.
 #           use for systems without CUDA GPU
-export PROBTRACKX_GPU="true"
+export PROBTRACKX_GPU="false"
 
 export REPARCELLATE="false" #TO BE MODIFIED BY USER
 
 #SETUP AFNI
-export AFNIDIR=/opt/afnibinary/21.0.06                                                        #TO BE MODIFIED BY USER
+# export AFNIDIR=/opt/afni                                                        #TO BE MODIFIED BY USER
 # export AFNIDIR="/cvmfs/soft.computecanada.ca/easybuild/software/2020/avx2/Compiler/gcc9/afni/20.3.05"
-
+export AFNIDIR=/opt/afnibinary/21.0.06
 #SETUP FREESURFER 
-export FREESURFER_HOME=/opt/freesurfer/7.1.1
 # export FREESURFER_HOME=/cvmfs/soft.computecanada.ca/easybuild/software/2020/Core/freesurfer/5.3.0/bin/freesurfer                                          #TO BE MODIFIED BY USER
-
-# if usin on Compute Canada, load module first
-# source $EBROOTFREESURFER/FreeSurferEnv.sh
+export FREESURFER_HOME=/opt/freesurfer/7.1.1
+#SET PATH FOR FREESURFER
+# source $FREESURFER_HOME/FreeSurferEnv.sh > /dev/null
+export PATH=$FREESURFER_HOME/bin:$PATH
 # source $FREESURFER_HOME/SetUpFreeSurfer.sh  > /dev/null
 
+
+# if usin on Compute Canada, load module first
+#source $EBROOTFREESURFER/FreeSurferEnv.sh
+
+
 #SETUP ANTS
-export ANTSPATH=/opt/ANTs/210aa67
 #export ANTSPATH="/cvmfs/soft.computecanada.ca/easybuild/software/2020/avx2/Compiler/gcc9/ants/2.3.5/bin"
+export ANTSPATH=/work/08008/yilewang/ls6/ANTs/bin
+export PATH=${ANTSPATH}:$PATH
+
+
 
 export SOFTDIR="/opt/tvb-pipeline"						#TO BE MODIFIED BY USER (DEFAULT FOR SINGULARITY)
 
@@ -88,7 +96,7 @@ export R_DIR="/usr/lib/R"							#TO BE MODIFIED BY USER (DEFAULT FOR SINGULARITY
 export LC_ALL=C
 
 #ENV VARIABLES FOR BIOBANK
-export BB_BIN_DIR="$BBDIR/tvb-ukbb"
+export BB_BIN_DIR="/opt/tvb-ukbb"
 export FSLGPUDIR="$BB_BIN_DIR/bb_diffusion_pipeline/bb_bedpostx"
 export MNI="$FSLDIR/data/standard/MNI152_T1_1mm.nii.gz"
 export MNI_mask="$FSLDIR/data/standard/MNI152_T1_1mm_brain_mask.nii.gz"
@@ -116,12 +124,12 @@ export DIFF_SHELL_TYPE="1"
 #INCLUDE 3 MAIN BIOBANK DIRECTORIES IN PATH
 export PATH="$BB_BIN_DIR/bb_pipeline_tools/:$BB_BIN_DIR/bb_general_tools/:$PATH"
 
+#INCLUDE LIBRARIES
+export LD_LIBRARY_PATH=/opt/tvb-pipeline/software/env/lib:$LD_LIBRARY_PATH
+
 
 #SET PATH FOR MCR
-
-export LD_LIBRARY_PATH="/opt/tvb-pipeline/software/env/lib:/usr/lib/x86_64-linux-gnu:$MCROOT/$MCRV/runtime/glnxa64:$MCROOT/$MCRV/bin/glnxa64:$MCROOT/$MCRV/sys/os/glnxa64:$MCROOT/$MCRV/sys/opengl/lib/glnxa64:$LD_LIBRARY_PATH"
-
-#export LD_LIBRARY_PATH="/usr/lib/x86_64-linux-gnu:$MCROOT/$MCRV/runtime/glnxa64:$MCROOT/$MCRV/bin/glnxa64:$MCROOT/$MCRV/sys/os/glnxa64:$MCROOT/$MCRV/sys/opengl/lib/glnxa64:$LD_LIBRARY_PATH"
+export LD_LIBRARY_PATH="/usr/lib/x86_64-linux-gnu:$MCROOT/$MCRV/runtime/glnxa64:$MCROOT/$MCRV/bin/glnxa64:$MCROOT/$MCRV/sys/os/glnxa64:$MCROOT/$MCRV/sys/opengl/lib/glnxa64:$LD_LIBRARY_PATH"
 
 export MATLAB_COMPILER_RUNTIME="$MCROOT/$MCRV"
 
@@ -129,3 +137,9 @@ export XAPPLRESDIR="$MCROOT/$MCRV/X11/app-defaults"
 
 # source activate $SOFTDIR/software/env
 source activate $SOFTDIR/software/env
+
+
+# fix vim error
+export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libexpat.so
+
+
