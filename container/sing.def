@@ -1,16 +1,28 @@
 Bootstrap: library
 From: noahfl/tvb/tvb-ukbb:latest
 %files
-    /mnt/c/Users/wayne/tvb/container/tvb-ukbb /opt
-    /mnt/c/Users/wayne/tvb/container/afnibinary /opt
-    /mnt/c/Users/wayne/tvb/container/freesurfer /opt
-    # /mnt/c/Users/wayne/tvb/container/ANTs /opt
+    /home/wayne/container/tvb-ukbb /opt
+    /home/wayne/container/afnibinary /opt
+    /home/wayne/container/freesurfer /opt
+    /home/wayne/container/install_ants.sh /opt
 %post
     chmod -R 755 /opt
     export TZ="America/Chicago"
     ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
     apt-get update
-    apt-get -y install libc6
+    # install cmake first
+    apt install build-essential libssl-dev
+    ### the version of the cmake could be newer than 3.20
+    cp /opt
+    wget https://github.com/Kitware/CMake/releases/download/v3.20.2/cmake-3.20.2.tar.gz
+    tar -zxvf cmake-3.20.2.tar.gz
+    cd cmake-3.20.2
+    ./bootstrap
+    make
+    make install
+    # install ANTs
+    . install_ants.sh
+    
     # install conda packages
     source /opt/tvb-ukbb/init_vars
     # solve reload problem
@@ -26,6 +38,15 @@ From: noahfl/tvb/tvb-ukbb:latest
     conda install -c conda-forge --yes xorg-libxmu
     conda install -c conda-forge --yes libpng
     conda install -c conda-forge --yes xorg-libxft
+
+    # avoid vim problem
+    export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libexpat.so
+    # avoid 3dROIMaker warning
+    apt-get install uuid-dev
+    ln -sf /usr/lib/x86_64-linux-gnu/libuuid.so /opt/tvb-pipeline/software/env/lib/libuuid.so.1
+
+
+
 %runscript
     echo "Container created ${NOW}"
 
