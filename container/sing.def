@@ -13,7 +13,7 @@ From: noahfl/tvb/tvb-ukbb:latest
     # install cmake first
     apt install build-essential libssl-dev
     ### the version of the cmake could be newer than 3.20
-    cp /opt
+    cd /opt
     wget https://github.com/Kitware/CMake/releases/download/v3.20.2/cmake-3.20.2.tar.gz
     tar -zxvf cmake-3.20.2.tar.gz
     cd cmake-3.20.2
