@@ -10,7 +10,7 @@ If you encounter errors, please see the installation instructions at
 Build will proceed in 5 seconds
 "
 
-sleep 5
+sleep 1
 
 workingDir=/opt
 
@@ -23,11 +23,11 @@ git clone https://github.com/ANTsX/ANTs.git
 # cd -
 
 # Number of threads used by make
-buildThreads=4
+buildThreads=1
 
 # Where to build, should be an empty directory
 buildDir=${workingDir}/build
-installDir=${workingDir}/ANTs
+installDir=${workingDir}/install
 
 mkdir $buildDir $installDir
 
