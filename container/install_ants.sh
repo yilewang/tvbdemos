@@ -27,7 +27,7 @@ buildThreads=1
 
 # Where to build, should be an empty directory
 buildDir=${workingDir}/build
-installDir=${workingDir}/install
+installDir=${workingDir}/antsbinary
 
 mkdir $buildDir $installDir
 

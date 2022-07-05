@@ -6,7 +6,6 @@ From: noahfl/tvb/tvb-ukbb:latest
     /mnt/w/container/freesurfer /opt
     /mnt/w/container/install_ants.sh /opt
 %post
-    # set time
     chmod -R 755 /opt
     export TZ="America/Chicago"
     ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
@@ -25,7 +24,7 @@ From: noahfl/tvb/tvb-ukbb:latest
     cd /opt
     ./install_ants.sh
     
-    # install conda packages, avoiding dependencies errors
+    # install conda packages
     source /opt/tvb-ukbb/init_vars
     # solve reload problem
     cd /opt/mcr/v93/bin/glnxa64
