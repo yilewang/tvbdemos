@@ -2,7 +2,6 @@ Bootstrap: library
 From: ubuntu:20.04
 
 %post
-
     apt update -y
     apt install -y --no-install-recommends software-properties-common
     add-apt-repository -y universe
