@@ -116,7 +116,7 @@ From: ubuntu:20.04
 
     # install FSL and configure CUDA
     wget https://fsl.fmrib.ox.ac.uk/fsldownloads/fslinstaller.py
-    python fslinstaller.py -V 6.0.5 -d /opt/fsl
+    python fslinstaller.py -d /opt/fsl
     echo '/opt/fsl/lib' > /etc/ld.so.conf.d/fsl.conf
     ldconfig
     cd /opt/fsl/bin && ln -sf eddy_cuda10.2 eddy_cuda
