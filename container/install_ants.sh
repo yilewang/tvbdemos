@@ -23,7 +23,7 @@ git clone https://github.com/ANTsX/ANTs.git
 # cd -
 
 # Number of threads used by make
-buildThreads=1
+buildThreads=4
 
 # Where to build, should be an empty directory
 buildDir=${workingDir}/build
