@@ -18,14 +18,16 @@ import nibabel as nib
 
 # import util
 
-sys.path.append('/home/yat-lok/workspace/tvb-ukbb/bb_diffusion_pipeline/tvb_SynB0/src')
+gpath = '/work/08008/yilewang/ls6/hsam/tvb-ukbb/bb_diffusion_pipeline/tvb_SynB0/src'
+sys.path.append(gpath)
 from model import UNet3D
 
 
 if __name__ == '__main__':
     # Get input arguments ----------------------------------#
-    model_path = "/home/yat-lok/workspace/tvb-ukbb/bb_diffusion_pipeline/tvb_SynB0/src/train_lin/num_fold_1_total_folds_5_seed_1_num_epochs_100_lr_0.0001_betas_(0.9, 0.999)_weight_decay_1e-05_num_epoch_97.pth"
+    pth = gpath+'/train_lin/num_fold_1_total_folds_5_seed_1_num_epochs_100_lr_0.0001_betas_(0.9, 0.999)_weight_decay_1e-05_num_epoch_97.pth'
 
+    model_path = pth
     # model_path = "/home/yat-lok/workspace/container/num_fold_1_total_folds_5_seed_1_num_epochs_100_lr_0.0001_betas_(0.9, 0.999)_weight_decay_1e-05_num_epoch_97.pth"
     print('Model path: ' + model_path)
 
