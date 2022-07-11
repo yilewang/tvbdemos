@@ -1,9 +1,14 @@
 Bootstrap: library
 From: ubuntu:20.04
 
+%files
+    /media/yat-lok/BATW/container/afnibinary /opt
+    /media/yat-lok/BATW/container/freesurfer /opt
+
+
 %post
     chmod 755 /root
-    chmod -R 755 /opt
+    
     apt update -y
     apt install -y --no-install-recommends software-properties-common
     add-apt-repository -y universe
@@ -16,7 +21,7 @@ From: ubuntu:20.04
 
     apt update && apt install -y --no-install-recommends \
     lsb-core libarchive-tools zip unzip gzip curl jq wget python3-pip bc dc strace \
-    software-properties-common xvfb tcsh ca-certificates libtinfo-dev
+    software-properties-common xvfb tcsh ca-certificates libtinfo-dev 
 
     # apt build-dep mesa
     add-apt-repository ppa:graphics-drivers/ppa
@@ -54,15 +59,20 @@ From: ubuntu:20.04
     Rscript -e 'require(devtools); install_version("class", version="7.3-14")' && \
     Rscript -e 'require(devtools); install_version("mvtnorm", version="1.0-8")' && \
     Rscript -e 'require(devtools); install_version("multcomp", version="1.4-8")' && \
+    Rscript -e 'require(devtools); install_version("modeltools", version="0.2-23")' && \
     Rscript -e 'require(devtools); install_version("coin", version="1.2-2")' && \
-    Rscript -e 'require(devtools); install_version("party", version="1.0-25")' && \
-    Rscript -e 'require(devtools); install_version("e1071", version="1.6-7")' && \
-    Rscript -e 'require(devtools); install_version("randomForest", version="4.6-12")'
-
+    Rscript -e 'require(devtools); install_version("strucchange", version="1.5-3")'
+    # Rscript -e 'require(devtools); install_version("party", version="1.0-25")'
+    
+    # in case installation fail
     wget https://cran.r-project.org/src/contrib/Archive/coin/coin_1.2-2.tar.gz
     R CMD INSTALL ./coin_1.2-2.tar.gz
     wget https://cran.r-project.org/src/contrib/Archive/party/party_1.0-25.tar.gz
     R CMD INSTALL ./party_1.0-25.tar.gz
+
+    Rscript -e 'require(devtools); install_version("e1071", version="1.6-7")' && \
+    Rscript -e 'require(devtools); install_version("randomForest", version="4.6-12")'
+
 
 
     # install conda
@@ -179,32 +189,28 @@ From: ubuntu:20.04
     chmod 755 ./install_ants.sh
     ./install_ants.sh
     
-    # install conda packages
-    cd /opt
-    git clone https://github.com/yilewang/tvb-ukbb.git
-    cd /opt/tvb-ukbb
-    git checkout -b HSAM
-    git pull origin HSAM
-    ./opt/tvb-ukbb/init_vars
-    
     # solve reload problem
     cd /opt/mcr/v93/bin/glnxa64
     mkdir exclude
     mv libfreetype* exclude
 
     # install conda env
-    conda install -c aarch64-staging gsl
-    conda install -y -c numba cudatoolkit=10.2
-    ln /opt/tvb-pipeline/software/env/lib/libgsl.so /opt/tvb-pipeline/software/env/lib/libgsl.so.0
-    conda install -c conda-forge --yes xorg-libxp
-    conda install -c conda-forge --yes xorg-libxpm
-    conda install -c conda-forge --yes xorg-libxmu
-    conda install -c conda-forge --yes libpng
-    conda install -c conda-forge --yes xorg-libxft
+    # conda install -c aarch64-staging gsl
+    # conda install -y -c numba cudatoolkit=10.2
+    # conda install -c conda-forge --yes xorg-libxp
+    # conda install -c conda-forge --yes xorg-libxpm
+    # conda install -c conda-forge --yes xorg-libxmu
+    # conda install -c conda-forge --yes libpng
+    # conda install -c conda-forge --yes xorg-libxft
+    # conda install -c conda-forge --yes pillow
 
     # avoid 3dROIMaker warning
-    apt-get install -y uuid-dev
-    ln -sf /usr/lib/x86_64-linux-gnu/libuuid.so /opt/tvb-pipeline/software/env/lib/libuuid.so.1
+    apt-get install -y uuid-dev libgsl-dev
+    ln -sf /usr/lib/x86_64-linux-gnu/libuuid.so /usr/lib/x86_64-linux-gnu/libuuid.so.1
+    ln /usr/lib/x86_64-linux-gnu/libgsl.so /usr/lib/x86_64-linux-gnu/libgsl.so.0
+
+    # avoid permission error
+    chmod -R 755 /opt
 
 %environment
 
@@ -235,15 +241,14 @@ From: ubuntu:20.04
     alias lr='ls -haltr'
 
 %runscript
-
     echo "Container created ${NOW}"
 
-    GITDIR=/opt/tvb-ukbb
+    GITDIR=${2}
     echo "Git directory specified: ${GITDIR}"
     . ${GITDIR}/init_vars
     echo "Subject directory: ${1}"
     echo "Running..."
-    exec python -u ${GITDIR}/bb_pipeline_tools/bb_pipeline.py ${1}
+    exec python -u ${GITDIR}/bb_pipeline_tools/bb_pipeline.py ${1} ${2}
 
 
     
