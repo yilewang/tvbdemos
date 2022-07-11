@@ -248,7 +248,7 @@ From: ubuntu:20.04
     . ${GITDIR}/init_vars
     echo "Subject directory: ${1}"
     echo "Running..."
-    exec python -u ${GITDIR}/bb_pipeline_tools/bb_pipeline.py ${1} ${2}
+    exec python -u ${GITDIR}/bb_pipeline_tools/bb_pipeline.py ${1}
 
 
     
