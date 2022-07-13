@@ -1,0 +1,99 @@
+channels:
+  - defaults
+  - edurand
+    # - r
+  - anaconda
+  - conda-forge
+  - pytorch
+dependencies:
+  - python=3.7
+  - libiconv
+    # - gxx_impl_linux-64
+    # - libgcc-ng
+    # - gfortran_linux-64
+  - noahfl::gradunwarp
+  - pytorch
+  - cpuonly
+  - torchvision
+  - torchaudio
+  - conda-pack
+  - nvidia::cudatoolkit=10.2
+    # - r-base=3.4.1
+  - scipy
+  - numpy
+  - matplotlib
+    # - r-kernlab
+    # - r-rocr
+    # - r-class
+    # - r-devtools
+    # - r-e1071=1.6-8
+    # - r-randomforest
+  - libxcb
+  - git
+  - git-lfs
+  - htop
+  - zip
+  - unzip
+  - alabaster
+  - babel
+  - cycler
+  - decorator
+  - docutils
+  - imagesize
+  - ipython
+    # - ipython-genutils
+  - jinja2
+  - markupsafe
+  - nibabel
+  - nose
+  - pandas
+  - pexpect
+  - pillow<7
+  - xorg-libxp
+  - xorg-libxpm
+  - libpng
+  - xorg-libxft
+  - xorg-libxmu
+  - pickleshare
+  - prompt-toolkit
+  - ptyprocess
+  - pydicom
+  - pygments
+  - pyparsing
+  - python-dateutil
+  - pytz
+  - simplegeneric
+  - six
+  - snowballstemmer
+  - sphinx
+  - traitlets
+  - wcwidth
+    #   - pip:
+    #     - alabaster
+    #     - babel
+    #     - cycler
+    #     - decorator
+    #     - docutils
+    #     - imagesize
+    #     - ipython
+    #     - ipython-genutils
+    #     - jinja2
+    #     - markupsafe
+    #     - nibabel
+    #     - nose
+    #     - pandas
+    #     - pexpect
+    #     - pickleshare
+    #     - prompt-toolkit
+    #     - ptyprocess
+    #     - pydicom
+    #     - pygments
+    #     - pyparsing
+    #     - python-dateutil
+    #     - pytz
+    #     - simplegeneric
+    #     - six
+    #     - snowballstemmer
+    #     - sphinx
+    #     - traitlets
+    #     - wcwidth
