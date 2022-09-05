@@ -17,7 +17,7 @@ dependencies:
   - torchvision
   - torchaudio
   - conda-pack
-  - nvidia::cudatoolkit=10.2
+  - nvidia::cudatoolkit=11.2
     # - r-base=3.4.1
   - scipy
   - numpy
