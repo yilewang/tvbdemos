@@ -2,9 +2,8 @@ Bootstrap: library
 From: ubuntu:20.04
 
 %files
-    /media/yat-lok/BATW/container/afnibinary /opt
-    /media/yat-lok/BATW/container/freesurfer /opt
-
+    /media/yat-lok/recycle/container/afnibinary /opt
+    /media/yat-lok/recycle/container/freesurfer /opt
 
 %post
     chmod 755 /root
@@ -216,7 +215,7 @@ From: ubuntu:20.04
     cd /opt
     mkdir bedpostx
     cd /opt/bedpostx
-    wget http://users.fmrib.ox.ac.uk/~moisesf/Bedpostx_GPU/FSL_6/CUDA_10.2/bedpostx_gpu.zip
+    wget http://users.fmrib.ox.ac.uk/~moisesf/Bedpostx_GPU/FSL_6/CUDA_11.2/bedpostx_gpu.zip
     unzip bedpostx_gpu.zip
     cp ./bin/* /opt/fsl/bin
     cp ./lib/* /opt/fsl/lib
@@ -287,6 +286,6 @@ From: ubuntu:20.04
     Version v1.1
 
 %help
-    This is a TVB-UKBB container installed with FSL 6.0.5 and CUDA 10.2.
+    This is a TVB-UKBB container installed with FSL 6.0.5 and CUDA 11.2.
     It provides all necessary software, with the exeption of AFNI, ANTS,
     and FreeSurfer, to run the TVB-UKBB pipeline.
