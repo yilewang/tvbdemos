@@ -32,3 +32,37 @@ MC_all[:,:,:,ind] = dFCstream2Trimers(dFCstream)
 ```
 
 Further description could be seen from [link](https://github.com/unbekanntt/Network-science-Toolbox).
+
+
+#### participation coefficient
+
+This is a method from graph theory. The basic idea is to calculate how strong this node is belonged to this cluster. It could be calculated by the `bctpy` toolbox in python. You can use `pip install python-louvain` and `pip install bctpy` to install them. 
+
+The workflow is that, we need to use the meta-connectivity matrix as the input, and specify a path to save your participation coefficient value as output.
+
+```python
+import community as community_louvain
+from bct.algorithms import community_louvain
+from bct.algorithms.centrality import participation_coef_sign
+
+
+def participation_pipe(mc_all, gamma=1, your_path)
+    overall_df = pd.DataFrame()
+    mat = pd.Dataframe(mc_all)
+    ci, Q = community_louvain(mat.to_numpy(), gamma = gamma, B='negative_asym', seed=None)
+    pos,_ = participation_coef_sign(mat.to_numpy())
+    ci_name_list = ["cluster_" + str(i) for i in ci]
+    cluster_info = pd.DataFrame(ci_name_list)
+    cluster_info.columns = ["cluster"]
+    part_coe = pd.DataFrame(pos)
+    part_coe.columns = ["participation_coef"]
+    _tmp = pd.concat([part_coe, cluster_info],axis=1, ignore_index=True)
+    overall_df = pd.concat([overall_df, _tmp], ignore_index=True)
+    overall_df.columns = ["participation_coef", "cluster"]
+    prefix = your_path
+    overall_df.to_excel(f"{your_path}/participation_coef.xlsx")
+    return overall_df
+
+df = participation_pipe(YOUR_MATRIX, YOUR_PATH)
+print(df)
+```
