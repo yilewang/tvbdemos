@@ -46,9 +46,9 @@ from bct.algorithms import community_louvain
 from bct.algorithms.centrality import participation_coef_sign
 
 
-def participation_pipe(mc_all, gamma=1, your_path)
+def participation_pipe(MC_MC, gamma=1, your_path)
     overall_df = pd.DataFrame()
-    mat = pd.Dataframe(mc_all)
+    mat = pd.Dataframe(MC_MC)
     ci, Q = community_louvain(mat.to_numpy(), gamma = gamma, B='negative_asym', seed=None)
     pos,_ = participation_coef_sign(mat.to_numpy())
     ci_name_list = ["cluster_" + str(i) for i in ci]
