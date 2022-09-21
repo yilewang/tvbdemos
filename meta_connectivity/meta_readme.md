@@ -45,9 +45,9 @@ import community as community_louvain
 from bct.algorithms import community_louvain
 from bct.algorithms.centrality import participation_coef_sign
 
-
+overall_df = pd.DataFrame()
 def participation_pipe(MC_MC, gamma=1, your_path)
-    overall_df = pd.DataFrame()
+    MC_MC = np.triu(MC_MC, k=1)
     mat = pd.Dataframe(MC_MC)
     ci, Q = community_louvain(mat.to_numpy(), gamma = gamma, B='negative_asym', seed=None)
     pos,_ = participation_coef_sign(mat.to_numpy())
@@ -63,6 +63,6 @@ def participation_pipe(MC_MC, gamma=1, your_path)
     overall_df.to_excel(f"{your_path}/participation_coef.xlsx")
     return overall_df
 
-df = participation_pipe(YOUR_MATRIX, YOUR_PATH)
+df = participation_pipe(MC_MC, 'C:/YOUR_PATH')
 print(df)
 ```
