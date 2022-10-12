@@ -10,7 +10,7 @@ Git is a tool used for **tracking changes**. Imagining you are using Microsoft W
 
 In order to know how to use Git, let's just start with an easy example.
 
-Currently I am working in an Alzheimer's Disease project, and I have a repository in github called `AD_project` (I skipped the processes to create your github account and create new repository, since they are straightforward).
+Currently I am working in an Alzheimer's Disease project, and I have a repository in github called `repo_name` (I skipped the processes to create your github account and create new repository, since they are straightforward).
 
 ### How to set up Git?
 
@@ -73,9 +73,62 @@ When you are working in a group project, your workflow to interact with Git will
 
 #### Step 1 clone repo and create new branch
 
+In order to be coherent and continuous, I will start with cloning the same repo here:
+
 ```bash
 git clone git@github.com:user_name/repo_name.git
 git checkout -b my-new-branch
 ```
 
+#### Step 2 save your work in your new branch
 
+```bash
+git add .
+git commit -m "YOUR_COMMENTS"
+```
+
+#### Step 3 push to new branch
+
+```bash
+git push origin my-new-branch
+```
+
+**WHAT IF SOMEONE SUBMIT A NEW UPDATE AHEAD OF ME???**
+
+When we are doing collaboration, it is super usual that you and other people are working with the same project but different parts. Sometimes when you just finish your part of codes and you want to update it into the main branch, however, you notice that a new update from other people is already there. One thing you need to do is to test if the new update could be merged into your update.
+
+#### *Step 1 update local main branch
+
+```bash
+git checkout main
+git pull origin master # pull the new update from others to your local main
+```
+
+#### *Step 2 rebase the local branch
+
+The rebase step can help us to add our new changes to updated main branch
+
+```bash
+git checkout my-new-branch
+git rebase main # It is an important step!!! rebase will add your changes to the updated main so that you can know if your codes are compatible with the new updates from others
+```
+#### *Step 3 push
+
+```bash
+git push origin my-new-branch
+```
+
+
+#### Step 4 create new pull request
+
+you need to do it in github website
+
+
+## Useful commands
+
+```bash 
+git diff # check the differences between repo and repo in your disk
+git branch -D my-new-branch # delete branch
+git status # check the current status of your repo
+git stash # be careful! but this command can help you discard all your changes
+```
