@@ -31,6 +31,7 @@ t = np.arange(0.0, 40.0, 0.01)
 result = odeint(lorenz, init_y, t, p)
 
 fig = plt.figure()
-ax = fig.gca(projection="3d")
+#ax = fig.gca(projection="3d")
+ax = fig.add_subplot(projection="3d")
 ax.plot(result[:,0], result[:,1], result[:,2])
 plt.show()
