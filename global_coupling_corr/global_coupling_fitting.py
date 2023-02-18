@@ -47,7 +47,11 @@ def tvb_simulation(file, g):
 
 input_path = '/scratch/yilewang/workspaces/data4project/lateralization/connectome/zip/'+ args.Group + '/'+ args.Caseid+'.zip'
 
-output_path = '/scratch/yilewang/Goptimal/' + args.Group + '/' + args.Caseid
+output_path = '/scratch/yilewang/Goptimal/' + args.Group + '/' + args.Caseid + '/'
 Path(output_path).mkdir(parents=True, exist_ok=True)
 
 df = tvb_simulation(input_path, args.G)
+output_name = args.Group + "_" + args.Caseid + "_" + args.G + ".xlsx"
+output = output_path + output_name
+df.to_excel(output)
+print(f"{args.Group} of {args.Caseid} in {args.G} has finished")
