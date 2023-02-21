@@ -25,8 +25,8 @@ def tvb_simulation(file, g):
         model=ReducedSetHindmarshRose(),
         connectivity=connectivity.Connectivity.from_file(file),
         coupling=coupling.Linear(a=np.array([g])),
-        simulation_length=1e3 * 416,
-        integrator=integrators.HeunStochastic(dt=0.01220703125, noise=noise.Additive(nsig=np.array([0.00001]), ntau=0.0,
+        simulation_length=1e3*416,
+        integrator=integrators.HeunStochastic(dt=0.01220703125, noise=noise.Additive(nsig=np.array([1.0]), ntau=0.0,
                                                                                     random_stream=np.random.RandomState(seed=42))),
         monitors=(
         monitors.TemporalAverage(period=1.),
@@ -45,13 +45,13 @@ def tvb_simulation(file, g):
     
     return df
 
-input_path = '/scratch/yilewang/workspaces/data4project/lateralization/connectome/zip/'+ args.Group + '/'+ args.Caseid+'.zip'
+input_path = '/Users/yat-lok/workspaces/data4project/lateralization/connectome/zip/'+ args.Group + '/'+ args.Caseid+'.zip'
 
-output_path = '/scratch/yilewang/Goptimal/' + args.Group + '/' + args.Caseid + '/'
+output_path = '/Users/yat-lok/workspaces/Goptimal/' + args.Group + '/' + args.Caseid + '/'
 Path(output_path).mkdir(parents=True, exist_ok=True)
 
 df = tvb_simulation(input_path, args.G)
-output_name = args.Group + "_" + args.Caseid + "_" + args.G + ".xlsx"
+output_name = args.Group + "_" + args.Caseid + "_" + str(args.G) + ".xlsx"
 output = output_path + output_name
 df.to_excel(output)
 print(f"{args.Group} of {args.Caseid} in {args.G} has finished")
