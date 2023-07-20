@@ -1,7 +1,6 @@
 import os
 from tvb.simulator.lab import *
 import numpy as np
-import seaborn
 import matplotlib.pyplot as plt
 LOG = get_logger('demo')
 import pickle as cPickle
@@ -39,4 +38,4 @@ for i in range(len(df_info)):
     raw_data = sj3d_sim(input_path, G)
     # avg_sv = np.mean(np.array(raw_data), axis=1)
     # avg_sv_modes = np.mean(avg_sv, axis=2)
-    np.save(f"/Users/yilewang/workspaces/LFP6vars/{Group}/{Caseid}_{G}.npy",raw_data)
+    np.save(f"/Volumes/lab4data/LFP6vars/{Group}/{Caseid}_{G}.npy",raw_data)
