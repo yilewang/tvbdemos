@@ -26,7 +26,7 @@ connectome_dir = pjoin(data_dir, 'lateralization/connectome/zip')
 ts_dir = pjoin(data_dir, 'lateralization/ts_fmri/fmri_AAL_16/')
 
 
-file = pjoin(connectome_dir+args.group, args.caseid, '.zip')
+file = pjoin(connectome_dir+args.Group, args.Caseid, '.zip')
 
 
 def tvb_K21_fitting(K21, Go, file):
@@ -52,7 +52,7 @@ def tvb_K21_fitting(K21, Go, file):
 
 
 df = tvb_K21_fitting(args.K21, args.Go, file)
-df.to_csv(pjoin('/scratch/yilewang/local_inhibition/',args.group,args.caseid,'.csv'), index=False)
+df.to_csv(pjoin('/scratch/yilewang/local_inhibition/',args.Group,args.Caseid,'.csv'), index=False)
 # # calculate correlation of the matrix
 # corr = df.corr()
 
