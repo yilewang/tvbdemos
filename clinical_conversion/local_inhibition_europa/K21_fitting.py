@@ -52,7 +52,7 @@ def tvb_K21_fitting(K21, Go, file):
 
 
 df = tvb_K21_fitting(args.K21, args.Go, file)
-df.to_csv(pjoin('/scratch/yilewang/local_inhibition/',args.Group,args.Caseid+'.csv'), index=False)
+df.to_csv(pjoin('/scratch/yilewang/local_inhibition/',args.Group,args.Caseid+"_"+str(args.K21)+".csv"), index=False)
 # # calculate correlation of the matrix
 # corr = df.corr()
 
