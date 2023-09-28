@@ -14,8 +14,9 @@ import scipy.io
 parser = argparse.ArgumentParser(description='pass parameters')
 parser.add_argument('--Group',type=str, required=True, help='group')
 parser.add_argument('--Caseid',type=str, required=True, help='caseid')
+parser.add_argument('--Go',type=float, required=True, help='Go')
 parser.add_argument('--K21',type=float, required=True, help='K21')
-parser.add_argument('--G',type=float, required=True, help='G')
+
 
 args = parser.parse_args()
 
@@ -25,15 +26,15 @@ connectome_dir = pjoin(data_dir, 'lateralization/connectome/zip')
 ts_dir = pjoin(data_dir, 'lateralization/ts_fmri/fmri_AAL_16/')
 
 
-file = pjoin(connectome_dir+args.group, args.caseid, '.zip')
+file = pjoin(connectome_dir, args.Group, args.Caseid+'.zip')
 
 
-def tvb_K21_fitting(K21, G, file):
+def tvb_K21_fitting(K21, Go, file):
     connectivity.speed = np.array([10.])
     sim = simulator.Simulator(
         model=ReducedSetHindmarshRose(K21=np.array([K21])), 
         connectivity=connectivity.Connectivity.from_file(file),                      
-        coupling=coupling.Linear(a=np.array([G])),
+        coupling=coupling.Linear(a=np.array([Go])),
         simulation_length=1e3*416,
         integrator=integrators.HeunStochastic(dt=0.01220703125, noise=noise.Additive(nsig=np.array([1.0]), ntau=0.0,
                                                                                     random_stream=np.random.RandomState(seed=42))),
@@ -50,8 +51,8 @@ def tvb_K21_fitting(K21, G, file):
     return df
 
 
-df = tvb_K21_fitting(args.K21, args.G, file)
-df.to_csv(pjoin('/scratch/yilewang/local_inhibition/',args.group,args.caseid,'.csv'), index=False)
+df = tvb_K21_fitting(args.K21, args.Go, file)
+df.to_csv(pjoin('/scratch/yilewang/local_inhibition/',args.Group,args.Caseid+"_"+str(args.K21)+".csv"), index=False)
 # # calculate correlation of the matrix
 # corr = df.corr()
 
