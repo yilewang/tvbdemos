@@ -21,7 +21,7 @@
 module load launcher
 
 export LD_LIBRARY_PATH=/lib64:$LD_LIBRARY_PATH
-export LAUNCHER_WORKDIR=$SCRATCH/workspaces/tvbdemos/clinical_conversion_local_inhibition_europa
+export LAUNCHER_WORKDIR=$SCRATCH/workspaces/tvbdemos/clinical_conversion/local_inhibition_fc
 export LAUNCHER_JOB_FILE=jobfile
 export LAUNCHER_SCHED=interleaved
 
