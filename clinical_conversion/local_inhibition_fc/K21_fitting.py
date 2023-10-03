@@ -16,8 +16,6 @@ parser.add_argument('--Group',type=str, required=True, help='group')
 parser.add_argument('--Caseid',type=str, required=True, help='caseid')
 parser.add_argument('--Go',type=float, required=True, help='Go')
 parser.add_argument('--K21',type=float, required=True, help='K21')
-
-
 args = parser.parse_args()
 
 
