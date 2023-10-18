@@ -44,5 +44,5 @@ def tvb_lfp_sj3d(Go, file):
     (tavg_time, tavg_data), (raw_time, raw_data),_ = sim.run()
     return raw_data
 
-raw_data = tvb_lfp_sj3d(args.K21, args.Go, file)
+raw_data = tvb_lfp_sj3d(args.Go, file)
 np.save(pjoin('/scratch/yilewang/local_inhibition_lfp_go/',args.Group,args.Caseid+"_"+str(args.Go)+".npy"), raw_data)
