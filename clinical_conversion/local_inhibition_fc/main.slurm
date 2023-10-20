@@ -9,8 +9,8 @@
 
 #set up parameters
 #SBATCH -J launcher
-#SBATHC -N 47
-#SBATCH -n 740
+#SBATHC -N 190
+#SBATCH -n 3034
 #SBATCH -p normal
 #SBATCH -o job.%j.out
 #SBATCH -e job.%j.err
