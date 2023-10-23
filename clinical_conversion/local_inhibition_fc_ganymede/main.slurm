@@ -9,8 +9,8 @@
 
 #set up parameters
 #SBATCH -J launcher
-#SBATCH -N 5
-#SBATCH -n 74
+#SBATCH -N 43
+#SBATCH -n 686
 #SBATCH -p normal
 #SBATCH -o job.%j.out
 #SBATCH -e job.%j.err
@@ -21,7 +21,7 @@
 module load launcher
 
 export LD_LIBRARY_PATH=/lib64:$LD_LIBRARY_PATH
-export LAUNCHER_WORKDIR=$SCRATCH/workspaces/tvbdemos/clinical_conversion/local_inhibition_lfp
+export LAUNCHER_WORKDIR=/home/yxw190015/scratch/workspaces/tvbdemos/clinical_conversion/local_inhibition_fc_ganymede
 export LAUNCHER_JOB_FILE=jobfile
 export LAUNCHER_SCHED=interleaved
 
