@@ -12,7 +12,7 @@ from os.path import join as pjoin
 parser = argparse.ArgumentParser(description='pass parameters')
 parser.add_argument('--Group',type=str, required=True, help='group')
 parser.add_argument('--Caseid',type=str, required=True, help='caseid')
-parser.add_argument('--Gc',type=float, required=True, help='Gc')
+parser.add_argument('--G',type=float, required=True, help='G')
 parser.add_argument('--K21',type=float, required=True, help='K21')
 
 
@@ -24,13 +24,13 @@ connectome_dir = pjoin(data_dir, 'lateralization/connectome/zip')
 
 file = pjoin(connectome_dir, args.Group, args.Caseid+'.zip')
 
-def tvb_lfp_sj3d(k21, Gc, file):
+def tvb_lfp_sj3d(k21, G, file):
     connectivity.speed = np.array([10.])
-    length = 1e3*180
+    length = 1e3*10
     sim = simulator.Simulator(
-        model=ReducedSetHindmarshRose(K21=np.array([k21]), variables_of_interest=["xi", "eta", "tau", "alpha", "beta", "gamma"]), 
+        model=ReducedSetHindmarshRose(K21=np.array([k21])), 
         connectivity=connectivity.Connectivity.from_file(file),                      
-        coupling=coupling.Linear(a=np.array([Gc])),
+        coupling=coupling.Linear(a=np.array([G])),
         simulation_length=length,
         integrator=integrators.HeunStochastic(dt=0.01220703125, noise=noise.Additive(nsig=np.array([0.00001]), ntau=0.0,
                                                                                     random_stream=np.random.RandomState(seed=42))),
@@ -45,5 +45,5 @@ def tvb_lfp_sj3d(k21, Gc, file):
     (tavg_time, tavg_data), (raw_time, raw_data),_ = sim.run()
     return raw_data
 
-raw_data = tvb_lfp_sj3d(args.K21, args.Gc, file)
+raw_data = tvb_lfp_sj3d(args.K21, args.G, file)
 np.save(pjoin('/scratch/yilewang/local_inhibition_lfp/',args.Group,args.Caseid+"_"+str(args.K21)+".npy"), raw_data)
