@@ -46,4 +46,4 @@ def tvb_lfp_sj3d(k21, G, file):
     return raw_data
 
 raw_data = tvb_lfp_sj3d(args.K21, args.G, file)
-np.save(pjoin('/scratch/yilewang/local_inhibition_lfp/',args.Group,args.Caseid+"_"+str(args.K21)+".npy"), raw_data)
+np.save(pjoin('/scratch/yilewang/local_inhibition_lfp/',args.Group,args.Caseid+"_"+str(args.G)+".npy"), raw_data)
