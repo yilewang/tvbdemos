@@ -28,7 +28,7 @@ def tvb_lfp_sj3d(k21, G, file):
     connectivity.speed = np.array([10.])
     length = 1e3*10
     sim = simulator.Simulator(
-        model=ReducedSetHindmarshRose(state_variabe=  K21=np.array([k21])), 
+        model=ReducedSetHindmarshRose(K21=np.array([k21])), 
         connectivity=connectivity.Connectivity.from_file(file),                      
         coupling=coupling.Linear(a=np.array([G])),
         simulation_length=length,
