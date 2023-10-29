@@ -47,4 +47,4 @@ def tvb_lfp_sj3d(k21, G, file):
 
 for G in np.arange(args.G, 0.09, 0.001):
     raw_data = tvb_lfp_sj3d(args.K21, G, file)
-    np.save(pjoin('/scratch/yilewang/K21_Gmax/',args.Group,args.Caseid+"_"+str(args.G)+".npy"), raw_data)
+    np.save(pjoin('/scratch/yilewang/K21_Gmax/',args.Group,args.Caseid+"_"+str(G)+".npy"), raw_data)
