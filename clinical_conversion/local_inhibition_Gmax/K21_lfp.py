@@ -26,7 +26,7 @@ file = pjoin(connectome_dir, args.Group, args.Caseid+'.zip')
 
 def tvb_lfp_sj3d(k21, G, file):
     connectivity.speed = np.array([10.])
-    length = 1e3*10
+    length = 1e3
     sim = simulator.Simulator(
         model=ReducedSetHindmarshRose(K21=np.array([k21])), 
         connectivity=connectivity.Connectivity.from_file(file),                      
