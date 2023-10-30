@@ -26,7 +26,7 @@ file = pjoin(connectome_dir, args.Group, args.Caseid+'.zip')
 
 def tvb_lfp_sj3d(k21, G, file):
     connectivity.speed = np.array([10.])
-    length = 1e3*10
+    length = 1e3
     sim = simulator.Simulator(
         model=ReducedSetHindmarshRose(K21=np.array([k21])), 
         connectivity=connectivity.Connectivity.from_file(file),                      
@@ -46,5 +46,6 @@ def tvb_lfp_sj3d(k21, G, file):
     return raw_data
 
 for G in np.arange(args.G, 0.09, 0.001):
+    G = round(G, 3)
     raw_data = tvb_lfp_sj3d(args.K21, G, file)
-    np.save(pjoin('/scratch/yilewang/K21_Gmax/',args.Group,args.Caseid+"_"+str(args.G)+".npy"), raw_data)
+    np.save(pjoin('/scratch/yilewang/K21_Gmax/',args.Group,args.Caseid+"_"+str(G)+".npy"), raw_data)
