@@ -46,5 +46,6 @@ def tvb_lfp_sj3d(k21, G, file):
     return raw_data
 
 for G in np.arange(args.G, 0.09, 0.001):
+    G = round(G, 3)
     raw_data = tvb_lfp_sj3d(args.K21, G, file)
     np.save(pjoin('/scratch/yilewang/K21_Gmax/',args.Group,args.Caseid+"_"+str(G)+".npy"), raw_data)
