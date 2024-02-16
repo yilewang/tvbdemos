@@ -15,7 +15,7 @@ library(grid)
 
 # Read the dataset
 file_path <- "/Users/yilewang/workspaces/data4project/prediction_data.xlsx"
-table <- as.data.frame(read_excel(file_path, sheet = "main", skip = 1))
+table <- as.data.frame(read_excel(file_path, sheet = "short_main", skip = 1))
 levels(table$group) <- c("SNC","NC","MCI","AD")
 
 
@@ -29,17 +29,17 @@ m.color.design[13:28] <- prettyGraphsColorSelection(starting.color = sample(1:17
 tvb_para.table <- table[29:34]
 m.color.design[29:34] <- prettyGraphsColorSelection(starting.color = sample(1:170, 1))
 
-MC.table <- table[35:47]
-m.color.design[35:47] <- prettyGraphsColorSelection(starting.color = sample(1:170, 1))
+MC.table <- table[35:39]
+m.color.design[35:39] <- prettyGraphsColorSelection(starting.color = sample(1:170, 1))
 
-SimFreq.table <- table[48:61]
-m.color.design[48:61] <- prettyGraphsColorSelection(starting.color = sample(1:170, 1))
+SimFreq.table <- table[40:53]
+m.color.design[40:53] <- prettyGraphsColorSelection(starting.color = sample(1:170, 1))
 
-sc.table <- table[62:70]
-m.color.design[62:70] <- prettyGraphsColorSelection(starting.color = sample(1:170, 1))
+sc.table <- table[54:55]
+m.color.design[54:55] <- prettyGraphsColorSelection(starting.color = sample(1:170, 1))
 
-wdc.table <- table[71:87]
-m.color.design[71:87] <- prettyGraphsColorSelection(starting.color = sample(1:170, 1))
+wdc.table <- table[56:72]
+m.color.design[56:72] <- prettyGraphsColorSelection(starting.color = sample(1:170, 1))
 
 ##########################################
 # the color of participants
@@ -68,10 +68,10 @@ res.PCA <- epPCA(DATA = data.table, center = TRUE,
                  DESIGN = table$group, graphs = FALSE)
 
 res.PCA.inf <- epPCA.inference.battery(DATA = data.table, 
-                                             center = TRUE,
-                                             scale = 'SS1',
-                                             DESIGN = table$group, 
-                                             graphs = FALSE)
+                                       center = TRUE,
+                                       scale = 'SS1',
+                                       DESIGN = table$group, 
+                                       graphs = FALSE)
 
 plot.scree(res.PCA$ExPosition.Data$eigs, res.PCA.inf$Inference.Data$components$p.vals)
 
@@ -95,27 +95,6 @@ plot.scree(res.MCA$ExPosition.Data$eigs, res.MCA.inf$Inference.Data$components$p
 
 
 plot.permutation(res.MCA.inf$Inference.Data$components$eigs.perm, res.MCA$ExPosition.Data$eigs)
-
-
-
-# Multiblock DICA
-g.masses <-  rep(1 / ncol(makeNominalData(XYmat)), length(unique(descriptors$AgeGen)))
-resDiCA <- tepDICA(bins.table[13:end_col], make_data_nominal = FALSE, 
-                   group.masses = g.masses,
-                   #weight = rep(1, nrow(XYmat)),# -- if equal weights for all columns,                    
-                   DESIGN = table$group, graphs = FALSE)
-
-# Inferences ----
-set.seed(70301) # set the seed
-
-# For random effects model so that we all have the same results.
-nIter = 1000
-resDiCA.inf <- tepDICA.inference.battery(bins.table[13:end_col],make_data_nominal = FALSE,
-                                         DESIGN = table$group,
-                                         group.masses = g.masses,
-                                         test.iters = nIter,
-                                         #weight = rep(1, nrow(XYmat)), # -- if equal weights for all columns,
-                                         graphs = FALSE)
 
 
 

@@ -15,7 +15,7 @@ library(grid)
 
 # Read the dataset
 file_path <- "/Users/yilewang/workspaces/data4project/prediction_data.xlsx"
-table <- as.data.frame(read_excel(file_path, sheet = "main", skip = 1))
+table <- as.data.frame(read_excel(file_path, sheet = "pCNG_subtable", skip = 1))
 levels(table$group) <- c("SNC","NC","MCI","AD")
 
 
@@ -23,23 +23,23 @@ levels(table$group) <- c("SNC","NC","MCI","AD")
 m.color.design <- as.matrix(colnames(table))
 
 # Each block
-ignition.table <- table[13:28]
-m.color.design[13:28] <- prettyGraphsColorSelection(starting.color = sample(1:170, 1))
+ignition.table <- table[5:6]
+m.color.design[5:6] <- prettyGraphsColorSelection(starting.color = sample(1:170, 1))
 
-tvb_para.table <- table[29:34]
-m.color.design[29:34] <- prettyGraphsColorSelection(starting.color = sample(1:170, 1))
+tvb_para.table <- table[7:12]
+m.color.design[7:12] <- prettyGraphsColorSelection(starting.color = sample(1:170, 1))
 
-MC.table <- table[35:47]
-m.color.design[35:47] <- prettyGraphsColorSelection(starting.color = sample(1:170, 1))
+MC.table <- table[13:15]
+m.color.design[13:15] <- prettyGraphsColorSelection(starting.color = sample(1:170, 1))
 
-SimFreq.table <- table[48:61]
-m.color.design[48:61] <- prettyGraphsColorSelection(starting.color = sample(1:170, 1))
+SimFreq.table <- table[16:29]
+m.color.design[16:29] <- prettyGraphsColorSelection(starting.color = sample(1:170, 1))
 
-sc.table <- table[62:70]
-m.color.design[62:70] <- prettyGraphsColorSelection(starting.color = sample(1:170, 1))
+sc.table <- table[30:31]
+m.color.design[30:31] <- prettyGraphsColorSelection(starting.color = sample(1:170, 1))
 
-wdc.table <- table[71:87]
-m.color.design[71:87] <- prettyGraphsColorSelection(starting.color = sample(1:170, 1))
+wdc.table <- table[32:34]
+m.color.design[32:34] <- prettyGraphsColorSelection(starting.color = sample(1:170, 1))
 
 ##########################################
 # the color of participants
@@ -53,11 +53,11 @@ ob.color.design[62:74] <- prettyGraphsColorSelection(starting.color = sample(1:1
 # Bins the data
 bins.table <- as.data.frame(table)
 end_col <- length(colnames(table))
-for(i in 13:end_col){
+for(i in 5:end_col){
   bins.table[,i] <- bins_helper(bins.table[,i], 
                                 colnames(bins.table)[i])
 }
-hist.afterbin <- multi.hist(bins.table[,13:end_col])
+hist.afterbin <- multi.hist(bins.table[,5:end_col])
 
 
 data.table <- SimFreq.table
@@ -68,10 +68,10 @@ res.PCA <- epPCA(DATA = data.table, center = TRUE,
                  DESIGN = table$group, graphs = FALSE)
 
 res.PCA.inf <- epPCA.inference.battery(DATA = data.table, 
-                                             center = TRUE,
-                                             scale = 'SS1',
-                                             DESIGN = table$group, 
-                                             graphs = FALSE)
+                                       center = TRUE,
+                                       scale = 'SS1',
+                                       DESIGN = table$group, 
+                                       graphs = FALSE)
 
 plot.scree(res.PCA$ExPosition.Data$eigs, res.PCA.inf$Inference.Data$components$p.vals)
 
@@ -84,10 +84,10 @@ plot.permutation(res.PCA.inf$Inference.Data$components$eigs.perm, res.PCA$ExPosi
 
 
 
-res.MCA <- epMCA(DATA = bins.table[13:end_col],
+res.MCA <- epMCA(DATA = bins.table[5:end_col],
                  DESIGN = table$group, 
                  graphs = FALSE)
-res.MCA.inf <- epMCA.inference.battery(DATA = bins.table[13:end_col],
+res.MCA.inf <- epMCA.inference.battery(DATA = bins.table[5:end_col],
                                        DESIGN = table$group, graphs = FALSE)
 
 
@@ -95,27 +95,6 @@ plot.scree(res.MCA$ExPosition.Data$eigs, res.MCA.inf$Inference.Data$components$p
 
 
 plot.permutation(res.MCA.inf$Inference.Data$components$eigs.perm, res.MCA$ExPosition.Data$eigs)
-
-
-
-# Multiblock DICA
-g.masses <-  rep(1 / ncol(makeNominalData(XYmat)), length(unique(descriptors$AgeGen)))
-resDiCA <- tepDICA(bins.table[13:end_col], make_data_nominal = FALSE, 
-                   group.masses = g.masses,
-                   #weight = rep(1, nrow(XYmat)),# -- if equal weights for all columns,                    
-                   DESIGN = table$group, graphs = FALSE)
-
-# Inferences ----
-set.seed(70301) # set the seed
-
-# For random effects model so that we all have the same results.
-nIter = 1000
-resDiCA.inf <- tepDICA.inference.battery(bins.table[13:end_col],make_data_nominal = FALSE,
-                                         DESIGN = table$group,
-                                         group.masses = g.masses,
-                                         test.iters = nIter,
-                                         #weight = rep(1, nrow(XYmat)), # -- if equal weights for all columns,
-                                         graphs = FALSE)
 
 
 
@@ -129,7 +108,7 @@ col4Labels <- col4Levels$color4Levels
 ### make correlation plot
 # get some color
 col4Levels <- data4PCCAR::coloringLevels(
-  rownames(res.MCA$ExPosition.Data$fj), m.color.design[13:end_col])
+  rownames(res.MCA$ExPosition.Data$fj), m.color.design[5:end_col])
 col4Labels <- col4Levels$color4Levels
 
 # plot color
@@ -139,7 +118,7 @@ col <-colorRampPalette(c("#BB4444",
                          "#77AADD", 
                          "#4477AA"))
 
-corrMatBurt.list <- phi2Mat4BurtTable(bins.table[13:end_col])
+corrMatBurt.list <- phi2Mat4BurtTable(bins.table[5:end_col])
 # plot
 corr4MCA.r <- corrplot::corrplot(
   as.matrix(corrMatBurt.list$phi2.mat^(1/2)),
@@ -147,7 +126,7 @@ corr4MCA.r <- corrplot::corrplot(
   col=col(200),
   type="upper",
   #addCoef.col = "black",
-  tl.col = m.color.design[13:86],
+  tl.col = m.color.design[5:end_col],
   tl.cex = .7,
   tl.srt = 60,#Text label color and rotation
   #number.cex = .5,
@@ -165,7 +144,7 @@ plot.fs(bins.table$group,
         mode="CI", 
         method = "MCA")
 
-plot.loading(bins.table[13:end_col], col=m.color.design[13:end_col], res.MCA$ExPosition.Data$fi, res.MCA$ExPosition.Data$eigs, res.MCA$ExPosition.Data$t, d=1)
+plot.loading(bins.table[5:end_col], col=m.color.design[5:end_col], res.MCA$ExPosition.Data$fi, res.MCA$ExPosition.Data$eigs, res.MCA$ExPosition.Data$t, d=1)
 
 plot.cfs(res.MCA$ExPosition.Data$fj, res.MCA$ExPosition.Data$eigs, res.MCA$ExPosition.Data$t, d=1, col=col4Labels, method="MCA", colrow="row")
 
