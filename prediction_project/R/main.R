@@ -50,6 +50,7 @@ ob.color.design[27:61] <- prettyGraphsColorSelection(starting.color = sample(1:1
 ob.color.design[62:74] <- prettyGraphsColorSelection(starting.color = sample(1:170, 1))
 ##########################################
 
+hist.beforebin <- multi.hist(table[,13:end_col])
 # Bins the data
 bins.table <- as.data.frame(table)
 end_col <- length(colnames(table))
@@ -98,24 +99,24 @@ plot.permutation(res.MCA.inf$Inference.Data$components$eigs.perm, res.MCA$ExPosi
 
 
 
-# Multiblock DICA
-g.masses <-  rep(1 / ncol(makeNominalData(XYmat)), length(unique(descriptors$AgeGen)))
-resDiCA <- tepDICA(bins.table[13:end_col], make_data_nominal = FALSE, 
-                   group.masses = g.masses,
-                   #weight = rep(1, nrow(XYmat)),# -- if equal weights for all columns,                    
-                   DESIGN = table$group, graphs = FALSE)
-
-# Inferences ----
-set.seed(70301) # set the seed
-
-# For random effects model so that we all have the same results.
-nIter = 1000
-resDiCA.inf <- tepDICA.inference.battery(bins.table[13:end_col],make_data_nominal = FALSE,
-                                         DESIGN = table$group,
-                                         group.masses = g.masses,
-                                         test.iters = nIter,
-                                         #weight = rep(1, nrow(XYmat)), # -- if equal weights for all columns,
-                                         graphs = FALSE)
+# # Multiblock DICA
+# g.masses <-  rep(1 / ncol(makeNominalData(bins.table[13:end_col])), length(unique(descriptors$AgeGen)))
+# resDiCA <- tepDICA(bins.table[13:end_col], make_data_nominal = FALSE, 
+#                    group.masses = g.masses,
+#                    #weight = rep(1, nrow(XYmat)),# -- if equal weights for all columns,                    
+#                    DESIGN = table$group, graphs = FALSE)
+# 
+# # Inferences ----
+# set.seed(70301) # set the seed
+# 
+# # For random effects model so that we all have the same results.
+# nIter = 1000
+# resDiCA.inf <- tepDICA.inference.battery(bins.table[13:end_col],make_data_nominal = FALSE,
+#                                          DESIGN = table$group,
+#                                          group.masses = g.masses,
+#                                          test.iters = nIter,
+#                                          #weight = rep(1, nrow(XYmat)), # -- if equal weights for all columns,
+#                                          graphs = FALSE)
 
 
 
