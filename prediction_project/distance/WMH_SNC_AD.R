@@ -1,0 +1,260 @@
+library(PTCA4CATA)
+library(TExPosition)
+library(TInPosition)
+library(data4PCCAR)
+library(ExPosition)
+library(InPosition)
+library(ggplot2)
+library(readxl)
+library(psych)
+source("functions.R")
+library(gridExtra)
+library(ggplotify)
+library(grid)
+library(knitr)
+library(pheatmap)
+
+# Read the dataset
+waves_path <- "/Users/yilewang/workspaces/data4project/MAS_T2w/waves_wmh.xlsx"
+
+wave1_table <- as.data.frame(read_excel(waves_path, sheet = 'wave1'))
+wave1_table <- wave1_table[wave1_table$in_our_group_or_not == 1, ]
+levels(wave1_table$M_w1_group) <- c("SNC","NC","MCI","AD")
+wave2_table <- as.data.frame(read_excel(waves_path, sheet = 'wave2'))
+wave2_table <- wave2_table[wave2_table$in_our_group_or_not == 1, ]
+levels(wave2_table$M_w2_group) <- c("SNC","NC","MCI","AD")
+
+# Read the computational metrics & behavioral data
+file_path <- "/Users/yilewang/workspaces/data4project/prediction_project/prediction_data.xlsx"
+table <- as.data.frame(read_excel(file_path, sheet = "main", skip=1))
+levels(table$group) <- c("SNC","NC","MCI","AD")
+
+common_table_w1 <- intersect(table$caseid, wave1_table$M_w1_ID)
+common_table_w2 <- intersect(table$caseid, wave2_table$M_w2_ID)
+common_w1_w2 <- intersect(wave1_table$M_w1_ID, wave2_table$M_w2_ID)
+
+
+table <- table[table$caseid %in% common_table_w2,]
+# find totalWMH from wave2_table based on caseid and add it to table
+table <- merge(table, wave2_table[, c("M_w2_ID", "M_w2_totalWMH")], by.x = "caseid", by.y = "M_w2_ID", all.x = TRUE)
+# table <- table[table$group %in% c("SNC", "AD"),]
+# levels(table$group) <- c("SNC","AD")
+levels(table$group) <- c("SNC","NC","MCI","AD")
+
+# sort the table based on group in order: ['SNC', 'NC', 'MCI', 'AD']
+table <- table[order(match(table$group, c("SNC", "NC", "MCI", "AD"))),]
+
+
+
+# reindex table
+rownames(table) <- 1:nrow(table)
+
+
+# manually setting color design
+m.color.design <- as.matrix(colnames(table))
+
+# Each block
+ignition.table <- table[13:28]
+m.color.design[13:28] <- prettyGraphsColorSelection(starting.color = sample(1:170, 1))
+
+tvb_para.table <- table[29:34]
+m.color.design[29:34] <- prettyGraphsColorSelection(starting.color = sample(1:170, 1))
+
+# for regular main table
+SimFreq.table <- table[35:48]
+m.color.design[35:48] <- prettyGraphsColorSelection(starting.color = sample(1:170, 1))
+sc.table <- table[49:57]
+m.color.design[49:57] <- prettyGraphsColorSelection(starting.color = sample(1:170, 1))
+wdc.table <- table[58:74]
+m.color.design[58:74] <- prettyGraphsColorSelection(starting.color = sample(1:170, 1))
+wmh.table <- table[75]
+m.color.design[75] <- prettyGraphsColorSelection(starting.color = sample(1:170, 1))
+
+
+# ignition.table <- table[4:11]
+# m.color.design[4:11] <- prettyGraphsColorSelection(starting.color = sample(1:170, 1))
+# 
+# tvb_para.table <- table[12:17]
+# m.color.design[12:17] <- prettyGraphsColorSelection(starting.color = sample(1:170, 1))
+# 
+# # for regular main table
+# SimFreq.table <- table[18:26]
+# m.color.design[18:26] <- prettyGraphsColorSelection(starting.color = sample(1:170, 1))
+# 
+# sc.table <- table[27:35]
+# m.color.design[27:35] <- prettyGraphsColorSelection(starting.color = sample(1:170, 1))
+# 
+# wdc.table <- table[36:44]
+# m.color.design[36:44] <- prettyGraphsColorSelection(starting.color = sample(1:170, 1))
+# wmh.table <- table[45]
+# m.color.design[45] <- prettyGraphsColorSelection(starting.color = sample(1:170, 1))
+
+
+##########################################
+# the color of participants
+ob.color.design <- as.matrix(rownames(table))
+# ob.color.design[1:10] <- prettyGraphsColorSelection(starting.color = sample(1:170, 1))
+# ob.color.design[11:26] <- prettyGraphsColorSelection(starting.color = sample(1:170, 1))
+# ob.color.design[27:61] <- prettyGraphsColorSelection(starting.color = sample(1:170, 1))
+# ob.color.design[62:74] <- prettyGraphsColorSelection(starting.color = sample(1:170, 1))
+
+ob.color.design[1:8] <- prettyGraphsColorSelection(starting.color = sample(1:170, 1))
+ob.color.design[9:21] <- prettyGraphsColorSelection(starting.color = sample(1:170, 1))
+ob.color.design[22:51] <- prettyGraphsColorSelection(starting.color = sample(1:170, 1))
+ob.color.design[52:62] <- prettyGraphsColorSelection(starting.color = sample(1:170, 1))
+
+# ob.color.design <- as.matrix(rownames(table))
+# ob.color.design[1:10] <- prettyGraphsColorSelection(starting.color = sample(1:170, 1))
+# ob.color.design[11:23] <- prettyGraphsColorSelection(starting.color = sample(1:170, 1))
+##########################################
+
+##########################################
+end_col <- length(colnames(table))
+start_col <- 13
+hist.beforebin <- multi.hist(table[,start_col:end_col])
+# Bins the data
+bins.table <- as.data.frame(table)
+
+for(i in start_col:end_col){
+  bins.table[,i] <- bins_helper(bins.table[,i], 
+                                colnames(bins.table)[i])
+}
+hist.afterbin <- multi.hist(bins.table[,start_col:end_col])
+levels(bins.table$group) <- c("SNC","NC","MCI","AD")
+
+data.table <- SimFreq.table
+
+# PCA
+# res.PCA <- epPCA(DATA = data.table, center = TRUE,
+#                  scale = 'SS1',
+#                  DESIGN = table$group, graphs = FALSE)
+# 
+# res.PCA.inf <- epPCA.inference.battery(DATA = data.table, 
+#                                        center = TRUE,
+#                                        scale = 'SS1',
+#                                        DESIGN = table$group, 
+#                                        graphs = FALSE)
+# 
+# plot.scree(res.PCA$ExPosition.Data$eigs, res.PCA.inf$Inference.Data$components$p.vals)
+# plot.permutation(res.PCA.inf$Inference.Data$components$eigs.perm, res.PCA$ExPosition.Data$eigs)
+
+
+
+# Multiple Corresponding Analysis
+
+# res.MCA <- epMCA(DATA = bins.table[13:end_col],
+#                  DESIGN = table$group, 
+#                  graphs = FALSE)
+# res.MCA.inf <- epMCA.inference.battery(DATA = bins.table[13:end_col],
+#                                        DESIGN = table$group, graphs = FALSE)
+
+# plot.scree(res.MCA$ExPosition.Data$eigs, res.MCA.inf$Inference.Data$components$p.vals)
+# plot.permutation(res.MCA.inf$Inference.Data$components$eigs.perm, res.MCA$ExPosition.Data$eigs)
+
+# DICA
+
+g.masses <- NULL
+
+# g.masses <-  rep(1 / ncol(makeNominalData(bins.table[13:end_col])), length(unique(descriptors$AgeGen)))
+res.DICA <- tepDICA(bins.table[start_col:end_col], make_data_nominal = TRUE, symmetric = TRUE,
+                    group.masses = g.masses,
+                    #weight = rep(1, nrow(XYmat)),# -- if equal weights for all columns,
+                    DESIGN = table$group, graphs = FALSE)
+
+# Inferences ----
+set.seed(70301) # set the seed
+
+# For random effects model so that we all have the same results.
+nIter = 1000
+res.DICA.inf <- tepDICA.inference.battery(bins.table[start_col:end_col], make_data_nominal = TRUE, symmetric = TRUE,
+                                          DESIGN = table$group,
+                                          group.masses = g.masses,
+                                          test.iters = nIter,
+                                          #weight = rep(1, nrow(XYmat)), # -- if equal weights for all columns,
+                                          graphs = FALSE)
+
+plot.scree(res.DICA$TExPosition.Data$eigs, res.DICA.inf$Inference.Data$components$p.vals)
+plot.permutation(res.DICA.inf$Inference.Data$components$eigs.perm, res.DICA$TExPosition.Data$eigs)
+
+
+# get levels of color
+col4Levels <- data4PCCAR::coloringLevels(
+  rownames(res.DICA$TExPosition.Data$fj), m.color.design)
+col4Labels <- col4Levels$color4Levels
+
+
+
+### make correlation plot
+# get some color
+col4Levels <- data4PCCAR::coloringLevels(
+  rownames(res.DICA$TExPosition.Data$fj), m.color.design[start_col:end_col])
+col4Labels <- col4Levels$color4Levels
+
+# plot color
+col <-colorRampPalette(c("#BB4444", 
+                         "#EE9988", 
+                         "#FFFFFF", 
+                         "#77AADD", 
+                         "#4477AA"))
+
+corrMatBurt.list <- phi2Mat4BurtTable(bins.table[start_col:end_col])
+# plot
+corr4MCA.r <- corrplot::corrplot(
+  as.matrix(corrMatBurt.list$phi2.mat^(1/2)),
+  method="color", 
+  col=col(200),
+  type="upper",
+  #addCoef.col = "black",
+  tl.col = m.color.design[start_col:end_col],
+  tl.cex = .7,
+  tl.srt = 60,#Text label color and rotation
+  #number.cex = .5,
+  #order = 'FPC',
+  diag = TRUE # needed to have the color of variables correct
+)
+
+# rename fii
+rownames(res.DICA$TExPosition.Data$fii) <- bins.table$caseid
+plot.fs(bins.table$group, 
+        res.DICA$TExPosition.Data$fii, 
+        res.DICA$TExPosition.Data$eigs, 
+        res.DICA$TExPosition.Data$t, 
+        d=1, 
+        mode="CI", 
+        method = "DICA")
+
+plot.loading(bins.table[start_col:end_col], col=m.color.design[start_col:end_col], res.DICA$TExPosition.Data$fii, res.DICA$TExPosition.Data$eigs, res.DICA$TExPosition.Data$t, d=1)
+
+plot.cfs(res.DICA$TExPosition.Data$fj, res.DICA$TExPosition.Data$eigs, res.DICA$TExPosition.Data$t, d=1, col=col4Labels, method="DICA", colrow="row")
+
+plot.cb(res.DICA$TExPosition.Data$cj, 
+        res.DICA$TExPosition.Data$fj, 
+        col = col4Labels, boot.ratios=res.DICA.inf$Inference.Data$boot.data$fj.boot.data$tests$boot.ratios, signifOnly = TRUE, fig = 2, horizontal = FALSE, colrow = "col", fontsize = 2)
+
+# Confusion Matrix
+
+fixed.confusion <- res.DICA.inf$Inference.Data$loo.data$fixed.confuse
+random.confusion <- res.DICA.inf$Inference.Data$loo.data$loo.confuse
+fixed.acc <- res.DICA.inf$Inference.Data$loo.data$fixed.acc
+random.acc <- res.DICA.inf$Inference.Data$loo.data$loo.acc
+fixed.assign <- res.DICA.inf[["Fixed.Data"]][["TExPosition.Data"]][["assign"]][["assignments"]]
+# rename
+rownames(fixed.confusion) <- sub("[[:punct:]]","",
+                                 rownames(fixed.confusion))
+rownames(random.confusion) <- sub("[[:punct:]]","",
+                                  rownames(random.confusion))
+colnames(fixed.confusion)<- sub("[[:punct:]]","",
+                                colnames(fixed.confusion))
+colnames(random.confusion)<- sub("[[:punct:]]","",
+                                 colnames(random.confusion))
+rownames(fixed.confusion) <- paste0(rownames(fixed.confusion), 
+                                    ".predicted")
+colnames(fixed.confusion) <- paste0(colnames(fixed.confusion),
+                                    ".actual")
+
+# print table and accurarcy
+kable(fixed.confusion, 
+      caption = "Fixed Confustion Matrix")
+rownames(fixed.assign) <- table$group
+print(fixed.assign)
+
