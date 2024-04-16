@@ -9,8 +9,8 @@
 
 #set up parameters
 #SBATCH -J launcher
-#SBATCH -N 42
-#SBATCH -n 669
+#SBATCH -N 140
+#SBATCH -n 2220
 #SBATCH -p normal
 #SBATCH -o job.%j.out
 #SBATCH -e job.%j.err
@@ -21,7 +21,7 @@
 module load launcher
 
 export LD_LIBRARY_PATH=/lib64:$LD_LIBRARY_PATH
-export LAUNCHER_WORKDIR=$SCRATCH/workspaces/tvbdemos/clinical_conversion/local_inhibition_fc_europa
+export LAUNCHER_WORKDIR=$SCRATCH/workspaces/tvbdemos/inhibition_simulation/K21_explore
 export LAUNCHER_JOB_FILE=jobfile
 export LAUNCHER_SCHED=interleaved
 

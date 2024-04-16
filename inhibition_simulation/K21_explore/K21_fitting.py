@@ -43,14 +43,15 @@ def tvb_K21_fitting(k21, Go, file):
         ))
     sim.configure()
     (tavg_time, tavg_data), (raw_time, raw_data),_ = sim.run()
-
+    raw_data_mean = np.mean(raw_data,3)
     # write it into the csv file
-    df = pd.DataFrame(raw_data[:, 0, :, 0], columns = ['aCNG-L', 'aCNG-R','mCNG-L','mCNG-R','pCNG-L','pCNG-R', 'HIP-L','HIP-R','PHG-L','PHG-R','AMY-L','AMY-R', 'sTEMp-L','sTEMP-R','mTEMp-L','mTEMp-R'])
+    df = pd.DataFrame(raw_data_mean[:,0,:], columns = ['aCNG-L', 'aCNG-R','mCNG-L','mCNG-R','pCNG-L','pCNG-R', 'HIP-L','HIP-R','PHG-L','PHG-R','AMY-L','AMY-R', 'sTEMp-L','sTEMP-R','mTEMp-L','mTEMp-R'])
     return df
 
-
 df = tvb_K21_fitting(args.K21, args.Go, file)
-df.to_csv(pjoin('/scratch/yilewang/local_inhibition/',args.Group,args.Caseid+"_"+str(args.K21)+".csv"), index=False)
+if not os.path.exists(pjoin('/scratch/yilewang/K21_explore/',args.Group)):
+    os.makedirs(pjoin('/scratch/yilewang/K21_explore/',args.Group))
+df.to_csv(pjoin('/scratch/yilewang/K21_explore/',args.Group,args.Caseid+"_"+str(args.K21)+".csv"), index=False)
 # # calculate correlation of the matrix
 # corr = df.corr()
 
