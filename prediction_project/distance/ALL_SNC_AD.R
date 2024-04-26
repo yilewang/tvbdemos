@@ -224,7 +224,7 @@ colnames(fixed.confusion) <- paste0(colnames(fixed.confusion),
 # print table and accurarcy
 kable(fixed.confusion, 
       caption = "Fixed Confustion Matrix")
-rownames(fixed.assign) <- table$group
+rownames(fixed.assign) <- table$caseid
 print(fixed.assign)
 
 
