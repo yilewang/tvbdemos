@@ -18,7 +18,7 @@ library(knitr)
 
 # Read the dataset
 file_path <- "/Users/yilewang/workspaces/data4project/prediction_project/prediction_data.xlsx"
-table <- as.data.frame(read_excel(file_path, sheet = "main", skip = 1))
+table <- as.data.frame(read_excel(file_path, sheet = "main_K21", skip = 1))
 # get only table$group == SNC and AD
 # table <- table[table$group %in% c("SNC", "AD"),]
 # reindex table

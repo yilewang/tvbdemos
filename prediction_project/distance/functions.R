@@ -60,7 +60,7 @@ plot.permutation <- function(eigs.perm, eigs,
 
 plot.fs <- function(DESIGN, fs, eigs, 
                     tau, d = 1, mode="CI",
-                    method = " ")
+                    method = " ", col_index = c("#66CDAA","#4682B4","#AB63FA","#FFA15A"))
 {
   fs <- as.matrix(fs)
   # GETMEANS
@@ -71,7 +71,7 @@ plot.fs <- function(DESIGN, fs, eigs,
   color.dot <- as.matrix(DESIGN)
   na.de <- as.matrix(levels(DESIGN))
   num.de <- length(na.de)
-  index <- c("#66CDAA","#4682B4","#AB63FA","#FFA15A")
+  index <- col_index
   # index <- prettyGraphsColorSelection(n.colors = 4)
 
   for (i in 1: num.de){
@@ -572,5 +572,130 @@ tepDICA.inference.battery <- function(DATA, make_data_nominal = FALSE, DESIGN = 
   }
   
   return(ret.data)
+}
+
+
+plot.fs.alternative <- function(DESIGN, fs, eigs, 
+                    tau, d = 1, mode="CI",
+                    method = " ", col_index = c("#66CDAA","#4682B4","#AB63FA","#FFA15A"), assign=assign_AD, NEW_DESIGN = new_design)
+{
+  fs <- as.matrix(fs)
+  # GETMEANS
+  fm.tmp <- aggregate(fs, list(DESIGN), mean)
+  fm <- fm.tmp[,2:ncol(fm.tmp)]
+  rownames(fm) <- fm.tmp[,1]
+  tau <- round(tau)
+  color.dot <- as.matrix(DESIGN)
+  na.de <- as.matrix(levels(DESIGN))
+  num.de <- length(na.de)
+  index <- col_index
+  # index <- prettyGraphsColorSelection(n.colors = 4)
+  for (i in 1: num.de){
+    color.dot[which(color.dot == na.de[i])] <- index[i]
+  }
+  
+  a_color.dot <- as.data.frame(color.dot)
+  color.dot2 <- as.data.frame(color.dot)
+  print(color.dot2)
+  
+  for (i in 1:61){
+    # if rownames of color.dot belongs to assign_AD, then assign
+    if (as.numeric(rownames(a_color.dot)[i]) %in% assign[["caseid"]]){
+      color.dot2[i, 'V1'] <- index[4]
+    }
+    else {
+      color.dot2[i, 'V1'] <- "#808080"
+    }
+  }
+  color.dot <- as.matrix(color.dot)
+  rownames(color.dot) <- DESIGN
+  
+  # color.dot2
+  color.dot2 <- as.matrix(color.dot2)
+  rownames(color.dot2) <- NEW_DESIGN
+  
+  print(color.dot2)
+  
+  fs.plot <- createFactorMap(fs, # data
+                             title = paste0("Factor Scores_",
+                                            method), 
+                             alpha.points = 0.5,
+                             axis1 = d, axis2 = (d+1), 
+                             pch = 19, 
+                             cex = 2,
+                             text.cex = 2.5, 
+                             display.labels = TRUE,
+                             col.points = color.dot2, 
+                             col.labels =  color.dot2
+  )
+  fs.label <- createxyLabels.gen(d,(d+1),
+                                 lambda = eigs,
+                                 tau = tau,
+                                 axisName = "Component "
+  )
+  ind <- c(1:num.de)
+  for (i in 1:num.de){
+    inde <- match(rownames(color.dot), 
+                  sort(rownames(fm)))
+    ind[i] <- which(inde == i)[1]
+  }
+  grp.ind <- ind
+  rownames(fm[sort(rownames(fm)),]) <- sub("[[:punct:]]","",
+                                           rownames(fm[sort(rownames(fm)),]))
+  
+  graphs.means <- PTCA4CATA:: createFactorMap(fm[sort(rownames(fm)),],
+                                              axis1 = d, axis2 =(d+1), 
+                                              constraints = fs.plot$constraints,
+                                              col.points = color.dot[grp.ind],
+                                              col.labels = color.dot[grp.ind],
+                                              alpha.points = 0.9)
+  
+  BootCube <- PTCA4CATA::Boot4Mean(fs, 
+                                   design = as.factor(DESIGN), 
+                                   niter = 100)
+  
+  dimnames(BootCube$BootCube)[[2]] <- paste0("dim ", 1:dim(BootCube$BootCube)[[2]])
+  
+  boot.elli <- MakeCIEllipses(data =
+                                BootCube$BootCube[,d:(d+1),][sort(rownames(BootCube$BootCube[,d:(d+1),])),,],
+                              names.of.factors = 
+                                c(paste0("Dimension ", d),paste0("Dimension ", 
+                                                                 (d+1))),
+                              col = color.dot[grp.ind],
+                              alpha.line = 0.3,
+                              alpha.ellipse = 0.3
+  )
+  
+  # with Hull
+  colnames(fs) <- paste0('Dimension ', 1:ncol(fs))
+  # getting the color correct: an ugly trick
+  #col.groups <- as.data.frame(col.groups)
+  DESIGN <- factor(DESIGN, levels = DESIGN[grp.ind])
+  GraphHull <- PTCA4CATA::MakeToleranceIntervals(fs, 
+                                                 axis1 = d, 
+                                                 axis2 = (d+1),
+                                                 design = DESIGN,
+                                                 col = color.dot[grp.ind],
+                                                 names.of.factors =  c(paste0("Dim ", d),
+                                                                       paste0("Dim 2", (d+1))),
+                                                 p.level = 1.00)
+  
+  if (mode == "hull"){
+    factor.map <- fs.plot$zeMap_background +
+      GraphHull + 
+      fs.plot$zeMap_dots + 
+      fs.plot$zeMap_text + 
+      fs.label +  
+      graphs.means$zeMap_dots + 
+      graphs.means$zeMap_text}
+  if (mode == "CI"){
+    factor.map <- fs.plot$zeMap_background +
+      boot.elli + 
+      fs.plot$zeMap_dots + 
+      fs.plot$zeMap_text + 
+      fs.label +  
+      graphs.means$zeMap_dots + 
+      graphs.means$zeMap_text}
+  factor.map
 }
 
